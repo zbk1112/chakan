@@ -58,6 +58,7 @@ export const projectContent = {
     uploadMethod: "邮寄内存卡",
     sceneRequirements: "农业、家居、商超",
     unitPrice: "30rmb（腕部）",
+    settlementMethod: "3周到一个月结算",
     equipment: ["充电宝2个", "摄像鸭舌帽1套", "CPU", "收纳腰包1个", "高速内存卡4张"],
     preparation: [
       "所有采集设备提前满电，保障全天作业续航",
@@ -99,6 +100,7 @@ export const projectContent = {
     uploadMethod: "手机app端上传",
     sceneRequirements: "主要居家+商业场景",
     unitPrice: "25rmb（自柜设备）",
+    settlementMethod: "3周到一个月结算",
     equipment: ["⚠️ iPhone手机（需客户自备/自租）", "充电宝（建议自备）", "充电器（建议自备）"],
     preparation: [
       "收到设备后，检查外观、开机、电量、网络、摄像头是否正常",
@@ -149,6 +151,7 @@ export const projectContent = {
     uploadMethod: "手机app端上传",
     sceneRequirements: "制造业",
     unitPrice: "35rmb（自租设备）",
+    settlementMethod: "3周到一个月结算",
     equipment: ["⚠️ iPhone手机（需客户自备/自租）", "充电宝（建议自备）", "充电器（建议自备）"],
     preparation: [
       "收到设备后，检查外观、开机、电量、网络、摄像头是否正常",
@@ -208,6 +211,7 @@ export const projectContent = {
     uploadMethod: "上传指定网址",
     sceneRequirements: "制造业",
     unitPrice: "25rmb",
+    settlementMethod: "3周到一个月结算",
     equipment: ["SW头戴设备", "配套灯光", "充电底座", "数据传输线", "配对软件"],
     preparation: [
       "长按开机键检查电量：蓝灯20-90%，绿灯90%以上，红灯<20%",
@@ -254,6 +258,7 @@ export const projectContent = {
     uploadMethod: "上传指定网址",
     sceneRequirements: "制造业",
     unitPrice: "20rmb",
+    settlementMethod: "3周到一个月结算",
     equipment: ["头戴式GoPro设备", "充电宝", "充电器", "内存卡", "品牌手环"],
     preparation: [
       "收到设备后阅读操作员执行手册了解使用流程",

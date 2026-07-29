@@ -73,6 +73,7 @@ export default function Home({ onNavigate }: HomeProps) {
               const durationInfo = project.id === 'at' ? '⏱️ 30小时' : project.id === 'df' ? '⏱️ 20小时' : project.id === 'sw' ? '⏱️ 26小时' : '⏱️ 不限制';
               const unitPrice = project.id === 'at' ? '💰 30rmb' : project.id === 'df' ? '💰 25rmb' : project.id === 'sw' ? '💰 25rmb' : '💰 20rmb';
               const limitInfo = project.id === 'at' ? '工序不限' : project.id === 'df' ? '≤15工序/场景' : project.id === 'sw' ? '限产品款式' : '录制上限宽松';
+              const settlementMethod = project.id === 'at' ? '3周到一个月结算' : project.id === 'df' ? '3周到一个月结算' : project.id === 'sw' ? '3周到一个月结算' : '3周到一个月结算';
               const icon = project.id === 'at' ? '🎩' : project.id === 'df' ? '📱' : project.id === 'sw' ? '🥽' : '🎥';
               const needsPhone = project.id === 'df';
               return (
@@ -100,7 +101,13 @@ export default function Home({ onNavigate }: HomeProps) {
                         <span className="text-xl font-bold">{unitPrice}</span>
                       </div>
                     </div>
-                    <div className="flex items-center text-sm font-medium">
+                    <div className="mt-3 bg-gradient-to-r from-amber-400 to-yellow-300 rounded-xl p-2.5 border-2 border-yellow-200 shadow-md">
+                      <div className="flex items-center justify-center gap-2">
+                        <span className="text-lg">💳</span>
+                        <span className="text-sm font-bold text-yellow-900">{settlementMethod}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center text-sm font-medium mt-4">
                       <span>了解详情</span>
                       <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

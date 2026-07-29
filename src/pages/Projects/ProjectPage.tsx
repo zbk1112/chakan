@@ -167,6 +167,18 @@ export default function ProjectPage({ initialProject }: ProjectPageProps) {
                   </div>
                 </div>
               </div>
+              <div className="bg-gradient-to-r from-amber-100 to-yellow-100 rounded-xl p-4 border-2 border-amber-300 col-span-2 shadow-sm">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <span className="text-2xl mr-3">💳</span>
+                    <div>
+                      <p className="text-sm text-gray-500">结算方式</p>
+                      <p className="text-xl font-bold text-amber-800">{(currentProject as any).settlementMethod || '3周到一个月结算'}</p>
+                    </div>
+                  </div>
+                  <span className="bg-amber-500 text-white text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">准时结算</span>
+                </div>
+              </div>
             </div>
           </Card>
 
