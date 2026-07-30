@@ -27,10 +27,10 @@ export const homeContent = {
     }
   ],
   projects: [
-    { id: "at", name: "AT头戴采集", description: "鸭舌帽式头戴摄像设备第一视角采集", color: "bg-green-500" },
-    { id: "df", name: "iPhone采集", description: "苹果手机EDL软件高清拍摄采集（含DF和BTS流水线）", color: "bg-blue-500" },
-    { id: "sw", name: "SW头戴设备", description: "专业头戴设备高精度采集", color: "bg-orange-500" },
-    { id: "st", name: "ST头戴式GoPro", description: "头戴式GoPro设备真实场景人手操作视频采集", color: "bg-red-500" }
+    { id: "at", name: "AT头戴采集", description: "鸭舌帽式头戴摄像设备第一视角采集", color: "bg-gradient-to-br from-green-600 via-emerald-600 to-green-500" },
+    { id: "df", name: "iPhone采集", description: "苹果手机EDL软件高清拍摄采集（含DF和BTS流水线）", color: "bg-gradient-to-br from-teal-600 via-cyan-600 to-teal-500" },
+    { id: "sw", name: "SW头戴设备", description: "专业头戴设备高精度采集", color: "bg-gradient-to-br from-emerald-600 via-green-500 to-teal-500" },
+    { id: "st", name: "ST头戴式GoPro", description: "头戴式GoPro设备真实场景人手操作视频采集", color: "bg-gradient-to-br from-green-700 via-teal-600 to-emerald-500" }
   ],
   process: [
     { step: "1", title: "对接洽谈", desc: "联系负责人了解合作详情" },
@@ -95,7 +95,7 @@ export const projectContent = {
   df: {
     title: "DF",
     description: "使用手机端EDL录制软件，完成居家/商业场景规范化实景数据采集",
-    validDuration: "20小时",
+    validDuration: "50小时",
     processLimit: "每个场景最多15个工序，相同场景最多2-3个",
     uploadMethod: "手机app端上传",
     sceneRequirements: "主要居家+商业场景",
@@ -206,7 +206,7 @@ export const projectContent = {
   sw: {
     title: "SW头戴设备采集",
     description: "使用自研头戴设备进行高精度第一视角数据采集",
-    validDuration: "26小时",
+    validDuration: "50小时",
     processLimit: "场景的工序不限，限制的是产品的款式，只有换了款式，才能申请新的工序",
     uploadMethod: "上传指定网址",
     sceneRequirements: "制造业",
