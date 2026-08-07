@@ -399,7 +399,6 @@ export const qualityCenter = {
     title: "一般不合格（T2）",
     description: "以下情况将影响视频质量评分，请尽量避免",
     items: [
-      { type: "重复动作", issues: ["连续重复同一动作超过1分钟"] },
       { type: "工具入镜", issues: ["工具过长导致一只手长期出镜"] },
       { type: "充电线干扰", issues: ["充电线连接不稳定或穿过画面"] },
       { type: "视角不正", issues: ["画面视角不平正影响任务理解"] },
