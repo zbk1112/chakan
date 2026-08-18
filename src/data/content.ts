@@ -53,7 +53,7 @@ export const projectContent = {
   at: {
     title: "AT头戴鸭舌帽采集",
     description: "采用自研头戴摄像设备，完成第一视角作业实景数据采集",
-    validDuration: "30小时",
+    validDuration: "20小时",
     processLimit: "场景的工序不限",
     uploadMethod: "邮寄内存卡",
     sceneRequirements: "农业、家居、商超",
@@ -293,7 +293,7 @@ export const projectContent = {
       "网络检查：确保单设备分配10M上行带宽"
     ],
     specialRules: [
-      "录制上限较宽松",
+      "录制工序时长不限",
       "需保障单设备分配10M上行带宽",
       "需上传数据到指定网址的指定软件",
       "试采阶段用于验证场景和人员组织能力",

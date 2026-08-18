@@ -71,7 +71,7 @@ export default function Home({ onNavigate }: HomeProps) {
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
             {projects.map(project => {
               const isDfProject = project.id === 'df';
-              const durationInfo = project.id === 'at' ? '⏱️ 30小时' : project.id === 'df' ? '⏱️ 50小时' : project.id === 'sw' ? '⏱️ 50小时' : '⏱️ 不限制';
+              const durationInfo = project.id === 'at' ? '⏱️ 20小时' : project.id === 'df' ? '⏱️ 50小时' : project.id === 'sw' ? '⏱️ 50小时' : '⏱️ 不限制';
               const unitPrice = project.id === 'at' ? '💰 30rmb' : project.id === 'df' ? '💰 25rmb' : project.id === 'sw' ? '💰 25rmb' : '💰 20rmb';
               const limitInfo = project.id === 'at' ? '工序不限' : project.id === 'df' ? '≤15工序/场景' : project.id === 'sw' ? '限产品款式' : '录制上限宽松';
               const settlementMethod = '💳 3周到一个月结算';
