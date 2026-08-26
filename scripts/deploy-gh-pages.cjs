@@ -189,56 +189,11 @@ async function main() {
     process.exit(1);
   }
 
-  // ======= 复制视频到 dist/sp/ 目录 =======
-  const spDir = path.join(__dirname, '..', 'sp');
-  const distSpDir = path.join(distDir, 'sp');
-  
-  // 清理旧的 sp 目录
-  if (fs.existsSync(distSpDir)) {
-    fs.rmSync(distSpDir, { recursive: true, force: true });
-  }
-  
-  if (fs.existsSync(spDir)) {
-    console.log('📹 复制视频文件到 dist/sp/ ...');
-    let copiedCount = 0;
-    let skippedCount = 0;
-    
-    function copyVideos(srcDir, destDir) {
-      if (!fs.existsSync(destDir)) {
-        fs.mkdirSync(destDir, { recursive: true });
-      }
-      const items = fs.readdirSync(srcDir);
-      for (const item of items) {
-        const srcPath = path.join(srcDir, item);
-        const destPath = path.join(destDir, item);
-        const stat = fs.statSync(srcPath);
-        if (stat.isDirectory()) {
-          copyVideos(srcPath, destPath);
-        } else {
-          const ext = path.extname(item).toLowerCase();
-          if (ext === '.mp4' || ext === '.webm') {
-            if (stat.size <= 100 * 1024 * 1024) { // <= 100MB
-              fs.copyFileSync(srcPath, destPath);
-              copiedCount++;
-            } else {
-              skippedCount++;
-              console.log(`   ⏭️  跳过超大文件 (${Math.round(stat.size / 1024 / 1024)}MB): ${srcPath.replace(spDir, '').replace(/\\/g, '/')}`);
-            }
-          } else {
-            fs.copyFileSync(srcPath, destPath);
-          }
-        }
-      }
-    }
-    
-    copyVideos(spDir, distSpDir);
-    console.log(`✅ 复制完成: ${copiedCount} 个视频，跳过 ${skippedCount} 个超大文件`);
-  } else {
-    console.log('⚠️  sp 目录不存在，跳过视频复制');
-  }
+  // GitHub Pages 只部署网页代码（不包含视频，视频通过 Release 单独托管）
+  // 所以这里不复制 sp 目录
 
   const files = collectFiles(distDir);
-  console.log(`📁 发现 ${files.length} 个文件需要上传`);
+  console.log(`📁 发现 ${files.length} 个文件需要上传（网页代码，不含视频）`);
 
   let commitInfo = await getLatestCommit();
   let commitSha, treeSha;

@@ -11,18 +11,34 @@ export default function TaskDetail({ taskId, onNavigate }: TaskDetailProps) {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [copied, setCopied] = useState(false);
   const [videoError, setVideoError] = useState<string>('');
-  const videoRef = useState<HTMLVideoElement | null>(null);
+  const [blobUrl, setBlobUrl] = useState<string>('');
+  const [isBlobLoading, setIsBlobLoading] = useState(false);
+  const [blobRetried, setBlobRetried] = useState(false);
 
   const videos = useMemo(() => {
     if (!task) return [];
     return getTaskVideos(task);
   }, [task]);
 
-  // 切换任务时重置视频
+  // 切换任务时重置
   useEffect(() => {
     setCurrentVideoIndex(0);
     setCopied(false);
+    setVideoError('');
+    if (blobUrl) { URL.revokeObjectURL(blobUrl); setBlobUrl(''); }
+    setBlobRetried(false);
+    setIsBlobLoading(false);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskId]);
+
+  // 切换当前视频时回收旧 blob
+  useEffect(() => {
+    if (blobUrl) { URL.revokeObjectURL(blobUrl); setBlobUrl(''); }
+    setBlobRetried(false);
+    setIsBlobLoading(false);
+    setVideoError('');
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentVideoIndex]);
 
   if (!task) {
     return (
@@ -42,6 +58,51 @@ export default function TaskDetail({ taskId, onNavigate }: TaskDetailProps) {
 
   const currentVideo = videos[currentVideoIndex];
   const videoUrl = currentVideo ? getVideoUrl(currentVideo.folder, currentVideo.index) : '';
+  const effectiveSrc = blobUrl || videoUrl;
+
+  // GitHub Release 会返回 Content-Disposition: attachment 导致 <video> ERR_ABORTED
+  // 方案：onerror 时用 fetch（忽略 attachment）下载，创建 Blob URL 内联播放
+  const MAX_BLOB_BYTES = 400 * 1024 * 1024; // 400MB 以上不转 Blob，避免内存爆炸
+  async function handleFallbackBlob(src: string) {
+    if (blobRetried || !src) return;
+    setBlobRetried(true);
+    setIsBlobLoading(true);
+    setVideoError('⚙️  正在通过备用通道加载视频（CDN 内联模式）...');
+    try {
+      // 先 HEAD 检查大小
+      let size = -1;
+      try {
+        const hr = await fetch(src, { method: 'HEAD', mode: 'cors' });
+        const cl = hr.headers.get('Content-Length');
+        if (cl) size = parseInt(cl, 10);
+      } catch { /* HEAD 被 CORS 阻止也无妨 */ }
+      if (size > MAX_BLOB_BYTES) {
+        const mb = Math.round(size / 1024 / 1024);
+        setVideoError(`⚠️  该视频较大（${mb}MB），受 CDN 限制无法直接播放。建议：
+① 切换到局域网模式（平台首页有入口）即可流畅播放全部任务；
+② 或者【右键 → 新标签页打开】下方链接，浏览器下载完成后直接播放：
+${src}`);
+        setIsBlobLoading(false);
+        return;
+      }
+      // Fetch 完整数据 → Blob URL
+      const r = await fetch(src, { mode: 'cors' });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const blob = await r.blob();
+      const typeFix = /video\//i.test(blob.type) ? blob.type : 'video/mp4';
+      const realBlob = /video\//i.test(blob.type) ? blob : new Blob([blob], { type: typeFix });
+      const objectUrl = URL.createObjectURL(realBlob);
+      setBlobUrl(objectUrl);
+      setVideoError('');
+    } catch (err: any) {
+      const msg = (err && err.message) ? err.message : String(err);
+      setVideoError(`❌ 备用通道加载失败：${msg.substring(0, 200)}
+原始链接：${src}
+建议复制链接到新标签页或用下载工具播放。`);
+    } finally {
+      setIsBlobLoading(false);
+    }
+  }
 
   // 同一分类下的其他任务
   const relatedTasks = taskDetails.filter(
@@ -111,8 +172,8 @@ export default function TaskDetail({ taskId, onNavigate }: TaskDetailProps) {
               {currentVideo ? (
                 <>
                   <video
-                    key={videoUrl}
-                    src={videoUrl}
+                    key={effectiveSrc + String(currentVideoIndex)}
+                    src={effectiveSrc}
                     controls
                     controlsList="nodownload"
                     autoPlay
@@ -123,10 +184,16 @@ export default function TaskDetail({ taskId, onNavigate }: TaskDetailProps) {
                     x5-video-player-type="h5-page"
                     x5-video-player-fullscreen="false"
                     preload="auto"
+                    type="video/mp4"
                     className="w-full aspect-video object-contain bg-black"
                     onError={(e) => {
                       const target = e.currentTarget;
                       const code = target?.error?.code;
+                      // 公网 CDN (attachment 或 CORS) 出错 → fallback 到 fetch+blob 内联模式
+                      if (!blobRetried) {
+                        handleFallbackBlob(videoUrl);
+                        return;
+                      }
                       const msg =
                         code === 1
                           ? '视频加载被中断，请检查网络或刷新重试'
@@ -137,22 +204,47 @@ export default function TaskDetail({ taskId, onNavigate }: TaskDetailProps) {
                           : code === 4
                           ? '视频格式不受支持或文件路径错误'
                           : '视频播放异常';
-                      setVideoError(`${msg}（错误码 ${code || '未知'}）URL: ${videoUrl}`);
+                      setVideoError(`${msg}（错误码 ${code || '未知'}）
+URL: ${videoUrl}`);
                     }}
-                    onLoadStart={() => setVideoError('')}
+                    onLoadStart={() => { if (!blobRetried) setVideoError(''); }}
                   >
                     您的浏览器不支持视频播放。请尝试：① 用 Chrome / Safari / Edge 现代浏览器 ② 不要使用 IE 或老旧微信 WebView
                   </video>
-                  {videoError && (
+                  {isBlobLoading && (
+                    <div className="mx-3 mt-2 mb-3 rounded-xl border border-blue-200 bg-blue-50 p-3 text-xs md:text-sm text-blue-700">
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 h-4 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
+                        <div className="font-medium">{videoError || '备用通道加载中...请稍候'}</div>
+                      </div>
+                    </div>
+                  )}
+                  {videoError && !isBlobLoading && (
                     <div className="mx-3 mt-3 mb-4 rounded-xl border border-red-200 bg-red-50 p-3 md:p-4 text-xs md:text-sm text-red-700">
                       <div className="font-bold mb-1">⚠️ 视频播放失败</div>
                       <div className="break-all whitespace-pre-wrap">{videoError}</div>
-                      <button
-                        onClick={() => window.location.reload()}
-                        className="mt-2 rounded-full bg-red-500 hover:bg-red-600 text-white px-3 py-1 text-xs font-medium"
-                      >
-                        🔄 刷新页面重试
-                      </button>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        <button
+                          onClick={() => {
+                            setBlobRetried(false);
+                            if (blobUrl) { URL.revokeObjectURL(blobUrl); setBlobUrl(''); }
+                            handleFallbackBlob(videoUrl);
+                          }}
+                          className="rounded-full bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 text-xs font-medium"
+                        >
+                          🔁 用备用通道重试
+                        </button>
+                        {videoUrl.startsWith('http') && (
+                          <a
+                            href={videoUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="rounded-full bg-green-500 hover:bg-green-600 text-white px-3 py-1 text-xs font-medium no-underline"
+                          >
+                            ⬇️ 新标签页下载/打开
+                          </a>
+                        )}
+                      </div>
                     </div>
                   )}
                 </>
