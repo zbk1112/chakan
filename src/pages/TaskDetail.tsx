@@ -60,48 +60,65 @@ export default function TaskDetail({ taskId, onNavigate }: TaskDetailProps) {
   const videoUrl = currentVideo ? getVideoUrl(currentVideo.folder, currentVideo.index) : '';
   const effectiveSrc = blobUrl || videoUrl;
 
-  // GitHub Release 会返回 Content-Disposition: attachment 导致 <video> ERR_ABORTED
-  // 方案：onerror 时用 fetch（忽略 attachment）下载，创建 Blob URL 内联播放
-  const MAX_BLOB_BYTES = 400 * 1024 * 1024; // 400MB 以上不转 Blob，避免内存爆炸
+  // GitHub Release 返回 Content-Disposition: attachment + 无 CORS 头，导致 <video> ERR_ABORTED
+  // 方案：onerror 时走公共 CORS 代理（corsproxy.io / allorigins），代理会返回 inline + CORS
+  //        再 fetch + Blob URL 内联播放（<400MB 直接播放；>400MB 提示切局域网或新标签页打开）
+  const MAX_BLOB_BYTES = 400 * 1024 * 1024;
+  const CORS_PROXIES = [
+    (u: string) => `https://corsproxy.io/?${encodeURIComponent(u)}`,
+    (u: string) => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+    (u: string) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
+  ];
+
   async function handleFallbackBlob(src: string) {
     if (blobRetried || !src) return;
     setBlobRetried(true);
     setIsBlobLoading(true);
-    setVideoError('⚙️  正在通过备用通道加载视频（CDN 内联模式）...');
-    try {
-      // 先 HEAD 检查大小
-      let size = -1;
+    setVideoError('⚙️  正在通过 CORS 备用通道加载视频（公网模式）...');
+    let lastError = '未知错误';
+    for (let pi = 0; pi < CORS_PROXIES.length; pi++) {
       try {
-        const hr = await fetch(src, { method: 'HEAD', mode: 'cors' });
-        const cl = hr.headers.get('Content-Length');
-        if (cl) size = parseInt(cl, 10);
-      } catch { /* HEAD 被 CORS 阻止也无妨 */ }
-      if (size > MAX_BLOB_BYTES) {
-        const mb = Math.round(size / 1024 / 1024);
-        setVideoError(`⚠️  该视频较大（${mb}MB），受 CDN 限制无法直接播放。建议：
-① 切换到局域网模式（平台首页有入口）即可流畅播放全部任务；
-② 或者【右键 → 新标签页打开】下方链接，浏览器下载完成后直接播放：
-${src}`);
-        setIsBlobLoading(false);
-        return;
+        const proxyUrl = CORS_PROXIES[pi](src);
+        if (pi > 0) setVideoError(`⚙️  通道 ${pi} 失败，切换备用通道 ${pi + 1}/${CORS_PROXIES.length} ...`);
+        // HEAD 检查大小 (通过代理)
+        let size = -1;
+        try {
+          const hr = await fetch(proxyUrl, { method: 'HEAD' });
+          const cl = hr.headers.get('Content-Length');
+          if (cl) size = parseInt(cl, 10);
+        } catch { /* 代理不支持 HEAD 也没关系 */ }
+        if (size > MAX_BLOB_BYTES) {
+          const mb = Math.round(size / 1024 / 1024);
+          setVideoError(`⚠️  该视频较大（${mb}MB），为避免浏览器内存占用过高：
+① 切换到【局域网模式】可流畅播放超大视频（首页有"start.bat"一键启动脚本）；
+② 或右键点击下方链接 → 新标签页打开，浏览器下载后直接播放；
+③ 或使用 Chrome/Safari 桌面浏览器复制链接直接打开。
+原视频链接：${src}`);
+          setIsBlobLoading(false);
+          return;
+        }
+        // Fetch 完整数据 → Blob URL
+        const r = await fetch(proxyUrl, { cache: 'force-cache' });
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        const blob = await r.blob();
+        const typeFix = /video\//i.test(blob.type) ? blob.type : 'video/mp4';
+        const realBlob = /video\//i.test(blob.type) ? blob : new Blob([blob], { type: typeFix });
+        if (realBlob.size < 1024 * 50) throw new Error('代理返回空内容（大小<50KB）');
+        const objectUrl = URL.createObjectURL(realBlob);
+        setBlobUrl(objectUrl);
+        setVideoError('');
+        return; // 成功
+      } catch (err: any) {
+        lastError = (err && err.message) ? err.message : String(err);
       }
-      // Fetch 完整数据 → Blob URL
-      const r = await fetch(src, { mode: 'cors' });
-      if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      const blob = await r.blob();
-      const typeFix = /video\//i.test(blob.type) ? blob.type : 'video/mp4';
-      const realBlob = /video\//i.test(blob.type) ? blob : new Blob([blob], { type: typeFix });
-      const objectUrl = URL.createObjectURL(realBlob);
-      setBlobUrl(objectUrl);
-      setVideoError('');
-    } catch (err: any) {
-      const msg = (err && err.message) ? err.message : String(err);
-      setVideoError(`❌ 备用通道加载失败：${msg.substring(0, 200)}
-原始链接：${src}
-建议复制链接到新标签页或用下载工具播放。`);
-    } finally {
-      setIsBlobLoading(false);
     }
+    // 所有通道失败
+    setVideoError(`❌ 3 条备用通道均失败：${lastError.substring(0, 150)}
+建议：
+① 本地运行 start.bat → 用局域网地址打开视频（无任何限制，支持2GB+视频拖动进度条）；
+② 或【直接打开视频链接】用浏览器单独播放（右键复制下面链接到新标签页）：
+${src}`);
+    setIsBlobLoading(false);
   }
 
   // 同一分类下的其他任务
