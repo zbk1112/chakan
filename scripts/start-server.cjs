@@ -72,6 +72,53 @@ function resolveFile(dir, sub) {
   return null;
 }
 
+// 扁平化回退查找：请求 /sp/DF/1.mp4 但目录不存在时，
+// 按候选优先级在 sp/ 根目录找真实文件（解决 DF/ST/sw 结构丢失问题）
+function resolveFileFallback(dir, sub) {
+  // sub 形如 "DF/1.mp4"
+  const parts = sub.replace(/^[\\/]+/, '').split(/[\\/]+/).filter(Boolean);
+  if (parts.length !== 2) return null;
+
+  const folder = parts[0].toUpperCase(); // DF / ST / SW
+  const fileName = parts[1];                       // 1.mp4
+  const index = path.basename(fileName, path.extname(fileName)); // "1"
+  const ext = path.extname(fileName);             // ".mp4"
+
+  // 根据文件夹生成候选（扩展名、下划线后缀不区分）
+  let candidates = [];
+  if (folder === 'DF' || folder === '1') {
+    candidates = [
+      `${index}.mp4`, `${index}.MP4`,
+      `${index}_1.mp4`, `${index}_1.MP4`,
+      `${index}_2.mp4`, `${index}_2.MP4`,
+    ];
+  } else if (folder === 'ST' || folder === '2') {
+    candidates = [
+      `${index}.MP4`, `${index}.mp4`,
+      `${index}_1.MP4`, `${index}_1.mp4`,
+      `${index}_2.MP4`, `${index}_2.mp4`,
+      `${index}_3.MP4`, `${index}_3.mp4`,
+      `${index}_4.MP4`, `${index}_4.mp4`,
+    ];
+  } else { // SW / sw
+    candidates = [
+      `${index}_2.mp4`, `${index}_2.MP4`,
+      `${index}.mp4`, `${index}.MP4`,
+      `${index}_1.mp4`, `${index}_1.MP4`,
+    ];
+  }
+
+  // 去重并查找
+  const seen = new Set();
+  for (const name of candidates) {
+    if (seen.has(name.toLowerCase())) continue;
+    seen.add(name.toLowerCase());
+    const found = resolveFile(dir, name);
+    if (found) return found;
+  }
+  return null;
+}
+
 // 流式返回文件（完整 or Range）
 function sendVideoFile(req, res, filePath, ext) {
   const contentType = mimeTypes[ext] || 'application/octet-stream';
@@ -201,8 +248,14 @@ function createServer(port) {
       }
       const resolved = resolveFile(spDir, sub);
       if (!resolved) {
-        res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
-        res.end('视频文件未找到: ' + sub + '\n源目录: ' + spDir);
+        // 目录不存在时，回退到扁平文件名搜索（DF/ST/sw 结构丢失时）
+        const fallback = resolveFileFallback(spDir, sub);
+        if (!fallback) {
+          res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+          res.end('视频文件未找到: ' + sub + '\n源目录: ' + spDir);
+          return;
+        }
+        sendVideoFile(req, res, fallback.filePath, fallback.ext);
         return;
       }
       sendVideoFile(req, res, resolved.filePath, resolved.ext);

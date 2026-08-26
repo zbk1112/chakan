@@ -98,15 +98,43 @@ export function getTaskVideos(task: TaskDetailData): VideoInfo[] {
   return videos;
 }
 
+// GitHub Release 配置（公网视频托管）
+const RELEASE_TAG = 'v1.0.0';
+const RELEASE_BASE = `https://github.com/zbk1112/chakan/releases/download/${RELEASE_TAG}`;
+
+/**
+ * 把 (folder, index) 映射成 sp/ 根目录下的真实扁平文件名
+ * （因为目录结构丢失，sp 现在是扁平化的，使用以下优先级匹配：
+ *   DF N → N.mp4 → N.MP4
+ *   ST N → N.MP4 → N.mp4 → N_1.mp4
+ *   sw N → N_2.mp4 → N.mp4
+ *  任意查找均不区分扩展名大小写）
+ */
+export function resolveFlatVideoName(folder: string, index: number): string {
+  const f = folder.toUpperCase();
+  const n = index.toString();
+  const candidates: string[] = [];
+  if (f === 'DF' || f === '1') {
+    candidates.push(`${n}.mp4`, `${n}.MP4`, `${n}_1.mp4`, `${n}_2.mp4`);
+  } else if (f === 'ST' || f === '2') {
+    candidates.push(`${n}.MP4`, `${n}.mp4`, `${n}_1.MP4`, `${n}_1.mp4`, `${n}_2.mp4`);
+  } else { // SW / sw
+    candidates.push(`${n}_2.mp4`, `${n}_2.MP4`, `${n}.mp4`, `${n}.MP4`, `${n}_1.mp4`);
+  }
+  // 注意：真正的文件存在性由运行时（本地服务器或浏览器加载 Release 时）处理。
+  // 这里只返回首选名，GitHub Release 上会上传所有候选名的实际文件。
+  return candidates[0];
+}
+
 export function getVideoUrl(folder: string, index: number): string {
-  // folder 统一转小写匹配实际 sp/ 目录名（DF/ST/sw → df/st/sw）
-  const f = folder.toLowerCase();
-  // GitHub Pages: 路径为 /chakan/sp/xxx
-  // 本地/LAN 服务器: 路径为 /sp/xxx
-  // 根据当前 hostname 自动判断
+  const releaseName = resolveFlatVideoName(folder, index);
   const isGitHubPages = typeof window !== 'undefined' && window.location.hostname.includes('github.io');
-  const prefix = isGitHubPages ? '/chakan' : '';
-  return `${prefix}/sp/${f}/${index}.mp4`;
+  if (isGitHubPages) {
+    // 公网：从 GitHub Release 加载
+    return `${RELEASE_BASE}/${encodeURIComponent(releaseName)}`;
+  }
+  // 本地/LAN：走本地 sp 路由（start-server 会按扁平化回退查找）
+  return `/sp/${folder.toLowerCase()}/${index}.mp4`;
 }
 
 // ==================== 12 分类 × 4 任务 = 48 个任务 ====================
