@@ -8,7 +8,7 @@ export default function SOPLibrary() {
   const [selectedCategory, setSelectedCategory] = useState('全部');
   const [selectedDoc, setSelectedDoc] = useState<typeof sopLibrary[0] | null>(null);
 
-  const categories = ['全部', 'AT设备', 'DF设备', 'BTS项目', 'SW设备', 'ST设备', 'ST项目', '通用'];
+  const categories = ['全部', 'AT设备', 'DF设备', 'SW设备', 'ST设备', 'ST项目', '通用'];
 
   const filteredDocs = sopLibrary.filter(doc => {
     const matchesSearch = doc.title.toLowerCase().includes(searchTerm.toLowerCase()) ||

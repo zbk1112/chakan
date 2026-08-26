@@ -22,3 +22,21 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# 视频和大文件（太大不适合 Git 仓库）
+sp/
+extracted/
+backend/
+flask-backend/
+.trae/
+
+# 本地部署脚本
+start.bat
+stop-platform.bat
+start-platform.bat
+deploy-to-github.bat
+
+# 根目录临时文档
+*.docx
+*.doc
+*.pdf

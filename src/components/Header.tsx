@@ -9,6 +9,7 @@ export default function Header({ onNavigate }: HeaderProps) {
 
   const navItems = [
     { label: '首页', path: '/' },
+    { label: '任务广场', path: '/tasksquare' },
     { label: '项目专区', path: '/projects/at' },
     { label: 'SOP库', path: '/sop' },
     { label: '质量判定', path: '/quality' },
@@ -21,7 +22,7 @@ export default function Header({ onNavigate }: HeaderProps) {
         <div className="flex items-center justify-between h-16 md:h-20">
           <button
             onClick={() => onNavigate('/')}
-            className="flex items-center space-x-2 hover:text-green-100 transition-colors"
+            className="flex items-center space-x-2 hover:text-green-100 transition-colors shrink-0"
           >
             <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-green-600 font-bold text-xl shadow-md">
               🎥
@@ -41,19 +42,21 @@ export default function Header({ onNavigate }: HeaderProps) {
             ))}
           </nav>
 
-          <button
-            className="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {menuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
+          <div className="flex items-center shrink-0">
+            <button
+              className="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors"
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label="Toggle menu"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {menuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+          </div>
         </div>
 
         {menuOpen && (

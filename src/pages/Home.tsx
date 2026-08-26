@@ -34,6 +34,13 @@ export default function Home({ onNavigate }: HomeProps) {
             <Button onClick={() => onNavigate('/sop')} variant="outline" size="lg">
               📚 学习SOP规范
             </Button>
+            <Button
+              onClick={() => onNavigate('/tasksquare')}
+              size="lg"
+              className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white border-transparent shadow-lg shadow-orange-500/20"
+            >
+              🎬 快速开拍赚收益
+            </Button>
           </div>
         </div>
       </section>
@@ -56,6 +63,59 @@ export default function Home({ onNavigate }: HomeProps) {
               </Card>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ====== 任务广场入口专区 ====== */}
+      <section className="py-12 px-4 bg-gradient-to-br from-emerald-50 via-white to-amber-50">
+        <div className="max-w-6xl mx-auto">
+          <button
+            onClick={() => onNavigate('/tasksquare')}
+            className="group relative w-full overflow-hidden rounded-3xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 p-8 md:p-10 text-left shadow-2xl shadow-emerald-500/20 hover:shadow-emerald-500/40 transition-all duration-300 hover:-translate-y-1"
+          >
+            {/* 装饰层 */}
+            <div className="absolute -top-16 -right-16 h-52 w-52 rounded-full bg-white/10 blur-3xl" />
+            <div className="absolute -bottom-20 -left-10 h-56 w-56 rounded-full bg-amber-300/20 blur-3xl" />
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-white/5" />
+
+            <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+              <div className="text-white max-w-3xl">
+                <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold backdrop-blur-sm ring-1 ring-white/20 mb-4">
+                  <span className="h-1.5 w-1.5 rounded-full bg-yellow-300 animate-pulse" />
+                  居家随手拍 · 48个任务 · 零成本上手
+                </div>
+                <h3 className="text-2xl md:text-4xl font-extrabold tracking-tight mb-3">
+                  🎬 任务广场 · 手边有什么就拍什么
+                </h3>
+                <p className="text-white/90 text-sm md:text-base leading-relaxed mb-3">
+                  食品加工、零售日用消费品、农贸生鲜处理、生活清洁服务、服饰配件加工、精密电子组装、玩具模型加工、手工装饰制作、饰品/工艺品/支架/成品整机装配 共 12 大类 ——
+                  家里现成物品马上变成可拍任务，多拍多赚、审核通过即获收益。
+                </p>
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 backdrop-blur-sm px-3 py-1 text-xs font-medium text-white ring-1 ring-white/20">
+                    🎬 12 大场景
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 backdrop-blur-sm px-3 py-1 text-xs font-medium text-white ring-1 ring-white/20">
+                    📋 48 个任务
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 backdrop-blur-sm px-3 py-1 text-xs font-medium text-white ring-1 ring-white/20">
+                    🎥 90+ 示范视频
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 backdrop-blur-sm px-3 py-1 text-xs font-medium text-white ring-1 ring-white/20">
+                    💰 审核即赚
+                  </span>
+                </div>
+              </div>
+              <div className="flex shrink-0">
+                <span className="inline-flex items-center gap-2 rounded-2xl bg-white px-6 py-4 text-base md:text-lg font-bold text-emerald-700 shadow-lg group-hover:scale-105 transition-transform">
+                  马上开拍
+                  <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </button>
         </div>
       </section>
 
@@ -114,42 +174,22 @@ export default function Home({ onNavigate }: HomeProps) {
                       )}
                     </div>
                     {isDfProject ? (
-                      <div className="mb-2 space-y-2">
-                        <div className="grid grid-cols-2 gap-2">
-                          <div className="rounded-xl p-2.5 border border-white/30 shadow-lg backdrop-blur-sm"
-                               style={{ background: 'linear-gradient(135deg, rgba(16,185,129,0.35) 0%, rgba(5,150,105,0.25) 100%)' }}>
-                            <div className="flex items-center gap-1.5 mb-1.5">
-                              <span className="text-sm">📱</span>
-                              <span className="text-xs font-bold text-white tracking-wide">DF 居家</span>
-                            </div>
-                            <div className="flex items-center gap-1 mb-0.5">
-                              <span className="text-sm">⏱️</span>
-                              <span className="text-sm font-extrabold text-white">50h</span>
-                            </div>
-                            <div className="text-[9px] text-green-50 mb-1 leading-tight">≤15工序/场景</div>
-                            <div className="flex items-center gap-1">
-                              <span className="text-xs">💰</span>
-                              <span className="text-sm font-extrabold text-yellow-300">25</span>
-                              <span className="text-[10px] text-green-50">rmb</span>
-                            </div>
+                      <div className="mb-2">
+                        <div className="rounded-xl p-2.5 border border-white/30 shadow-lg backdrop-blur-sm"
+                             style={{ background: 'linear-gradient(135deg, rgba(16,185,129,0.35) 0%, rgba(5,150,105,0.25) 100%)' }}>
+                          <div className="flex items-center gap-1.5 mb-1.5">
+                            <span className="text-sm">📱</span>
+                            <span className="text-xs font-bold text-white tracking-wide">DF 居家</span>
                           </div>
-                          <div className="rounded-xl p-2.5 border border-white/30 shadow-lg backdrop-blur-sm"
-                               style={{ background: 'linear-gradient(135deg, rgba(20,184,166,0.35) 0%, rgba(6,182,212,0.25) 100%)' }}>
-                            <div className="flex items-center gap-1.5 mb-1.5">
-                              <span className="text-sm">🏭</span>
-                              <span className="text-xs font-bold text-white tracking-wide">BTS 流水线</span>
-                            </div>
-                            <div className="flex items-center gap-1 mb-0.5">
-                              <span className="text-sm">⏱️</span>
-                              <span className="text-sm font-extrabold text-white">20h</span>
-                            </div>
-                            <div className="text-[9px] text-teal-50 mb-1 leading-tight">≤15工序/场景</div>
-                            <div className="flex items-center gap-1">
-                              <span className="text-xs">💰</span>
-                              <span className="text-sm font-extrabold text-yellow-300">35</span>
-                              <span className="text-[10px] text-teal-50">rmb</span>
-                              <span className="text-[8px] bg-yellow-400/30 text-yellow-200 px-1 py-0.5 rounded ml-0.5 font-medium">自租</span>
-                            </div>
+                          <div className="flex items-center gap-1 mb-0.5">
+                            <span className="text-sm">⏱️</span>
+                            <span className="text-sm font-extrabold text-white">50h</span>
+                          </div>
+                          <div className="text-[9px] text-green-50 mb-1 leading-tight">≤15工序/场景</div>
+                          <div className="flex items-center gap-1">
+                            <span className="text-xs">💰</span>
+                            <span className="text-sm font-extrabold text-yellow-300">25</span>
+                            <span className="text-[10px] text-green-50">rmb</span>
                           </div>
                         </div>
                       </div>
@@ -205,6 +245,28 @@ export default function Home({ onNavigate }: HomeProps) {
                 </button>
               );
             })}
+          </div>
+          <div className="mt-8 bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-5 border border-amber-200">
+            <div className="flex items-start gap-3">
+              <span className="text-2xl shrink-0">💰</span>
+              <div>
+                <h4 className="font-bold text-amber-800 text-base mb-1">设备押金说明（AT / SW / ST）</h4>
+                <p className="text-amber-900 text-sm leading-relaxed">
+                  初次跨省合作，由于自研设备较贵，可先投放 <span className="font-bold">2-5 台</span> 设备试运行，收取押金。试运行通过后，追加设备<span className="font-bold">免押金</span>，前期押金于首次结算<span className="font-bold">全额退还</span>。
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="mt-4 bg-gradient-to-r from-teal-50 to-cyan-50 rounded-2xl p-5 border border-teal-200">
+            <div className="flex items-start gap-3">
+              <span className="text-2xl shrink-0">📱</span>
+              <div>
+                <h4 className="font-bold text-teal-800 text-base mb-1">DF 配件押金说明</h4>
+                <p className="text-teal-900 text-sm leading-relaxed">
+                  DF 的配件需要收取押金。试运行通过后，追加配件<span className="font-bold">免押金</span>，前期押金于首次结算<span className="font-bold">全额退还</span>。
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -280,7 +342,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white text-xl mr-4">🏭</div>
                 <div>
                   <h4 className="font-bold text-gray-800">XX电子厂</h4>
-                  <p className="text-sm text-gray-500">制造业 | BTS项目</p>
+                  <p className="text-sm text-gray-500">制造业 | DF项目</p>
                 </div>
               </div>
               <p className="text-gray-700 mb-4">平台操作简单，培训内容详细，工人上手快。结算透明，每月准时到账，非常满意！</p>
