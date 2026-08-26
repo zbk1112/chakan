@@ -173,7 +173,6 @@ ${src}`);
                 <>
                   <video
                     key={effectiveSrc + String(currentVideoIndex)}
-                    src={effectiveSrc}
                     controls
                     controlsList="nodownload"
                     autoPlay
@@ -184,7 +183,6 @@ ${src}`);
                     x5-video-player-type="h5-page"
                     x5-video-player-fullscreen="false"
                     preload="auto"
-                    type="video/mp4"
                     className="w-full aspect-video object-contain bg-black"
                     onError={(e) => {
                       const target = e.currentTarget;
@@ -209,6 +207,7 @@ URL: ${videoUrl}`);
                     }}
                     onLoadStart={() => { if (!blobRetried) setVideoError(''); }}
                   >
+                    <source src={effectiveSrc} type="video/mp4" />
                     您的浏览器不支持视频播放。请尝试：① 用 Chrome / Safari / Edge 现代浏览器 ② 不要使用 IE 或老旧微信 WebView
                   </video>
                   {isBlobLoading && (
