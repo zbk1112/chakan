@@ -3,60 +3,319 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>供应商培训平台 · 任务广场</title>
+<title>供应商培训平台 · 一站式实景数据采集合作</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--green:#2e7d32;--green-light:#43a047;--bg:#f0f2f5;--card-bg:#fff;--text:#222;--text-light:#666;--text-muted:#999;--border:#e0e0e0;--radius:12px;--shadow:0 2px 12px rgba(0,0,0,.06);--shadow-hover:0 8px 28px rgba(0,0,0,.14)}
-body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+:root{--green:#2e7d32;--green-light:#43a047;--green-dark:#1b5e20;--bg:#f0f2f5;--card-bg:#fff;--text:#222;--text-light:#666;--text-muted:#999;--border:#e0e0e0;--radius:12px;--shadow:0 2px 12px rgba(0,0,0,.06);--shadow-hover:0 8px 28px rgba(0,0,0,.14)}
+html{scroll-behavior:smooth}
+body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
 
 /* 导航栏 */
-.navbar{background:linear-gradient(135deg,var(--green),var(--green-light));color:#fff;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(0,0,0,.15);position:sticky;top:0;z-index:100}
-.navbar .logo{font-size:19px;font-weight:700;display:flex;align-items:center;gap:10px;white-space:nowrap}
-.navbar .logo-icon{width:34px;height:34px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px}
-.navbar .search{display:flex;align-items:center;gap:8px}
-.navbar .search input{padding:9px 18px;border:none;border-radius:22px;width:300px;font-size:14px;outline:none;transition:width .3s}
-.navbar .search input:focus{width:360px;box-shadow:0 0 0 3px rgba(255,255,255,.3)}
+.navbar{background:linear-gradient(135deg,var(--green),var(--green-light));color:#fff;padding:0 28px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(0,0,0,.15);position:sticky;top:0;z-index:100;height:64px;flex-wrap:wrap}
+.navbar .logo{font-size:19px;font-weight:700;display:flex;align-items:center;gap:10px;white-space:nowrap;cursor:pointer}
+.navbar .logo-icon{width:34px;height:34px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--green)}
+.navbar .nav-list{display:flex;gap:4px;flex-wrap:wrap}
+.navbar .nav-item{padding:8px 14px;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;transition:all .2s;background:transparent;border:none;color:#fff}
+.navbar .nav-item:hover{background:rgba(255,255,255,.15);transform:translateY(-1px)}
+.navbar .nav-item.active{background:rgba(255,255,255,.25);font-weight:700}
+.navbar .menu-btn{display:none;padding:8px;border-radius:8px;background:transparent;border:none;color:#fff;font-size:22px;cursor:pointer}
 
-/* 容器 */
+/* 页面容器 */
+.page{display:none;animation:fadeIn .3s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .container{max-width:1240px;margin:0 auto;padding:28px 24px}
+.container-sm{max-width:1150px;margin:0 auto;padding:40px 24px}
 
-/* 头部 */
-.header{text-align:center;margin-bottom:28px}
-.header h1{font-size:28px;color:var(--text);margin-bottom:6px}
-.header h1 .num{color:var(--green);font-size:32px;font-weight:800}
-.header .subtitle{color:var(--text-light);font-size:14px}
+/* 通用卡片 */
+.card{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);transition:all .25s;border:1px solid var(--border)}
+.card-pad{padding:24px}
+.section-title{font-size:13px;font-weight:600;color:var(--green);background:#e8f5e9;padding:4px 14px;border-radius:14px;display:inline-block;margin-bottom:12px}
+.h-title{font-size:28px;font-weight:700;color:var(--text);margin-bottom:8px}
+.h-sub{color:var(--text-light);font-size:15px}
+.text-center{text-align:center}
 
-/* 分类筛选条 */
-.filter-bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:28px}
+/* ===== 首页 ===== */
+.hero{background:linear-gradient(135deg,#2e7d32,#43a047,#66bb6a);color:#fff;padding:70px 24px;position:relative;overflow:hidden;text-align:center}
+.hero::before{content:"";position:absolute;top:40px;left:40px;width:120px;height:120px;background:rgba(255,255,255,.1);border-radius:50%;filter:blur(40px)}
+.hero::after{content:"";position:absolute;bottom:40px;right:40px;width:180px;height:180px;background:rgba(255,255,255,.08);border-radius:50%;filter:blur(50px)}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.2);backdrop-filter:blur(6px);border-radius:20px;padding:6px 16px;font-size:13px;font-weight:500;margin-bottom:20px;position:relative;z-index:1}
+.hero-badge .dot{width:8px;height:8px;background:#a5d6a7;border-radius:50%;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-size:42px;font-weight:800;margin-bottom:18px;position:relative;z-index:1;line-height:1.25}
+.hero .hero-sub{font-size:22px;color:#c8e6c9;margin-bottom:10px;position:relative;z-index:1}
+.hero .hero-desc{font-size:16px;color:#e8f5e9;max-width:700px;margin:0 auto 28px;position:relative;z-index:1}
+.hero-btns{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;position:relative;z-index:1}
+.btn{padding:13px 28px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;border:none;transition:all .25s;display:inline-flex;align-items:center;gap:6px}
+.btn-primary{background:#fff;color:var(--green)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.2)}
+.btn-outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.6)}
+.btn-outline:hover{background:rgba(255,255,255,.15)}
+.btn-amber{background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;box-shadow:0 6px 18px rgba(249,115,22,.3)}
+.btn-amber:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(249,115,22,.4)}
+
+.adv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-top:32px}
+.adv-card{background:#fff;border-radius:14px;padding:24px;box-shadow:var(--shadow);text-align:center;transition:all .25s}
+.adv-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.adv-card .icon{font-size:42px;margin-bottom:12px}
+.adv-card h3{font-size:16px;font-weight:700;margin-bottom:8px;color:var(--text)}
+.adv-card p{font-size:13px;color:var(--text-light);line-height:1.6}
+
+/* 任务广场入口banner */
+.ts-banner{background:linear-gradient(135deg,#10b981,#14b8a6,#06b6d4);border-radius:24px;padding:36px;position:relative;overflow:hidden;cursor:pointer;transition:all .3s;box-shadow:0 12px 30px rgba(16,185,129,.25)}
+.ts-banner:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(16,185,129,.35)}
+.ts-banner::before{content:"";position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:rgba(255,255,255,.1);border-radius:50%;filter:blur(30px)}
+.ts-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border-radius:16px;padding:4px 12px;font-size:12px;font-weight:600;margin-bottom:14px}
+.ts-banner h3{font-size:26px;font-weight:800;margin-bottom:10px;color:#fff}
+.ts-banner p{font-size:14px;color:rgba(255,255,255,.9);margin-bottom:14px;max-width:600px}
+.ts-tags{display:flex;flex-wrap:wrap;gap:8px}
+.ts-tag{background:rgba(255,255,255,.15);border-radius:14px;padding:4px 12px;font-size:12px;font-weight:500}
+.ts-cta{display:inline-flex;align-items:center;gap:8px;background:#fff;color:#047857;border-radius:14px;padding:12px 22px;font-size:16px;font-weight:700;margin-top:14px}
+
+/* 项目卡片 */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.proj-card{border-radius:20px;padding:22px;color:#fff;cursor:pointer;position:relative;overflow:hidden;transition:all .3s;border:1px solid rgba(255,255,255,.2)}
+.proj-card:hover{transform:translateY(-6px);box-shadow:0 16px 36px rgba(0,0,0,.2)}
+.proj-card.at{background:linear-gradient(135deg,#2e7d32,#43a047)}
+.proj-card.df{background:linear-gradient(135deg,#0d9488,#0891b2)}
+.proj-card.sw{background:linear-gradient(135deg,#059669,#10b981,#14b8a6)}
+.proj-card.st{background:linear-gradient(135deg,#1b5e20,#0f766e,#059669)}
+.proj-card .p-icon{font-size:30px;margin-bottom:8px}
+.proj-card h3{font-size:18px;font-weight:700;margin-bottom:4px}
+.proj-card .p-desc{font-size:12px;color:rgba(255,255,255,.85);margin-bottom:8px}
+.proj-info-box{background:rgba(255,255,255,.12);border-radius:12px;padding:10px 12px;margin-bottom:10px;border:1px solid rgba(255,255,255,.15)}
+.proj-info-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.proj-info-row:last-child{margin-bottom:0}
+.proj-feat{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
+.proj-feat div{background:rgba(255,255,255,.1);border-radius:8px;padding:6px;text-align:center;font-size:11px}
+.proj-tag-row{background:rgba(255,255,255,.1);border-radius:8px;padding:6px 10px;margin-bottom:6px;font-size:11px}
+.proj-settle{background:linear-gradient(90deg,#fbbf24,#fde047,#fbbf24);border-radius:10px;padding:8px;text-align:center;margin-top:8px;color:#78350f;font-size:12px;font-weight:700}
+.deposit-box{border-radius:14px;padding:16px;margin-top:18px}
+.deposit-box.at{background:linear-gradient(90deg,#fffbeb,#fef3c7);border:1px solid #fde68a}
+.deposit-box.df{background:linear-gradient(90deg,#f0fdfa,#ccfbf1);border:1px solid #99f6e4}
+.deposit-box h4{font-size:15px;font-weight:700;margin-bottom:4px}
+.deposit-box.at h4{color:#92400e}
+.deposit-box.df h4{color:#115e59}
+.deposit-box p{font-size:13px;line-height:1.7}
+.deposit-box.at p{color:#78350f}
+.deposit-box.df p{color:#115e59}
+.deposit-box b{font-weight:700}
+
+/* 流程步骤 */
+.process-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px;position:relative}
+.process-step{text-align:center}
+.process-num{width:60px;height:60px;background:#fff;border:4px solid var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:var(--green);margin:0 auto 12px;box-shadow:var(--shadow);transition:transform .25s}
+.process-step:hover .process-num{transform:scale(1.1)}
+.process-step h4{font-size:16px;font-weight:700;margin-bottom:6px}
+.process-step p{font-size:13px;color:var(--text-light)}
+
+/* 数据统计 */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
+.stat-card{background:#fff;border-radius:16px;padding:24px;text-align:center;box-shadow:var(--shadow);transition:transform .25s}
+.stat-card:hover{transform:translateY(-4px)}
+.stat-num{font-size:36px;font-weight:800;margin-bottom:6px}
+.stat-card .stat-label{color:var(--text-light);font-size:14px}
+
+/* 评价 */
+.review-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.review-card{border-radius:14px;padding:22px;box-shadow:var(--shadow)}
+.review-card.g{background:linear-gradient(135deg,#f0fdf4,#ecfdf5)}
+.review-card.b{background:linear-gradient(135deg,#eff6ff,#eef2ff)}
+.review-card.o{background:linear-gradient(135deg,#fff7ed,#fffbeb)}
+.review-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.review-avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px}
+.review-avatar.g{background:var(--green)}
+.review-avatar.b{background:#3b82f6}
+.review-avatar.o{background:#f97316}
+.review-card h4{font-size:15px;font-weight:700}
+.review-card .r-type{font-size:12px;color:var(--text-light)}
+.review-card p{font-size:14px;color:var(--text);margin-bottom:10px}
+.stars{color:#f59e0b;font-size:16px;letter-spacing:2px}
+
+/* ===== 任务广场 ===== */
+.ts-header{text-align:center;margin-bottom:24px}
+.ts-header h1{font-size:26px;margin-bottom:6px}
+.ts-header h1 .num{color:var(--green);font-size:30px;font-weight:800}
+.ts-search{display:flex;justify-content:center;margin-bottom:20px}
+.ts-search input{padding:10px 20px;border:2px solid var(--border);border-radius:24px;width:100%;max-width:420px;font-size:14px;outline:none;transition:all .3s}
+.ts-search input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(46,125,50,.12)}
+.filter-bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:24px}
 .filter-chip{background:#fff;padding:6px 16px;border-radius:18px;font-size:13px;color:var(--text-light);cursor:pointer;transition:all .2s;border:2px solid transparent;box-shadow:var(--shadow);user-select:none}
 .filter-chip:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover)}
 .filter-chip.active{background:var(--green);color:#fff;border-color:var(--green)}
 .filter-chip .count{font-size:11px;opacity:.7;margin-left:4px}
-
-/* 分类区块 */
-.section{margin-bottom:36px}
+.section{margin-bottom:32px}
 .section-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--border)}
 .section-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;flex-shrink:0}
-.section-info{flex:1;min-width:0}
-.section-title{font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px}
-.section-title .badge-count{font-size:12px;font-weight:400;color:var(--text-muted);background:#f0f0f0;padding:2px 10px;border-radius:10px}
-.section-desc{font-size:12px;color:var(--text-muted);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-
-/* 卡片网格 */
+.section-title-l{font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px}
+.section-title-l .badge-count{font-size:12px;font-weight:400;color:var(--text-muted);background:#f0f0f0;padding:2px 10px;border-radius:10px}
+.section-desc{font-size:12px;color:var(--text-muted);margin-top:2px}
 .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
-.card{background:var(--card-bg);border-radius:var(--radius);padding:16px;cursor:pointer;transition:all .25s;border:2px solid transparent;position:relative;overflow:hidden}
-.card::before{content:"";position:absolute;left:0;top:0;width:4px;height:100%;background:var(--cat-color,#ccc);transition:width .25s}
-.card:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover);border-color:var(--cat-color,#ccc)}
-.card:hover::before{width:6px}
-.card .name{font-size:15px;font-weight:600;margin-bottom:6px;line-height:1.3;padding-left:6px}
-.card .info{font-size:12px;color:var(--text-light);padding-left:6px;margin:3px 0}
-.card .info .label{color:var(--text-muted)}
-.card .play-hint{margin-top:8px;font-size:12px;color:var(--green);font-weight:500;padding-left:6px;display:flex;align-items:center;gap:4px}
+.task-card{background:var(--card-bg);border-radius:var(--radius);padding:16px;cursor:pointer;transition:all .25s;border:2px solid transparent;position:relative;overflow:hidden}
+.task-card::before{content:"";position:absolute;left:0;top:0;width:4px;height:100%;background:var(--cat-color,#ccc);transition:width .25s}
+.task-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover);border-color:var(--cat-color,#ccc)}
+.task-card:hover::before{width:6px}
+.task-card .name{font-size:15px;font-weight:600;margin-bottom:6px;padding-left:6px}
+.task-card .info{font-size:12px;color:var(--text-light);padding-left:6px;margin:3px 0}
+.task-card .info .label{color:var(--text-muted)}
+.task-card .play-hint{margin-top:8px;font-size:12px;color:var(--green);font-weight:500;padding-left:6px}
+.empty{text-align:center;padding:60px 20px;color:var(--text-muted)}
+.empty .icon{font-size:48px;margin-bottom:12px}
+
+/* ===== 项目专区 ===== */
+.proj-tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.proj-tab{padding:8px 18px;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;border:none;transition:all .2s;background:#fff;color:var(--text-light);box-shadow:var(--shadow)}
+.proj-tab:hover{background:#f5f5f5}
+.proj-tab.active{background:linear-gradient(90deg,var(--green),var(--green-light));color:#fff}
+.proj-grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px}
+.p-section{background:#fff;border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
+.p-section .p-sec-head{padding:12px 16px;border-bottom:1px solid var(--border);font-size:15px;font-weight:700}
+.p-section .p-sec-body{padding:16px}
+.eq-list{list-style:none}
+.eq-list li{display:flex;align-items:center;padding:8px 10px;background:#f9fafb;border-radius:6px;margin-bottom:6px;font-size:13px}
+.eq-list li:last-child{margin-bottom:0}
+.eq-badge{width:20px;height:20px;background:var(--green);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-right:10px;flex-shrink:0}
+.eq-note{margin-top:10px;padding:8px 10px;border-radius:6px;font-size:12px;font-weight:500}
+.eq-note.ok{background:#f0fdf4;border:1px solid #bbf7d0;color:#15803d}
+.eq-note.warn{background:#fffbeb;border:1px solid #fde68a;color:#92400e}
+.time-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.time-item{border-radius:8px;padding:10px;display:flex;align-items:center;gap:8px}
+.time-item .t-label{font-size:11px;color:var(--text-light)}
+.time-item .t-val{font-size:13px;font-weight:700}
+.time-item.blue{background:linear-gradient(90deg,#eff6ff,#e0e7ff);border:1px solid #bfdbfe}
+.time-item.blue .t-val{color:#1d4ed8}
+.time-item.purple{background:linear-gradient(90deg,#fdf4ff,#fae8ff);border:1px solid #e9d5ff}
+.time-item.green2{background:linear-gradient(90deg,#f0fdf4,#ecfdf5);border:1px solid #bbf7d0}
+.time-item.green2 .t-val{color:#15803d}
+.time-item.orange{background:linear-gradient(90deg,#fff7ed,#fffbeb);border:1px solid #fed7aa}
+.time-item.red{background:linear-gradient(90deg,#fef2f2,#fff1f2);border:1px solid #fecaca}
+.time-item.red .t-val{color:#dc2626}
+.time-item.amber{background:linear-gradient(90deg,#fef3c7,#fde68a);border:2px solid #fbbf24}
+.time-item.amber .t-val{color:#92400e}
+.step-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.step-item{background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border-radius:8px;padding:12px;border:1px solid #d1fae5}
+.step-num{width:28px;height:28px;background:linear-gradient(90deg,var(--green),var(--green-light));color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-bottom:8px}
+.step-item h4{font-size:14px;font-weight:700;margin-bottom:4px}
+.step-item p{font-size:12px;color:var(--text-light)}
+.check-list{list-style:none}
+.check-list li{display:flex;align-items:flex-start;padding:8px 10px;border-radius:6px;margin-bottom:6px;font-size:13px;background:#f9fafb}
+.check-list li:last-child{margin-bottom:0}
+.check-list .dot{margin-right:8px;flex-shrink:0}
+.ban-box{background:linear-gradient(135deg,#fef2f2,#fff1f2);border-radius:8px;padding:14px;border:1px solid #fecaca}
+.ban-box .ban-title{color:#b91c1c;font-weight:700;font-size:14px;margin-bottom:10px}
+.ban-list{list-style:none}
+.ban-list li{display:flex;align-items:center;padding:8px 10px;background:#fff;border-radius:6px;margin-bottom:6px;font-size:13px;font-weight:500;color:#991b1b}
+.ban-list li:last-child{margin-bottom:0}
+.self-check-box{background:#eff6ff;border-radius:8px;padding:14px;border:1px solid #bfdbfe}
+.self-check-box .sc-title{color:#1d4ed8;font-weight:700;font-size:14px;margin-bottom:10px}
+.rule-box{background:#fdf4ff;border-radius:8px;padding:14px;border:1px solid #e9d5ff}
+.rule-box .r-title{color:#7e22ce;font-weight:700;font-size:14px;margin-bottom:10px}
+.num-list{list-style:none;counter-reset:n}
+.num-list li{display:flex;align-items:center;padding:8px 10px;background:#fff;border-radius:6px;margin-bottom:6px;font-size:13px}
+.num-list li:last-child{margin-bottom:0}
+.num-badge{width:20px;height:20px;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-right:10px;flex-shrink:0}
+.sw-img-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.sw-img-item{background:#fff;border-radius:8px;padding:8px;border:1px solid var(--border);text-align:center}
+.sw-img-item img{width:100%;height:90px;object-fit:contain;border-radius:6px}
+.sw-img-item p{font-size:11px;color:var(--text-light);margin-top:4px}
+.sw-light{margin-top:12px;background:#eff6ff;border-radius:8px;padding:12px;border:1px solid #bfdbfe}
+.sw-light-row{display:flex;flex-wrap:wrap;gap:14px;font-size:12px}
+.sw-light-row span{display:flex;align-items:center;gap:4px}
+.sw-light-row .ldot{width:10px;height:10px;border-radius:50%}
+
+/* ===== SOP库 ===== */
+.sop-toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:24px;background:#fff;border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+.sop-toolbar input{flex:1;min-width:200px;padding:10px 16px;border:1px solid var(--border);border-radius:8px;font-size:14px;outline:none}
+.sop-toolbar input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(46,125,50,.12)}
+.sop-cats{display:flex;gap:8px;flex-wrap:wrap}
+.sop-cat{padding:8px 14px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--text-light);transition:all .2s}
+.sop-cat:hover{background:#f5f5f5}
+.sop-cat.active{background:linear-gradient(90deg,var(--green),var(--green-light));color:#fff;border-color:transparent}
+.sop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px}
+.sop-card{background:#fff;border-radius:14px;padding:20px;box-shadow:var(--shadow);cursor:pointer;transition:all .25s}
+.sop-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.sop-card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.sop-cat-badge{background:#e8f5e9;color:var(--green);padding:4px 12px;border-radius:14px;font-size:12px;font-weight:600}
+.sop-view{color:#2563eb;font-size:13px;font-weight:500}
+.sop-card h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.sop-card p{font-size:13px;color:var(--text-light);line-height:1.6}
+
+/* ===== 质量判定 ===== */
+.principle-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:18px}
+.principle-item{text-align:center}
+.principle-num{width:52px;height:52px;background:linear-gradient(135deg,var(--green),var(--green-light));color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;margin:0 auto 10px;box-shadow:var(--shadow)}
+.principle-item h4{font-size:13px;font-weight:600}
+.tier-box{border-radius:14px;padding:18px}
+.tier-box.t1{background:#fef2f2;border:1px solid #fecaca}
+.tier-box.t2{background:#fff7ed;border:1px solid #fed7aa}
+.tier-box .tier-desc{color:var(--text-light);font-size:13px;margin-bottom:14px}
+.tier-item{margin-bottom:14px}
+.tier-item:last-child{margin-bottom:0}
+.tier-item h4{font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.tier-box.t1 .tier-item h4{color:#dc2626}
+.tier-box.t2 .tier-item h4{color:#ea580c}
+.tier-item ul{list-style:none}
+.tier-item li{display:flex;align-items:flex-start;background:#fff;border-radius:8px;padding:8px 10px;margin-bottom:6px;font-size:13px}
+.tier-item li:last-child{margin-bottom:0}
+.tier-item li .x{margin-right:6px;flex-shrink:0}
+.case-row{margin-bottom:24px}
+.case-row h3{font-size:17px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.case-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.case-side{border-radius:14px;padding:18px}
+.case-side.ok{background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border:1px solid #bbf7d0}
+.case-side.bad{background:linear-gradient(135deg,#fef2f2,#fff1f2);border:1px solid #fecaca}
+.case-side .c-head{display:flex;align-items:center;gap:8px;margin-bottom:12px;font-weight:700;font-size:15px}
+.case-side.ok .c-head{color:#15803d}
+.case-side.bad .c-head{color:#b91c1c}
+.case-img-box{background:#fff;border-radius:10px;height:160px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;overflow:hidden}
+.case-img-box.ok{border:2px solid #bbf7d0}
+.case-img-box.bad{border:2px solid #fecaca}
+.case-img-box img{width:100%;height:100%;object-fit:cover}
+.case-img-box .placeholder{font-size:40px}
+.case-side p{font-size:13px;margin-bottom:6px}
+.grade-table{width:100%;border-collapse:collapse;font-size:13px;overflow-x:auto;display:block}
+.grade-table th{background:linear-gradient(90deg,var(--green),var(--green-light));color:#fff;padding:12px;text-align:left;font-weight:700}
+.grade-table td{padding:12px;border-bottom:1px solid var(--border)}
+.grade-table tr:hover td{background:#f9fafb}
+.grade-table .red{color:#dc2626}
+.grade-table .orange{color:#ea580c}
+
+/* ===== 故障处理 ===== */
+.ts-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.ts-tab{padding:8px 20px;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;color:#fff;border:none;transition:all .2s}
+.ts-tab:hover{opacity:1}
+.ts-tab.at{background:#22c55e}
+.ts-tab.df{background:#3b82f6}
+.ts-tab.sw{background:#f97316}
+.ts-tab.st{background:#ef4444}
+.ts-tab:not(.active){opacity:.65}
+.ts-tab.active{box-shadow:0 6px 16px rgba(0,0,0,.18);transform:scale(1.05)}
+.fault-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:18px}
+.fault-card{background:#fff;border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.fault-card .f-head{padding:14px 18px;border-bottom:1px solid var(--border);font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
+.fault-card .f-body{padding:18px}
+.fault-block{margin-bottom:14px}
+.fault-block:last-child{margin-bottom:0}
+.fault-block h4{font-size:14px;font-weight:700;margin-bottom:4px;color:var(--text)}
+.fault-block .f-sol-title{color:#15803d}
+.fault-block p{font-size:13px;color:var(--text-light)}
+.fault-tag{display:inline-block;padding:4px 12px;border-radius:14px;font-size:12px;font-weight:600}
+.fault-tag.need{background:#fef2f2;color:#b91c1c}
+.fault-tag.no{background:#f0fdf4;color:#15803d}
+.fault-mat{margin-top:10px}
+.fault-mat h4{color:#b91c1c;margin-bottom:8px}
+.fault-mat-list{display:flex;flex-wrap:wrap;gap:6px}
+.fault-mat-list span{background:#fef2f2;color:#b91c1c;padding:4px 12px;border-radius:14px;font-size:12px}
+.flow-row{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:14px;margin-top:10px}
+.flow-step{text-align:center}
+.flow-num{width:44px;height:44px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;margin:0 auto 6px}
+.flow-arrow{font-size:20px;color:var(--text-muted)}
 
 /* 模态播放器 */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
 .modal-overlay.active{display:flex}
 .modal-box{background:#1a1a1a;border-radius:14px;padding:18px;max-width:92vw;max-height:92vh;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.modal-box.white{background:#fff}
 .modal-close{position:absolute;top:-16px;right:-16px;width:38px;height:38px;border-radius:50%;background:#fff;color:#333;border:none;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;transition:transform .2s;z-index:1}
 .modal-close:hover{transform:scale(1.1) rotate(90deg)}
 .modal-title{color:#fff;font-size:16px;margin-bottom:10px;text-align:center;max-width:640px;word-break:break-all;font-weight:600}
@@ -64,51 +323,292 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg)
 .modal-links{margin-top:12px;text-align:center}
 .modal-links a{color:#64b5f6;font-size:13px;text-decoration:none;margin:0 8px;padding:4px 12px;border:1px solid rgba(100,181,246,.3);border-radius:16px;transition:all .2s}
 .modal-links a:hover{background:rgba(100,181,246,.1)}
+.sop-modal-head{background:linear-gradient(90deg,var(--green),var(--green-light));color:#fff;padding:16px 22px;display:flex;justify-content:space-between;align-items:center;border-radius:14px 14px 0 0}
+.sop-modal-head h2{font-size:18px;font-weight:700}
+.sop-modal-body{padding:22px;max-height:70vh;overflow-y:auto}
+.sop-modal-body p{font-size:14px;color:var(--text);margin-bottom:10px;line-height:1.8}
+.sop-modal-body p:last-child{margin-bottom:0}
 
-/* 空结果 */
-.empty{text-align:center;padding:60px 20px;color:var(--text-muted)}
-.empty .icon{font-size:48px;margin-bottom:12px}
+/* Footer */
+.footer{background:#1f2937;color:#fff;padding:28px 24px;text-align:center;margin-top:20px}
+.footer p{color:#9ca3af;font-size:13px}
+.footer .footer-sub{color:#6b7280;font-size:12px;margin-top:12px}
 
 /* 响应式 */
 @media(max-width:768px){
   .card-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
-  .navbar{padding:10px 14px}
-  .navbar .search input{width:160px}
-  .navbar .search input:focus{width:200px}
+  .navbar{padding:0 14px;height:auto;flex-direction:column;gap:8px;padding:10px 14px}
+  .navbar .nav-list{justify-content:center}
+  .navbar .menu-btn{display:block}
+  .navbar .nav-list.mobile-hide{display:none}
   .container{padding:20px 14px}
-  .header h1{font-size:22px}
-  .header h1 .num{font-size:26px}
-  .section-title{font-size:16px}
+  .hero{padding:50px 18px}
+  .hero h1{font-size:28px}
+  .hero .hero-sub{font-size:18px}
   .modal-video{max-width:90vw;max-height:55vh}
+  .proj-grid-2{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
+<!-- 导航栏 -->
 <div class="navbar">
-  <div class="logo"><span class="logo-icon">🎬</span> 供应商培训平台</div>
-  <div class="search">
-    <input id="searchInput" type="text" placeholder="🔍 输入场景名称搜索任务...">
+  <div class="logo" onclick="showPage('home')"><span class="logo-icon">🎬</span> 供应商培训平台</div>
+  <nav class="nav-list" id="navList">
+    <button class="nav-item active" data-page="home" onclick="showPage('home')">首页</button>
+    <button class="nav-item" data-page="tasksquare" onclick="showPage('tasksquare')">任务广场</button>
+    <button class="nav-item" data-page="projects" onclick="showPage('projects')">项目专区</button>
+    <button class="nav-item" data-page="sop" onclick="showPage('sop')">SOP库</button>
+    <button class="nav-item" data-page="quality" onclick="showPage('quality')">质量判定</button>
+    <button class="nav-item" data-page="troubleshooting" onclick="showPage('troubleshooting')">故障处理</button>
+  </nav>
+  <button class="menu-btn" id="menuBtn" onclick="toggleMenu()">☰</button>
+</div>
+
+<!-- ===== 首页 ===== -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="hero-badge"><span class="dot"></span>局域网离线培训平台</div>
+    <h1>一站式第一视角实景数据采集合作平台</h1>
+    <p class="hero-sub">局域网离线全流程培训</p>
+    <p class="hero-desc">无需外网，同局域网任意设备可访问，低成本上手，清晰收益，标准化作业</p>
+    <div class="hero-btns">
+      <button class="btn btn-primary" onclick="showPage('projects')">🚀 查看项目详情</button>
+      <button class="btn btn-outline" onclick="showPage('sop')">📚 学习SOP规范</button>
+      <button class="btn btn-amber" onclick="showPage('tasksquare')">🎬 快速开拍赚收益</button>
+    </div>
+  </section>
+
+  <section class="container-sm">
+    <div class="text-center" style="margin-bottom:28px">
+      <span class="section-title">核心优势</span>
+      <h2 class="h-title">🌟 为什么选择我们</h2>
+      <p class="h-sub">一站式全品类采集项目，标准化设备，透明结算</p>
+    </div>
+    <div class="adv-grid">
+      <div class="adv-card"><div class="icon">🎥</div><h3>全套设备免费提供</h3><p>AT头戴摄像、SW头戴设备、ST头戴式GoPro全套配齐，含充电宝、内存卡、充电器，DF需客户自租iPhone</p></div>
+      <div class="adv-card"><div class="icon">🏭</div><h3>多场景可接单</h3><p>流水线工厂、商业实操、农业作业，不限原有合作工厂，新场景可自建完整链路</p></div>
+      <div class="adv-card"><div class="icon">💰</div><h3>结算透明有保障</h3><p>规范报备、完整记录不扣结算，异常提前报备无扣款，按对接人分工反馈问题</p></div>
+      <div class="adv-card"><div class="icon">🛠️</div><h3>故障兜底专人对接</h3><p>全流程故障处理标准，专人对接通道，及时反馈快速解决</p></div>
+    </div>
+  </section>
+
+  <section class="container-sm" style="background:linear-gradient(135deg,#ecfdf5,#fff,#fffbeb)">
+    <div class="ts-banner" onclick="showPage('tasksquare')">
+      <div class="ts-badge"><span style="width:6px;height:6px;background:#fde047;border-radius:50%;display:inline-block"></span>居家随手拍 · 48个任务 · 零成本上手</div>
+      <h3>🎬 任务广场 · 手边有什么就拍什么</h3>
+      <p>食品加工、零售日用消费品、农贸生鲜处理、生活清洁服务、服饰配件加工、精密电子组装、玩具模型加工、手工装饰制作、饰品/工艺品/支架/成品整机装配 共 12 大类 —— 家里现成物品马上变成可拍任务，多拍多赚、审核通过即获收益。</p>
+      <div class="ts-tags">
+        <span class="ts-tag">🎬 12 大场景</span>
+        <span class="ts-tag">📋 48 个任务</span>
+        <span class="ts-tag">🎥 90+ 示范视频</span>
+        <span class="ts-tag">💰 审核即赚</span>
+      </div>
+      <div class="ts-cta">马上开拍 ➜</div>
+    </div>
+  </section>
+
+  <section class="container-sm" style="background:#fff">
+    <div class="text-center" style="margin-bottom:28px">
+      <span class="section-title" style="background:#dbeafe;color:#1d4ed8">项目专区</span>
+      <h2 class="h-title">🚀 四大可接单项目</h2>
+      <p class="h-sub">灵活选择，多场景接单</p>
+    </div>
+    <div class="proj-grid" id="homeProjects"></div>
+    <div class="deposit-box at">
+      <h4>💰 设备押金说明（AT / SW / ST）</h4>
+      <p>初次跨省合作，由于自研设备较贵，可先投放 <b>2-5 台</b> 设备试运行，收取押金。试运行通过后，追加设备<b>免押金</b>，前期押金于首次结算<b>全额退还</b>。</p>
+    </div>
+    <div class="deposit-box df">
+      <h4>📱 DF 配件押金说明</h4>
+      <p>DF 的配件需要收取押金。试运行通过后，追加配件<b>免押金</b>，前期押金于首次结算<b>全额退还</b>。</p>
+    </div>
+  </section>
+
+  <section class="container-sm">
+    <div class="text-center" style="margin-bottom:28px">
+      <span class="section-title" style="background:#f3e8ff;color:#7e22ce">合作流程</span>
+      <h2 class="h-title">📋 合作完整流程</h2>
+      <p class="h-sub">简单五步，轻松上手</p>
+    </div>
+    <div class="process-grid">
+      <div class="process-step"><div class="process-num">1</div><h4>对接洽谈</h4><p>联系负责人了解合作详情</p></div>
+      <div class="process-step"><div class="process-num">2</div><h4>设备准备</h4><p>AT/SW/ST设备我方提供，DF需客户自租iPhone</p></div>
+      <div class="process-step"><div class="process-num">3</div><h4>培训采集</h4><p>学习SOP规范开始采集</p></div>
+      <div class="process-step"><div class="process-num">4</div><h4>数据上传</h4><p>按流程导出上传数据</p></div>
+      <div class="process-step"><div class="process-num">5</div><h4>对账结算</h4><p>透明结算获取收益</p></div>
+    </div>
+  </section>
+
+  <section class="container-sm" style="background:linear-gradient(135deg,#f0fdf4,#ecfdf5)">
+    <div class="text-center" style="margin-bottom:28px">
+      <span class="section-title">平台数据</span>
+      <h2 class="h-title">📊 合作成果</h2>
+      <p class="h-sub">累计服务数千家供应商，采集数据覆盖多行业</p>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-num" style="color:var(--green)">10K+</div><div class="stat-label">合作供应商</div></div>
+      <div class="stat-card"><div class="stat-num" style="color:#2563eb">500K+</div><div class="stat-label">采集时长(小时)</div></div>
+      <div class="stat-card"><div class="stat-num" style="color:#f97316">100+</div><div class="stat-label">覆盖行业</div></div>
+      <div class="stat-card"><div class="stat-num" style="color:#7e22ce">98%</div><div class="stat-label">客户满意度</div></div>
+    </div>
+  </section>
+
+  <section class="container-sm" style="background:#fff">
+    <div class="text-center" style="margin-bottom:28px">
+      <span class="section-title" style="background:#dbeafe;color:#1d4ed8">客户评价</span>
+      <h2 class="h-title">💬 合作伙伴反馈</h2>
+      <p class="h-sub">听听他们怎么说</p>
+    </div>
+    <div class="review-grid">
+      <div class="review-card g">
+        <div class="review-head"><div class="review-avatar g">🏭</div><div><h4>XX电子厂</h4><div class="r-type">制造业 | DF项目</div></div></div>
+        <p>平台操作简单，培训内容详细，工人上手快。结算透明，每月准时到账，非常满意！</p>
+        <div class="stars">★★★★★</div>
+      </div>
+      <div class="review-card b">
+        <div class="review-head"><div class="review-avatar b">🏠</div><div><h4>XX家政公司</h4><div class="r-type">服务业 | DF项目</div></div></div>
+        <p>DF项目非常适合我们，居家场景采集方便，不需要额外设备投入，收益稳定。</p>
+        <div class="stars">★★★★★</div>
+      </div>
+      <div class="review-card o">
+        <div class="review-head"><div class="review-avatar o">🌾</div><div><h4>XX农业合作社</h4><div class="r-type">农业 | AT项目</div></div></div>
+        <p>AT设备轻便，适合户外作业。技术支持响应快，遇到问题能及时解决，合作很愉快！</p>
+        <div class="stars">★★★★★</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== 任务广场 ===== -->
+<div class="page" id="page-tasksquare">
+  <div class="container">
+    <div class="ts-header">
+      <h1>全部 <span class="num" id="totalCount">0</span> 个可拍任务</h1>
+      <div class="h-sub">点击任务卡片查看示例视频</div>
+    </div>
+    <div class="ts-search"><input id="searchInput" type="text" placeholder="🔍 输入场景名称搜索任务..."></div>
+    <div class="filter-bar" id="filterBar"></div>
+    <div id="sections"></div>
+    <div class="empty" id="empty" style="display:none">
+      <div class="icon">🔍</div>
+      <div>没有找到匹配的任务</div>
+    </div>
   </div>
 </div>
 
-<div class="container">
-  <div class="header">
-    <h1>全部 <span class="num" id="totalCount">0</span> 个可拍任务</h1>
-    <div class="subtitle">点击任务卡片查看示例视频</div>
+<!-- ===== 项目专区 ===== -->
+<div class="page" id="page-projects">
+  <div class="container">
+    <div class="text-center" style="margin-bottom:20px">
+      <span class="section-title">🥽 项目专区</span>
+      <h1 class="h-title" id="projTitle">AT头戴鸭舌帽采集</h1>
+      <p class="h-sub" id="projDesc">采用自研头戴摄像设备，完成第一视角作业实景数据采集</p>
+    </div>
+    <div class="proj-tabs" id="projTabs">
+      <button class="proj-tab active" data-proj="at" onclick="renderProject('at')">🎩 AT头戴采集</button>
+      <button class="proj-tab" data-proj="df" onclick="renderProject('df')">📱 iPhone采集</button>
+      <button class="proj-tab" data-proj="sw" onclick="renderProject('sw')">🥽 SW头戴设备</button>
+      <button class="proj-tab" data-proj="st" onclick="renderProject('st')">🎥 ST头戴式GoPro</button>
+    </div>
+    <div class="proj-grid-2" id="projContent"></div>
   </div>
+</div>
 
-  <div class="filter-bar" id="filterBar"></div>
-  <div id="sections"></div>
-
-  <div class="empty" id="empty" style="display:none">
-    <div class="icon">🔍</div>
-    <div>没有找到匹配的任务</div>
+<!-- ===== SOP库 ===== -->
+<div class="page" id="page-sop">
+  <div class="container">
+    <div class="text-center" style="margin-bottom:24px">
+      <span class="section-title">📚 SOP资料库</span>
+      <h1 class="h-title">SOP运维资料库</h1>
+      <p class="h-sub">整合8份文档全部操作规范，可搜索、分类查看，支持本地打印导出</p>
+    </div>
+    <div class="sop-toolbar">
+      <input id="sopSearch" type="text" placeholder="搜索SOP文档..." oninput="renderSOP()">
+      <div class="sop-cats" id="sopCats"></div>
+    </div>
+    <div class="sop-grid" id="sopGrid"></div>
+    <div class="empty" id="sopEmpty" style="display:none">
+      <div class="icon">📭</div>
+      <div>没有找到匹配的文档</div>
+      <div style="font-size:13px;margin-top:8px">请尝试其他搜索关键词或选择其他分类</div>
+    </div>
   </div>
+</div>
+
+<!-- ===== 质量判定 ===== -->
+<div class="page" id="page-quality">
+  <div class="container">
+    <div class="text-center" style="margin-bottom:24px">
+      <span class="section-title">🎯 质量判定</span>
+      <h1 class="h-title">质量判定中心</h1>
+      <p class="h-sub">图文可视化质量标准，合格画面VS不合格画面对比展示</p>
+    </div>
+    <div class="card card-pad" style="margin-bottom:24px">
+      <h3 style="font-size:17px;font-weight:700;margin-bottom:16px">📌 采集核心五原则</h3>
+      <div class="principle-grid" id="principleGrid"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin-bottom:24px">
+      <div class="card card-pad"><h3 style="font-size:17px;font-weight:700;margin-bottom:14px">🚫 严重不合格（T1）</h3><div class="tier-box t1" id="tier1Box"></div></div>
+      <div class="card card-pad"><h3 style="font-size:17px;font-weight:700;margin-bottom:14px">⚠️ 一般不合格（T2）</h3><div class="tier-box t2" id="tier2Box"></div></div>
+    </div>
+    <div class="card card-pad" style="margin-bottom:24px">
+      <h3 style="font-size:17px;font-weight:700;margin-bottom:16px">🖼️ 实拍案例对照</h3>
+      <div id="caseStudies"></div>
+    </div>
+    <div class="card card-pad">
+      <h3 style="font-size:17px;font-weight:700;margin-bottom:16px">📊 废片分级判定对照表</h3>
+      <table class="grade-table">
+        <thead><tr><th>问题分类</th><th>Tier1 直接作废</th><th>Tier2 风险片</th><th>处理方式</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600">操作问题</td><td class="red">手部离开画面超30秒、50%以上动作过快、超过1分钟无意义动作</td><td class="orange">重复同一动作超1分钟、工具过长导致一只手长期出镜</td><td>重新采集 / 人工审核</td></tr>
+          <tr><td style="font-weight:600">设备问题</td><td class="red">未选超广角、镜头脏污遮挡、视频模糊不清</td><td class="orange">充电线干扰、视角歪斜、镜头大幅晃动</td><td>维修设备 / 清洁镜头</td></tr>
+          <tr><td style="font-weight:600">环境问题</td><td class="red">环境过暗、面部清晰入镜</td><td class="orange">背景干扰、光线稍暗</td><td>改善环境 / 调整角度</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 故障处理 ===== -->
+<div class="page" id="page-troubleshooting">
+  <div class="container">
+    <div class="text-center" style="margin-bottom:24px">
+      <h1 class="h-title">🔧 异常故障速查手册</h1>
+      <p class="h-sub">按设备分类的故障速查指南，快速解决采集过程中的问题</p>
+    </div>
+    <div class="ts-tabs" id="faultTabs">
+      <button class="ts-tab at active" data-ftab="at" onclick="renderFault('at')">AT设备故障</button>
+      <button class="ts-tab df" data-ftab="df" onclick="renderFault('df')">DF手机故障</button>
+      <button class="ts-tab sw" data-ftab="sw" onclick="renderFault('sw')">SW头戴故障</button>
+      <button class="ts-tab st" data-ftab="st" onclick="renderFault('st')">ST头戴故障</button>
+    </div>
+    <div class="fault-grid" id="faultContent"></div>
+    <div class="card card-pad" style="margin-top:24px">
+      <h3 style="font-size:17px;font-weight:700;margin-bottom:16px">📋 故障处理流程</h3>
+      <div class="flow-row">
+        <div class="flow-step"><div class="flow-num" style="background:#ef4444">1</div><h4>发现异常</h4></div>
+        <span class="flow-arrow">➜</span>
+        <div class="flow-step"><div class="flow-num" style="background:#f59e0b">2</div><h4>对照手册</h4></div>
+        <span class="flow-arrow">➜</span>
+        <div class="flow-step"><div class="flow-num" style="background:#3b82f6">3</div><h4>处理解决</h4></div>
+        <span class="flow-arrow">➜</span>
+        <div class="flow-step"><div class="flow-num" style="background:#22c55e">4</div><h4>确认恢复</h4></div>
+      </div>
+      <p style="text-align:center;color:var(--text-muted);font-size:13px;margin-top:16px">若无法解决，请立即联系对接人报备，并提供设备编号和故障截图/照片</p>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <p>本平台为局域网离线供应商培训平台，无需外网即可访问全部内容。</p>
+  <p class="footer-sub">供应商合作培训平台 | 离线版 v1.0</p>
 </div>
 
 <!-- 模态播放器 -->
-<div class="modal-overlay" id="modal">
+<div class="modal-overlay" id="taskModal">
   <div class="modal-box">
     <button class="modal-close" id="modalClose">✕</button>
     <div class="modal-title" id="modalTitle"></div>
@@ -117,8 +617,17 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg)
   </div>
 </div>
 
+<!-- SOP详情弹窗 -->
+<div class="modal-overlay" id="sopModal">
+  <div class="modal-box white" style="max-width:640px">
+    <button class="modal-close" id="sopModalClose">✕</button>
+    <div class="sop-modal-head"><h2 id="sopModalTitle"></h2></div>
+    <div class="sop-modal-body" id="sopModalBody"></div>
+  </div>
+</div>
+
 <script>
-// 分类定义
+// ============ 数据：分类定义 ============
 const CATS={
   retail:   {name:"商超零售",icon:"🛒",color:"#1565C2",desc:"过期下架、货物上架、整理货架、收银、卸货、称重等"},
   fresh:    {name:"生鲜处理",icon:"🥬",color:"#2E7D32",desc:"蔬菜分拣、挑选、上架、称重，菌菇分装称重"},
@@ -157,8 +666,8 @@ const TASKS=[
   {cat:"pack",title:"包装成品-钱包",material:"成品钱包、包装材料"},
   {cat:"pack",title:"拆除标签定孔-钱包卡片",material:"钱包卡片、标签拆除工具"},
 
-  {cat:"paper",title:"纸品厂‑折叠杯套",material:"杯套片材"},
-  {cat:"paper",title:"纸品厂‑纸袋穿绳",material:"纸袋、绳子"},
+  {cat:"paper",title:"纸品厂\u2011折叠杯套",material:"杯套片材"},
+  {cat:"paper",title:"纸品厂\u2011纸袋穿绳",material:"纸袋、绳子"},
 
   {cat:"shoes",title:"鞋厂-鞋后跟片修理毛边",material:"鞋后跟片、修毛边工具"},
   {cat:"shoes",title:"鞋底前脚掌刷胶",material:"鞋底、胶料"},
@@ -212,17 +721,192 @@ const TASKS=[
   {cat:"battery",title:"安装负极贴片-铅酸蓄电槽",material:"铅酸蓄电槽、负极贴片"}
 ];
 
-// 当前筛选
+// ============ 数据：项目内容 ============
+const PROJECTS={
+  at:{
+    title:"AT头戴鸭舌帽采集",description:"采用自研头戴摄像设备，完成第一视角作业实景数据采集",
+    validDuration:"20小时",processLimit:"场景的工序不限",uploadMethod:"邮寄内存卡",sceneRequirements:"农业、家居、商超",unitPrice:"30rmb（腕部）",settlementMethod:"3周到一个月结算",
+    equipment:["充电宝2个","摄像鸭舌帽1套","CPU","收纳腰包1个","高速内存卡4张"],
+    preparation:["所有采集设备提前满电，保障全天作业续航","内存卡预留充足存储空间，满足2-3天不间断录制","严格核对设备编号与对应工序，匹配无误再下发","规范佩戴摄像帽，腰包收纳至身后隐蔽位置，避免入镜","录制时按要求佩戴腕部镜头"],
+    steps:[{num:"1",title:"连接设备",desc:"连接主机与充电宝，设备播报请扫描二维码后上报设备编号"},{num:"2",title:"扫码识别",desc:"领取对应二维码，置于镜头前20cm左右完成识别"},{num:"3",title:"佩戴镜头",desc:"按要求佩戴腕部镜头"},{num:"4",title:"开始采集",desc:"听到播报录制已开始即正式启动采集"},{num:"5",title:"依次部署",desc:"依次完成全部设备部署"},{num:"6",title:"结束采集",desc:"完成后停止录制，分类取出内存卡"}],
+    patrol:["作业人员听到设备语音提示第一时间上报","区分故障类型：重新扫码、电量不足、内存已满","充电宝电量低于30%自动停机断电"],
+    lunchBreak:["午间停工：AT设备断开电源","电量不足统一更换满电充电宝","换下电量设备集中充电","复工重新扫码启动采集","人员临时离岗如厕：可摘除采集设备"],
+    finish:["分类取出内存卡，已录制与空白存储卡严格区分摆放","次日统一顺丰寄出，及时上报快递单号","提前装入空白内存卡、更换满电充电宝，做好次日开工准备"],
+    prohibitions:["禁止拍摄到手机和别的拍摄设备","禁止腰包入镜","禁止设备编号与工序不匹配时采集"],
+    selfCheck:[],
+    specialRules:["不需要上传，设备较轻","需提前确认客户开放场景","录制时按要求佩戴腕部镜头"]
+  },
+  df:{
+    title:"DF",description:"使用手机端EDL录制软件，完成居家/商业场景规范化实景数据采集",
+    validDuration:"50小时",processLimit:"每个场景最多15个工序，相同场景最多2-3个",uploadMethod:"手机app端上传",sceneRequirements:"主要居家+商业场景",unitPrice:"25rmb（自柜设备）",settlementMethod:"3周到一个月结算",
+    equipment:["⚠️ iPhone手机（需客户自备/自租）","充电宝（建议自备）","充电器（建议自备）"],
+    preparation:["收到设备后，检查外观、开机、电量、网络、摄像头是否正常","开机打开EDL采集软件，进入录制界面","参数设置：镜头选超广角、场景分类选择工厂、任务名称填写对应工序","场景描述统一填写工厂车间作业","手机调整至60-70°固定角度","工厂必须要有WiFi，设备需链接网络进行采集","提前一周确认要采集的工序产品"],
+    steps:[{num:"1",title:"开机打开EDL",desc:"开机打开EDL采集软件，进入录制界面"},{num:"2",title:"设置参数",desc:"镜头选超广角、场景分类选择工厂、任务名称填写对应工序"},{num:"3",title:"调整角度",desc:"手机调整至60-70°固定角度"},{num:"4",title:"开始录制",desc:"点击启动录制，保证画面清晰，双手和操作物体尽量在画面内"},{num:"5",title:"采集执行",desc:"按SOP采集，动作自然速度正常，不要假任务水时长"},{num:"6",title:"结束上传",desc:"连接WiFi，保持手机通电不息屏，后台批量上传当日采集视频"}],
+    patrol:["定时巡查录制状态","长时间无手部画面、抓拍人脸均会自动停止录制","发现异常立即重启恢复采集"],
+    lunchBreak:["DF设备手动暂停录制","手机电量低于30%及时补电","充满断电收纳","复工按标准流程重启","人员临时离岗：DF手机设备离岗后必须重新开启录制"],
+    finish:["连接WiFi，保持手机通电不息屏，后台批量上传当日采集视频","核对并上报当日总采集时长","上传完成删除本地视频释放内存","静置完成后台上传，上传周期通常为整夜及以上"],
+    prohibitions:["禁止拍摄到人脸画面","禁止戴手套作业","禁止数据线入镜","禁止假任务、水时长","禁止血腥等任务"],
+    selfCheck:["设备自检：外观、开机、电量、网络、摄像头是否正常","采集前检查：确认设备是否佩戴正确，超广角、镜头干净、画面清晰","采集执行：双手和操作物体尽量在画面内，动作不要过快","表格记录：每批任务完成后，及时填写设备编号、任务名称、采集人员、采集时长、上传情况","每日报备：每天反馈当天使用设备数、总采集时长、上传情况","异常反馈：设备故障、无法上传、任务不清楚、画面异常等问题需及时反馈"],
+    specialRules:[]
+  },
+  sw:{
+    title:"SW头戴设备采集",description:"使用自研头戴设备进行高精度第一视角数据采集",
+    validDuration:"50小时",processLimit:"场景的工序不限，限制的是产品的款式，只有换了款式，才能申请新的工序",uploadMethod:"上传指定网址",sceneRequirements:"制造业",unitPrice:"25rmb",settlementMethod:"3周到一个月结算",
+    equipment:["SW头戴设备","配套灯光","充电底座","数据传输线","配对软件"],
+    preparation:["长按开机键检查电量：蓝灯20-90%，绿灯90%以上，红灯<20%","电量低于30%无法开启录制，需先充电","准备安卓手机，使用Edge浏览器","打开网址：https://vela.fozmoly.com/","保障单设备分配10M上行带宽"],
+    steps:[{num:"1",title:"设备开机",desc:"长按开机键，根据指示灯确认电量状态"},{num:"2",title:"网页配对",desc:"使用安卓手机Edge浏览器打开配对网页，选择对应设备序列号"},{num:"3",title:"填写信息",desc:"工序信息填写：名字必须写真实姓名，身高需要较为准确"},{num:"4",title:"开始录制",desc:"确认软件为最新版本，正常录制状态时间跳动10秒后再操作"},{num:"5",title:"按键保存",desc:"1.8.1版本可使用设备侧面按键保存，注意只能按突起的按键"},{num:"6",title:"数据导出",desc:"设备连接USB线插上电脑，找到SXR-1文件路径复制到本地，上传至指定网站"}],
+    patrol:["检查设备灯光状态确认电量","录制人员对面允许有人，但侧边的手不要入镜","设备满电可录制3小时左右，建议每半小时或一小时保存"],
+    lunchBreak:["按下停止键暂停录制","可插上移动电源边充边用","休息结束后检查电量","重新开始采集"],
+    finish:["停止采集","设备连接USB线插上电脑","文件路径：Internal shared storage/Android/data/ai.worldengine.pyxis/files/sessions","复制到本地后及时删除设备里的文件确保存储空间足够","打开网址上传本地文件"],
+    prohibitions:["禁止电量低于30%时开启录制","禁止按非突起的按键保存","禁止侧边的手入镜","禁止工序名字超过11个字"],
+    selfCheck:[],
+    specialRules:["工序名字不能超过11个字，否则无法审核","需通过网页完成设备配对","数据需通过电脑导出并上传至指定网站","建议手机端保存以及开机，一台手机可以连接多台设备","时间跳动10秒后可以点按断开连接，连接下一个设备","如果有多个款式的工序，需要拆分不同的标题进行申报","条件允许建议上传网盘备份确保数据安全","保障单设备分配10M上行带宽","场景审核通过率高"]
+  },
+  st:{
+    title:"ST头戴式GoPro采集",description:"使用自研头戴设备进行制造业场景第一视角数据采集",
+    validDuration:"不限制",processLimit:"录制上限较宽松",uploadMethod:"上传指定网址",sceneRequirements:"制造业",unitPrice:"20rmb",settlementMethod:"3周到一个月结算",
+    equipment:["头戴式GoPro设备","充电宝","充电器","内存卡","品牌手环"],
+    preparation:["收到设备后阅读操作员执行手册了解使用流程","确认设备外观完好，电量充足","保障单设备分配10M上行带宽","准备佩戴品牌手环","熟悉指定网址上传流程"],
+    steps:[{num:"1",title:"设备开机",desc:"长按开机键开启GoPro设备"},{num:"2",title:"佩戴设备",desc:"将头戴设备佩戴好，调整角度确保画面清晰"},{num:"3",title:"佩戴手环",desc:"佩戴品牌手环，确保在画面中可见"},{num:"4",title:"开始录制",desc:"确认设备正常后开始录制，展示清晰完整的手部作业动作"},{num:"5",title:"完成录制",desc:"按停止键结束录制，检查视频质量"},{num:"6",title:"数据上传",desc:"将数据上传至指定网址的指定软件"}],
+    patrol:["定时检查设备电量和录制状态","确保手部动作完整清晰入镜","注意环境光线充足","确保网络带宽稳定"],
+    lunchBreak:["暂停录制保存进度","设备充电确保续航","休息结束后检查设备状态","重新开始采集"],
+    finish:["停止采集，保存所有视频","检查视频质量，确保清晰完整","按要求上传至指定网址的指定软件","填写任务清单，规范分类标签"],
+    prohibitions:["禁止拍摄到人脸画面","禁止视频模糊不清","禁止手部动作不完整","禁止未经审核擅自采集"],
+    selfCheck:["设备自检：外观、开机、电量是否正常","采集前检查：设备佩戴正确，画面清晰","采集执行：手部动作完整清晰，操作物体可见","视频审核：按质量标准自查","表格记录：填写任务清单，规范分类标签","网络检查：确保单设备分配10M上行带宽"],
+    specialRules:["录制工序时长不限","需保障单设备分配10M上行带宽","需上传数据到指定网址的指定软件","试采阶段用于验证场景和人员组织能力","样片需上传至多维表格等待T+1审核","审核通过后开始批量试采集","正式批量采集需签署商务合同","按周/双周更新任务清单","最终有效交付量以审核通过的数据为准"]
+  }
+};
+
+const PROJ_META={
+  at:{label:"AT头戴采集",icon:"🎩"},
+  df:{label:"iPhone采集",icon:"📱"},
+  sw:{label:"SW头戴设备",icon:"🥽"},
+  st:{label:"ST头戴式GoPro",icon:"🎥"}
+};
+
+// ============ 数据：SOP库 ============
+const SOP_LIBRARY=[
+  {id:"sop-001",title:"AT头戴设备开机操作指南",category:"AT设备",content:"1. 连接主机与充电宝\n2. 设备播报请扫描二维码后上报设备编号\n3. 领取对应二维码，置于镜头前20cm左右完成识别\n4. 听到播报录制已开始即正式启动采集\n5. 依次完成全部设备部署"},
+  {id:"sop-002",title:"iPhone EDL软件配置说明",category:"iPhone设备",content:"1. 开机打开EDL采集软件，进入录制界面\n2. 参数设置：镜头选超广角、场景分类选择工厂\n3. 任务名称填写对应工序\n4. 场景描述统一填写工厂车间作业\n5. 手机调整至60-70°固定角度\n6. 点击启动录制"},
+  {id:"sop-004",title:"SW头戴设备网页配对流程",category:"SW设备",content:"1. 准备安卓手机，使用Edge浏览器\n2. 打开网址：https://vela.fozmoly.com/\n3. 选择对应设备序列号\n4. 填写工序信息：名字必须写真实姓名\n5. 确认软件为最新版本\n6. 正常录制状态时间跳动10秒后再操作"},
+  {id:"sop-009",title:"ST头戴式GoPro操作指南",category:"ST设备",content:"1. 长按开机键开启GoPro设备\n2. 将头戴设备佩戴好，调整角度确保画面清晰\n3. 佩戴品牌手环，确保在画面中可见\n4. 确认设备正常后开始录制\n5. 展示清晰完整的手部作业动作\n6. 按停止键结束录制，检查视频质量\n7. 将视频上传至公司专有平台"},
+  {id:"sop-010",title:"ST样片审核流程",category:"ST项目",content:"1. 完成单台设备采样录制\n2. 将样片上传至多维表格\n3. 规范分类标签\n4. 等待工程师T+1审核\n5. 审核通过后开始批量试采集\n6. 签署正式商务合同后进行批量采集"},
+  {id:"sop-005",title:"设备电量管理规范",category:"通用规范",content:"1. 所有采集设备提前满电，保障全天作业续航\n2. 充电宝电量低于30%自动停机断电\n3. SW设备电量低于30%无法开启录制\n4. 午间停工统一更换满电充电宝\n5. 每日完工后检查并充电所有设备"},
+  {id:"sop-006",title:"视频上传流程",category:"通用规范",content:"1. 连接WiFi，保持手机通电不息屏\n2. 后台批量上传当日采集视频\n3. 核对并上报当日总采集时长\n4. 上传完成删除本地视频释放内存\n5. 静置完成后台上传，上传周期通常为整夜及以上"},
+  {id:"sop-008",title:"质量判定标准",category:"质量规范",content:"A级画面标准：\n- 双手和操作物体完整在画面内\n- 动作自然速度正常\n- 无遮挡、无反光、无模糊\n- 无无关物品入镜\n\n不合格画面：\n- 手部频繁离开画面超过30秒\n- 超过1分钟无意义动作\n- 镜头有脏东西、水渍或被遮挡\n- 他人或本人面部清晰入镜"}
+];
+
+// ============ 数据：质量判定中心 ============
+const QUALITY={
+  principles:["双手和操作物体尽量在画面内","动作自然速度正常，不要假任务水时长","选择超广角镜头","保证画面清晰，无遮挡、无反光","禁止拍摄到人脸画面"],
+  tier1:{title:"严重不合格（T1）",description:"以下情况将导致视频直接作废，请严格遵守",items:[
+    {type:"手部频繁离开画面",issues:["手部频繁离开画面超过30秒"]},
+    {type:"动作过快",issues:["50%以上时间动作过快"]},
+    {type:"无意义动作",issues:["超过1分钟无意义动作","超过1分钟等待过长","超过1分钟无意义整理"]},
+    {type:"双手不动",issues:["超过1分钟双手不动"]},
+    {type:"未选超广角",issues:["未选择超广角全部作废"]},
+    {type:"镜头问题",issues:["镜头有脏东西、水渍或被遮挡"]}
+  ]},
+  tier2:{title:"一般不合格（T2）",description:"以下情况将影响视频质量评分，请尽量避免",items:[
+    {type:"工具入镜",issues:["工具过长导致一只手长期出镜"]},
+    {type:"充电线干扰",issues:["充电线连接不稳定或穿过画面"]},
+    {type:"视角不正",issues:["画面视角不平正影响任务理解"]},
+    {type:"手部不出镜",issues:["手部长期不出镜超过1分钟"]},
+    {type:"画面模糊",issues:["视频模糊不清","镜头大幅晃动"]},
+    {type:"面部入镜",issues:["他人或本人面部清晰入镜"]},
+    {type:"背景干扰",issues:["背景干扰物严重影响主任务观察"]},
+    {type:"环境过暗",issues:["环境过暗"]}
+  ]},
+  caseStudies:[
+    {title:"手部离开画面",qualified:{desc:"双手完整在画面内，操作清晰可见",tips:"确保双手始终在画面范围内"},unqualified:{desc:"手部频繁离开画面超过30秒",tips:"调整拍摄角度，确保双手始终入镜"},img:"df_case_1.jpeg"},
+    {title:"镜头遮挡",qualified:{desc:"画面清晰，无遮挡、无反光",tips:"定期清洁镜头，避免遮挡"},unqualified:{desc:"镜头有污渍或被遮挡",tips:"立即清洁镜头，检查是否有遮挡物"},img:"df_case_2.jpeg"},
+    {title:"面部入镜",qualified:{desc:"无任何面部入镜，保护隐私",tips:"调整拍摄角度，避免拍摄到人脸"},unqualified:{desc:"他人或本人面部清晰入镜",tips:"调整拍摄角度，确保无面部入镜"},img:"df_case_3.jpeg"},
+    {title:"动作过快",qualified:{desc:"动作自然速度正常",tips:"按正常速度操作，确保动作清晰可见"},unqualified:{desc:"50%以上时间动作过快",tips:"放慢操作速度，确保细节清晰"},img:"df_case_4.jpeg"}
+  ]
+};
+
+// ============ 数据：故障处理 ============
+const TROUBLESHOOTING={
+  at:[
+    {title:"设备无法开机",symptom:"设备通电后无法启动",cause:"电量不足或连接异常",solution:"检查充电宝连接，更换满电充电宝，检查设备编号与工序匹配",needReport:true,reportMaterials:["设备编号","现场照片","故障时间"]},
+    {title:"录制自动停止",symptom:"录制过程中突然停止",cause:"网络异常或触发人脸检测",solution:"检查网络连接，检查是否抓拍人脸，检查是否长时间无手部画面",needReport:false,reportMaterials:[]}
+  ],
+  df:[
+    {title:"EDL软件无法启动",symptom:"打开EDL采集软件后闪退或无响应",cause:"软件版本不兼容或手机系统问题",solution:"重启手机，检查软件版本，确保手机系统版本兼容",needReport:true,reportMaterials:["手机型号","系统版本","软件版本"]},
+    {title:"视频上传失败",symptom:"采集完成后无法上传视频",cause:"网络不稳定或视频文件过大",solution:"检查WiFi连接，确保手机通电不息屏，分段采集避免过长",needReport:false,reportMaterials:[]}
+  ],
+  sw:[
+    {title:"电量不足",symptom:"设备电量消耗过快",cause:"电池老化或使用不当",solution:"停止录制充电，电量低于30%无法开启录制，更换满电设备",needReport:false,reportMaterials:[]},
+    {title:"画面模糊",symptom:"拍摄画面不清晰",cause:"镜头脏污或光线不足",solution:"清洁镜头，调整拍摄角度，确保光线充足",needReport:false,reportMaterials:[]}
+  ],
+  st:[
+    {title:"平台上传异常",symptom:"无法登录上传平台或上传失败",cause:"网络问题或账户权限不足",solution:"检查网络连接，确认账户权限，联系平台管理员",needReport:true,reportMaterials:["账户名","错误截图","网络状态"]},
+    {title:"手环未佩戴",symptom:"样片审核未通过，提示未佩戴手环",cause:"录制时忘记佩戴品牌手环",solution:"佩戴品牌手环重新录制，确保手环在画面中可见",needReport:false,reportMaterials:[]}
+  ]
+};
+
+// ============ 页面切换 ============
+function showPage(page){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById("page-"+page).classList.add("active");
+  document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
+  document.querySelectorAll('.nav-item[data-page="'+page+'"]').forEach(n=>n.classList.add("active"));
+  window.scrollTo(0,0);
+  // 关闭移动端菜单
+  const navList=document.getElementById("navList");
+  if(window.innerWidth<=768) navList.classList.add("mobile-hide");
+}
+
+function toggleMenu(){
+  document.getElementById("navList").classList.toggle("mobile-hide");
+}
+
+// ============ 首页：项目卡片 ============
+function renderHomeProjects(){
+  const grid=document.getElementById("homeProjects");
+  const projOrder=["at","df","sw","st"];
+  const projData={
+    at:{icon:"🎩",name:"AT头戴采集",desc:"鸭舌帽式头戴摄像设备第一视角采集",duration:"⏱️ 20小时",limit:"工序不限",price:"💰 30rmb",scene:"🏷️ 农业·家居·商超",equip:"✅ 我方提供全部硬件",feat:[{i:"🎬",t:"腕部镜头同步"},{i:"🔋",t:"充电宝续航"},{i:"📦",t:"邮寄内存卡"}]},
+    df:{icon:"📱",name:"iPhone采集",desc:"苹果手机EDL软件高清拍摄采集",duration:"⏱️ 50小时",limit:"≤15工序/场景",price:"💰 25rmb",scene:"🏷️ 居家+制造业",equip:"⚠️ 需客户自备iPhone",feat:[]},
+    sw:{icon:"🥽",name:"SW头戴设备",desc:"专业头戴设备高精度采集",duration:"⏱️ 50小时",limit:"限产品款式",price:"💰 25rmb",scene:"🏷️ 制造业",equip:"✅ 我方提供全部硬件",feat:[{i:"🔆",t:"配套灯光"},{i:"💻",t:"网页配对"},{i:"📡",t:"10M上行带宽"}]},
+    st:{icon:"🎥",name:"ST头戴式GoPro",desc:"头戴式GoPro设备真实场景人手操作视频采集",duration:"⏱️ 不限制",limit:"录制上限宽松",price:"💰 20rmb",scene:"🏷️ 真实场景·人手操作",equip:"✅ 我方提供全部硬件",feat:[{i:"⌚",t:"品牌手环"},{i:"📶",t:"10M上行带宽"},{i:"✅",t:"T+1审核"}]}
+  };
+  let html="";
+  projOrder.forEach(id=>{
+    const p=projData[id];
+    let featHtml="";
+    if(p.feat.length){
+      featHtml='<div class="proj-feat">'+p.feat.map(f=>'<div><div>'+f.i+'</div><div>'+f.t+'</div></div>').join("")+'</div>';
+    }
+    html+='<div class="proj-card '+id+'" onclick="showPage(\'projects\');setTimeout(function(){renderProject(\''+id+'\')},50)">'+
+      '<div class="p-icon">'+p.icon+'</div>'+
+      '<h3>'+p.name+'</h3>'+
+      '<p class="p-desc">'+p.desc+'</p>'+
+      (id==="df"?'<div style="display:inline-block;background:rgba(251,191,36,.9);color:#78350f;font-size:11px;font-weight:600;padding:2px 10px;border-radius:12px;margin-bottom:8px">⚠️ iPhone需客户自租</div>':'')+
+      '<div class="proj-info-box">'+
+        '<div class="proj-info-row"><span style="font-size:13px;font-weight:700">'+p.duration+'</span><span style="font-size:10px;background:rgba(255,255,255,.2);padding:2px 8px;border-radius:10px">'+p.limit+'</span></div>'+
+        '<div style="text-align:center"><span style="font-size:15px;font-weight:700">'+p.price+'</span></div>'+
+      '</div>'+
+      featHtml+
+      '<div class="proj-tag-row">'+p.scene+'</div>'+
+      '<div class="proj-tag-row">'+p.equip+'</div>'+
+      '<div class="proj-settle">💳 3周到一个月结算</div>'+
+      '<div style="margin-top:10px;font-size:12px;font-weight:500">了解详情 ➜</div>'+
+    '</div>';
+  });
+  grid.innerHTML=html;
+}
+
+// ============ 任务广场 ============
 let activeFilter="all";
 
-// 渲染分类筛选条
 function renderFilterBar(){
   const bar=document.getElementById("filterBar");
-  let html=`<div class="filter-chip ${activeFilter==='all'?'active':''}" data-cat="all">全部 <span class="count">${TASKS.length}</span></div>`;
+  let html='<div class="filter-chip '+(activeFilter==='all'?'active':'')+'" data-cat="all">全部 <span class="count">'+TASKS.length+'</span></div>';
   for(const [key,cat] of Object.entries(CATS)){
     const count=TASKS.filter(t=>t.cat===key).length;
     if(count===0) continue;
-    html+=`<div class="filter-chip ${activeFilter===key?'active':''}" data-cat="${key}">${cat.icon} ${cat.name} <span class="count">${count}</span></div>`;
+    html+='<div class="filter-chip '+(activeFilter===key?'active':'')+'" data-cat="'+key+'">'+cat.icon+' '+cat.name+' <span class="count">'+count+'</span></div>';
   }
   bar.innerHTML=html;
   bar.querySelectorAll(".filter-chip").forEach(chip=>{
@@ -234,52 +918,38 @@ function renderFilterBar(){
   });
 }
 
-// 渲染分类区块
-function renderSections(filter=""){
+function renderSections(filter){
+  filter=filter||"";
   const f=filter.trim().toLowerCase();
   const container=document.getElementById("sections");
   container.innerHTML="";
   let total=0;
-
   for(const [key,cat] of Object.entries(CATS)){
-    if(activeFilter!=="all" && activeFilter!==key) continue;
+    if(activeFilter!=="all"&&activeFilter!==key) continue;
     let tasks=TASKS.filter(t=>t.cat===key);
     if(f) tasks=tasks.filter(t=>t.title.toLowerCase().includes(f)||t.material.toLowerCase().includes(f));
     if(tasks.length===0) continue;
     total+=tasks.length;
-
     const section=document.createElement("div");
     section.className="section";
-    section.innerHTML=`
-      <div class="section-header">
-        <div class="section-icon" style="background:${cat.color}">${cat.icon}</div>
-        <div class="section-info">
-          <div class="section-title">${cat.name}<span class="badge-count">${tasks.length} 个任务</span></div>
-          <div class="section-desc">${cat.desc}</div>
-        </div>
-      </div>
-      <div class="card-grid"></div>`;
+    section.innerHTML='<div class="section-header"><div class="section-icon" style="background:'+cat.color+'">'+cat.icon+'</div><div><div class="section-title-l">'+cat.name+'<span class="badge-count">'+tasks.length+' 个任务</span></div><div class="section-desc">'+cat.desc+'</div></div></div><div class="card-grid"></div>';
     const grid=section.querySelector(".card-grid");
     tasks.forEach(t=>{
       const card=document.createElement("div");
-      card.className="card";
+      card.className="task-card";
       card.style.setProperty("--cat-color",cat.color);
-      card.innerHTML=`
-        <div class="name">${t.title}</div>
-        <div class="info"><span class="label">📦 物料：</span>${t.material}</div>
-        <div class="play-hint">▶ 点击查看示例视频</div>`;
+      card.innerHTML='<div class="name">'+t.title+'</div><div class="info"><span class="label">📦 物料：</span>'+t.material+'</div><div class="play-hint">▶ 点击查看示例视频</div>';
       card.addEventListener("click",()=>openModal(t));
       grid.appendChild(card);
     });
     container.appendChild(section);
   }
-
   document.getElementById("totalCount").textContent=total;
   document.getElementById("empty").style.display=total===0?"block":"none";
 }
 
 // 模态播放器
-const modal=document.getElementById("modal");
+const taskModal=document.getElementById("taskModal");
 const modalVideo=document.getElementById("modalVideo");
 const modalTitle=document.getElementById("modalTitle");
 const modalLinks=document.getElementById("modalLinks");
@@ -289,7 +959,7 @@ function openModal(task){
   const srcMp4="./"+task.title+".mp4";
   const srcMP4="./"+task.title+".MP4";
   modalLinks.innerHTML="";
-  modal.classList.add("active");
+  taskModal.classList.add("active");
   modalVideo.src=srcMp4;
   modalVideo.load();
   const tryAlt=()=>{
@@ -298,7 +968,7 @@ function openModal(task){
       modalVideo.load();
       modalVideo.play().catch(()=>{});
     }else{
-      modalLinks.innerHTML=`<a href="${srcMp4}" target="_blank">🔗 下载 .mp4</a><a href="${srcMP4}" target="_blank">🔗 下载 .MP4</a>`;
+      modalLinks.innerHTML='<a href="'+srcMp4+'" target="_blank">🔗 下载 .mp4</a><a href="'+srcMP4+'" target="_blank">🔗 下载 .MP4</a>';
     }
   };
   modalVideo.play().catch(()=>{tryAlt();});
@@ -306,22 +976,224 @@ function openModal(task){
 }
 
 function closeModal(){
-  modal.classList.remove("active");
+  taskModal.classList.remove("active");
   modalVideo.pause();
   modalVideo.removeAttribute("src");
   modalVideo.load();
 }
 
 document.getElementById("modalClose").addEventListener("click",closeModal);
-modal.addEventListener("click",e=>{if(e.target===modal)closeModal();});
-document.addEventListener("keydown",e=>{if(e.key==="Escape"&&modal.classList.contains("active"))closeModal();});
+taskModal.addEventListener("click",e=>{if(e.target===taskModal)closeModal();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&taskModal.classList.contains("active"))closeModal();});
 
-// 搜索
 document.getElementById("searchInput").addEventListener("input",e=>{renderSections(e.target.value);});
 
-// 初始化
+// ============ 项目专区 ============
+let currentProj="at";
+
+function renderProject(id){
+  currentProj=id;
+  const p=PROJECTS[id];
+  document.getElementById("projTitle").textContent=p.title;
+  document.getElementById("projDesc").textContent=p.description;
+  document.querySelectorAll(".proj-tab").forEach(t=>t.classList.toggle("active",t.dataset.proj===id));
+  const c=document.getElementById("projContent");
+  let html="";
+
+  // 设备清单
+  html+='<div class="p-section"><div class="p-sec-head">📦 全套设备清单</div><div class="p-sec-body"><ul class="eq-list">';
+  p.equipment.forEach((item,i)=>{
+    html+='<li><span class="eq-badge">'+(i+1)+'</span>'+item+'</li>';
+  });
+  html+='</ul>'+(id!=="df"?'<div class="eq-note ok">✅ 我方提供全部硬件</div>':'<div class="eq-note warn">⚠️ iPhone需自备/自租</div>')+'</div></div>';
+
+  // 采集时效
+  html+='<div class="p-section"><div class="p-sec-head">⌛ 采集时效说明</div><div class="p-sec-body"><div class="time-grid">'+
+    '<div class="time-item blue"><span style="font-size:18px">⏱️</span><div><div class="t-label">有效时长</div><div class="t-val">'+p.validDuration+'</div></div></div>'+
+    '<div class="time-item purple"><span style="font-size:18px">📊</span><div><div class="t-label">工序限制</div><div class="t-val" style="font-size:12px">'+p.processLimit+'</div></div></div>'+
+    '<div class="time-item green2"><span style="font-size:18px">📤</span><div><div class="t-label">上传方式</div><div class="t-val" style="font-size:12px">'+p.uploadMethod+'</div></div></div>'+
+    '<div class="time-item orange"><span style="font-size:18px">🎯</span><div><div class="t-label">场景需求</div><div class="t-val" style="font-size:12px">'+p.sceneRequirements+'</div></div></div>'+
+    '<div class="time-item red"><span style="font-size:18px">💰</span><div><div class="t-label">时长单价</div><div class="t-val">'+p.unitPrice+'</div></div></div>'+
+    '<div class="time-item amber"><span style="font-size:18px">💳</span><div><div class="t-label">结算</div><div class="t-val" style="font-size:12px">'+(p.settlementMethod||'3周到一个月')+'</div></div></div>'+
+    '</div></div></div>';
+
+  // 开工准备
+  html+='<div class="p-section"><div class="p-sec-head">📋 开工前置准备</div><div class="p-sec-body"><ul class="check-list">';
+  p.preparation.forEach(item=>{
+    html+='<li><span class="dot" style="color:var(--green)">✓</span><span>'+item+'</span></li>';
+  });
+  html+='</ul></div></div>';
+
+  // 操作步骤
+  html+='<div class="p-section"><div class="p-sec-head">📝 标准化操作步骤</div><div class="p-sec-body"><div class="step-grid">';
+  p.steps.forEach(s=>{
+    html+='<div class="step-item"><div class="step-num">'+s.num+'</div><h4>'+s.title+'</h4><p>'+s.desc+'</p></div>';
+  });
+  html+='</div></div></div>';
+
+  // SW设备图示
+  if(id==="sw"){
+    html+='<div class="p-section"><div class="p-sec-head">🖼️ SW设备图示说明</div><div class="p-sec-body"><div class="sw-img-grid">';
+    for(let i=1;i<=6;i++){
+      html+='<div class="sw-img-item"><img src="./sw_image_'+i+'.png" alt="SW设备图示'+i+'"><p>图示'+i+'</p></div>';
+    }
+    html+='</div><div class="sw-light"><p style="font-size:13px;font-weight:600;margin-bottom:8px;color:var(--text)">设备灯光说明：</p><div class="sw-light-row">'+
+      '<span><span class="ldot" style="background:#3b82f6"></span>蓝灯：20-90%</span>'+
+      '<span><span class="ldot" style="background:#22c55e"></span>绿灯：90%+</span>'+
+      '<span><span class="ldot" style="background:#ef4444"></span>红灯：20%-</span>'+
+      '</div></div></div></div>';
+  }
+
+  // 巡检 + 午休
+  html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">';
+  html+='<div class="p-section"><div class="p-sec-head">🔍 现场巡检</div><div class="p-sec-body"><ul class="check-list">';
+  p.patrol.forEach(item=>{html+='<li><span class="dot">🔵</span><span>'+item+'</span></li>';});
+  html+='</ul></div></div>';
+  html+='<div class="p-section"><div class="p-sec-head">😴 午休/临时离岗</div><div class="p-sec-body"><ul class="check-list">';
+  p.lunchBreak.forEach(item=>{html+='<li><span class="dot">🟠</span><span>'+item+'</span></li>';});
+  html+='</ul></div></div>';
+  html+='</div>';
+
+  // 完工处理
+  html+='<div class="p-section"><div class="p-sec-head">📤 完工数据处理</div><div class="p-sec-body"><ul class="check-list">';
+  p.finish.forEach(item=>{
+    html+='<li><span class="eq-badge">✓</span><span>'+item+'</span></li>';
+  });
+  html+='</ul></div></div>';
+
+  // 红线禁令
+  html+='<div class="p-section"><div class="p-sec-head">🚫 红线禁令</div><div class="p-sec-body"><div class="ban-box"><div class="ban-title">🚨 违反将影响结算</div><ul class="ban-list">';
+  p.prohibitions.forEach(item=>{html+='<li><span style="margin-right:6px">❌</span><span>'+item+'</span></li>';});
+  html+='</ul></div></div></div>';
+
+  // 自检表
+  if(p.selfCheck&&p.selfCheck.length>0){
+    html+='<div class="p-section"><div class="p-sec-head">📋 每日自检表</div><div class="p-sec-body"><div class="self-check-box"><div class="sc-title">✅ 采集前请完成以下检查</div><ul class="num-list">';
+    p.selfCheck.forEach((item,i)=>{
+      html+='<li><span class="num-badge" style="background:#3b82f6">'+(i+1)+'</span><span>'+item+'</span></li>';
+    });
+    html+='</ul></div></div></div>';
+  }
+
+  // 专项规则
+  if(p.specialRules&&p.specialRules.length>0){
+    html+='<div class="p-section"><div class="p-sec-head">📌 专项规则</div><div class="p-sec-body"><div class="rule-box"><div class="r-title">📌 本项目注意事项</div><ul class="num-list">';
+    p.specialRules.forEach((item,i)=>{
+      html+='<li><span class="num-badge" style="background:#7e22ce">'+(i+1)+'</span><span>'+item+'</span></li>';
+    });
+    html+='</ul></div></div></div>';
+  }
+
+  c.innerHTML=html;
+}
+
+// ============ SOP库 ============
+let sopCategory="全部";
+
+function renderSOPCats(){
+  const cats=["全部","AT设备","iPhone设备","SW设备","ST设备","ST项目","通用规范","质量规范"];
+  const c=document.getElementById("sopCats");
+  c.innerHTML=cats.map(cat=>'<button class="sop-cat '+(sopCategory===cat?'active':'')+'" onclick="sopCategory=\''+cat+'\';renderSOPCats();renderSOP()">'+cat+'</button>').join("");
+}
+
+function renderSOP(){
+  const search=document.getElementById("sopSearch").value.toLowerCase();
+  const filtered=SOP_LIBRARY.filter(doc=>{
+    const ms=doc.title.toLowerCase().includes(search)||doc.content.toLowerCase().includes(search);
+    const mc=sopCategory==="全部"||doc.category===sopCategory;
+    return ms&&mc;
+  });
+  const grid=document.getElementById("sopGrid");
+  document.getElementById("sopEmpty").style.display=filtered.length===0?"block":"none";
+  grid.innerHTML=filtered.map(doc=>{
+    const preview=doc.content.substring(0,100);
+    return '<div class="sop-card" onclick="openSOP(\''+doc.id+'\')"><div class="sop-card-head"><span class="sop-cat-badge">'+doc.category+'</span><span class="sop-view">查看详情 ➜</span></div><h3>'+doc.title+'</h3><p>'+preview+'...</p></div>';
+  }).join("");
+}
+
+function openSOP(id){
+  const doc=SOP_LIBRARY.find(d=>d.id===id);
+  if(!doc) return;
+  document.getElementById("sopModalTitle").textContent=doc.title;
+  const body=document.getElementById("sopModalBody");
+  body.innerHTML='<div style="margin-bottom:14px"><span class="sop-cat-badge">'+doc.category+'</span></div>'+doc.content.split("\n").map(l=>'<p>'+l+'</p>').join("")+'<div style="text-align:right;margin-top:16px"><button class="btn btn-primary" onclick="window.print()">🖨️ 打印文档</button></div>';
+  document.getElementById("sopModal").classList.add("active");
+}
+
+document.getElementById("sopModalClose").addEventListener("click",()=>{
+  document.getElementById("sopModal").classList.remove("active");
+});
+document.getElementById("sopModal").addEventListener("click",e=>{
+  if(e.target.id==="sopModal") document.getElementById("sopModal").classList.remove("active");
+});
+
+// ============ 质量判定 ============
+function renderQuality(){
+  // 原则
+  const pg=document.getElementById("principleGrid");
+  pg.innerHTML=QUALITY.principles.map((p,i)=>'<div class="principle-item"><div class="principle-num">'+(i+1)+'</div><h4>'+p+'</h4></div>').join("");
+
+  // T1
+  const t1=document.getElementById("tier1Box");
+  t1.innerHTML='<p class="tier-desc">'+QUALITY.tier1.description+'</p>'+QUALITY.tier1.items.map(item=>{
+    return '<div class="tier-item"><h4>❌ '+item.type+'</h4><ul>'+item.issues.map(is=>'<li><span class="x" style="color:#ef4444">✕</span>'+is+'</li>').join("")+'</ul></div>';
+  }).join("");
+
+  // T2
+  const t2=document.getElementById("tier2Box");
+  t2.innerHTML='<p class="tier-desc">'+QUALITY.tier2.description+'</p>'+QUALITY.tier2.items.map(item=>{
+    return '<div class="tier-item"><h4>⚠️ '+item.type+'</h4><ul>'+item.issues.map(is=>'<li><span class="x" style="color:#f97316">⚠</span>'+is+'</li>').join("")+'</ul></div>';
+  }).join("");
+
+  // 案例
+  const cs=document.getElementById("caseStudies");
+  cs.innerHTML=QUALITY.caseStudies.map(study=>{
+    return '<div class="case-row"><h3>📸 '+study.title+'</h3><div class="case-grid">'+
+      '<div class="case-side ok"><div class="c-head"><span style="font-size:22px">✅</span><span>合格画面标准</span></div>'+
+        '<div class="case-img-box ok"><div class="placeholder">📸</div></div>'+
+        '<p><b style="color:#15803d">标准：</b>'+study.qualified.desc+'</p>'+
+        '<p style="color:#15803d"><b>要求：</b>'+study.qualified.tips+'</p>'+
+      '</div>'+
+      '<div class="case-side bad"><div class="c-head"><span style="font-size:22px">❌</span><span>不合格画面案例</span></div>'+
+        '<div class="case-img-box bad"><img src="./'+study.img+'" alt="'+study.title+' - 问题示例"></div>'+
+        '<p><b style="color:#b91c1c">问题：</b>'+study.unqualified.desc+'</p>'+
+        '<p style="color:#b91c1c"><b>整改方法：</b>'+study.unqualified.tips+'</p>'+
+      '</div>'+
+    '</div></div>';
+  }).join("");
+}
+
+// ============ 故障处理 ============
+function renderFault(tab){
+  document.querySelectorAll(".ts-tab").forEach(t=>t.classList.toggle("active",t.dataset.ftab===tab));
+  const issues=TROUBLESHOOTING[tab];
+  const c=document.getElementById("faultContent");
+  c.innerHTML=issues.map(issue=>{
+    let matHtml="";
+    if(issue.needReport&&issue.reportMaterials.length>0){
+      matHtml='<div class="fault-mat"><h4>报备所需材料</h4><div class="fault-mat-list">'+issue.reportMaterials.map(m=>'<span>'+m+'</span>').join("")+'</div></div>';
+    }
+    return '<div class="fault-card"><div class="f-head">❌ '+issue.symptom+'</div><div class="f-body">'+
+      '<div class="fault-block"><h4>停机原因</h4><p>'+issue.cause+'</p></div>'+
+      '<div class="fault-block"><h4 class="f-sol-title">即时处理方案</h4><p>'+issue.solution+'</p></div>'+
+      '<div><span class="fault-tag '+(issue.needReport?'need':'no')+'">'+(issue.needReport?'⚠️ 需要报备':'✅ 无需报备')+'</span></div>'+
+      matHtml+
+    '</div></div>';
+  }).join("");
+}
+
+// ============ 初始化 ============
+renderHomeProjects();
 renderFilterBar();
 renderSections();
+renderProject("at");
+renderSOPCats();
+renderSOP();
+renderQuality();
+renderFault("at");
+
+// 移动端默认隐藏菜单
+if(window.innerWidth<=768) document.getElementById("navList").classList.add("mobile-hide");
 </script>
 </body>
 </html>
