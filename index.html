@@ -334,6 +334,11 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg)
 .footer p{color:#9ca3af;font-size:13px}
 .footer .footer-sub{color:#6b7280;font-size:12px;margin-top:12px}
 
+/* 返回顶部 */
+.back-top{position:fixed;bottom:30px;right:30px;width:48px;height:48px;background:var(--green);color:#fff;border:none;border-radius:50%;font-size:22px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.2);display:none;align-items:center;justify-content:center;z-index:99;transition:all .25s}
+.back-top:hover{transform:scale(1.1);box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.back-top.visible{display:flex}
+
 /* 响应式 */
 @media(max-width:768px){
   .card-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
@@ -371,12 +376,43 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg)
   <section class="hero">
     <div class="hero-badge"><span class="dot"></span>局域网离线培训平台</div>
     <h1>一站式第一视角实景数据采集合作平台</h1>
-    <p class="hero-sub">局域网离线全流程培训</p>
-    <p class="hero-desc">无需外网，同局域网任意设备可访问，低成本上手，清晰收益，标准化作业</p>
+    <p class="hero-sub">局域网离线全流程培训 · 新手友好</p>
+    <p class="hero-desc">无需外网，同局域网任意设备可访问。从设备领取到收益结算，全流程标准化指导，零经验也能快速上手开拍赚收益</p>
     <div class="hero-btns">
       <button class="btn btn-primary" onclick="showPage('projects')">🚀 查看项目详情</button>
       <button class="btn btn-outline" onclick="showPage('sop')">📚 学习SOP规范</button>
       <button class="btn btn-amber" onclick="showPage('tasksquare')">🎬 快速开拍赚收益</button>
+    </div>
+  </section>
+
+  <!-- 快速入口 -->
+  <section class="container-sm" style="padding-top:28px;padding-bottom:0">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px">
+      <div onclick="showPage('tasksquare')" style="background:linear-gradient(135deg,#10b981,#14b8a6);border-radius:14px;padding:20px;cursor:pointer;transition:all .25s;color:#fff;text-align:center" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 30px rgba(16,185,129,.3)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="font-size:32px;margin-bottom:6px">🎬</div>
+        <div style="font-size:15px;font-weight:700">任务广场</div>
+        <div style="font-size:12px;opacity:.85;margin-top:2px">62个任务 · 点击看视频</div>
+      </div>
+      <div onclick="showPage('projects')" style="background:linear-gradient(135deg,#3b82f6,#6366f1);border-radius:14px;padding:20px;cursor:pointer;transition:all .25s;color:#fff;text-align:center" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 30px rgba(59,130,246,.3)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="font-size:32px;margin-bottom:6px">🥽</div>
+        <div style="font-size:15px;font-weight:700">项目专区</div>
+        <div style="font-size:12px;opacity:.85;margin-top:2px">AT / DF / SW / ST</div>
+      </div>
+      <div onclick="showPage('sop')" style="background:linear-gradient(135deg,#8b5cf6,#a855f7);border-radius:14px;padding:20px;cursor:pointer;transition:all .25s;color:#fff;text-align:center" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 30px rgba(139,92,246,.3)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="font-size:32px;margin-bottom:6px">📚</div>
+        <div style="font-size:15px;font-weight:700">SOP库</div>
+        <div style="font-size:12px;opacity:.85;margin-top:2px">8份操作规范文档</div>
+      </div>
+      <div onclick="showPage('quality')" style="background:linear-gradient(135deg,#f59e0b,#f97316);border-radius:14px;padding:20px;cursor:pointer;transition:all .25s;color:#fff;text-align:center" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 30px rgba(245,158,11,.3)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="font-size:32px;margin-bottom:6px">🎯</div>
+        <div style="font-size:15px;font-weight:700">质量判定</div>
+        <div style="font-size:12px;opacity:.85;margin-top:2px">合格 vs 不合格对照</div>
+      </div>
+      <div onclick="showPage('troubleshooting')" style="background:linear-gradient(135deg,#ef4444,#f43f5e);border-radius:14px;padding:20px;cursor:pointer;transition:all .25s;color:#fff;text-align:center" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 30px rgba(239,68,68,.3)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="font-size:32px;margin-bottom:6px">🔧</div>
+        <div style="font-size:15px;font-weight:700">故障处理</div>
+        <div style="font-size:12px;opacity:.85;margin-top:2px">异常速查手册</div>
+      </div>
     </div>
   </section>
 
@@ -396,13 +432,13 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg)
 
   <section class="container-sm" style="background:linear-gradient(135deg,#ecfdf5,#fff,#fffbeb)">
     <div class="ts-banner" onclick="showPage('tasksquare')">
-      <div class="ts-badge"><span style="width:6px;height:6px;background:#fde047;border-radius:50%;display:inline-block"></span>居家随手拍 · 48个任务 · 零成本上手</div>
+      <div class="ts-badge"><span style="width:6px;height:6px;background:#fde047;border-radius:50%;display:inline-block"></span>62个任务 · 13大类别 · 零成本上手</div>
       <h3>🎬 任务广场 · 手边有什么就拍什么</h3>
-      <p>食品加工、零售日用消费品、农贸生鲜处理、生活清洁服务、服饰配件加工、精密电子组装、玩具模型加工、手工装饰制作、饰品/工艺品/支架/成品整机装配 共 12 大类 —— 家里现成物品马上变成可拍任务，多拍多赚、审核通过即获收益。</p>
+      <p>商超零售、生鲜处理、包装作业、纸品加工、鞋业加工、模型加工、饰品加工、手工布艺、电子组装、玩具组装、灯饰加工、五金塑胶、电池组装 共 13 大类 —— 家里现成物品马上变成可拍任务，多拍多赚、审核通过即获收益。</p>
       <div class="ts-tags">
-        <span class="ts-tag">🎬 12 大场景</span>
-        <span class="ts-tag">📋 48 个任务</span>
-        <span class="ts-tag">🎥 90+ 示范视频</span>
+        <span class="ts-tag">🎬 13 大类别</span>
+        <span class="ts-tag">📋 62 个任务</span>
+        <span class="ts-tag">🎥 62 个示范视频</span>
         <span class="ts-tag">💰 审核即赚</span>
       </div>
       <div class="ts-cta">马上开拍 ➜</div>
@@ -522,7 +558,7 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg)
     <div class="text-center" style="margin-bottom:24px">
       <span class="section-title">📚 SOP资料库</span>
       <h1 class="h-title">SOP运维资料库</h1>
-      <p class="h-sub">整合8份文档全部操作规范，可搜索、分类查看，支持本地打印导出</p>
+      <p class="h-sub">共 <b style="color:var(--green);font-size:18px">8</b> 份操作规范文档，可搜索、分类查看，支持本地打印导出</p>
     </div>
     <div class="sop-toolbar">
       <input id="sopSearch" type="text" placeholder="搜索SOP文档..." oninput="renderSOP()">
@@ -549,6 +585,11 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg)
       <h3 style="font-size:17px;font-weight:700;margin-bottom:16px">📌 采集核心五原则</h3>
       <div class="principle-grid" id="principleGrid"></div>
     </div>
+    <!-- 质量口诀 -->
+    <div style="background:linear-gradient(135deg,#f0fdf4,#ecfdf5,#fffbeb);border:2px dashed #86efac;border-radius:14px;padding:20px;margin-bottom:24px;text-align:center">
+      <div style="font-size:15px;font-weight:700;color:var(--green);margin-bottom:10px">💡 质量口诀（速记）</div>
+      <div style="font-size:18px;font-weight:700;color:#1b5e20;letter-spacing:2px;line-height:2">双手入镜是基础，动作自然不赶速；超广镜头要选对，画面清晰无遮挡；人脸绝不可入镜，五条原则记心中</div>
+    </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin-bottom:24px">
       <div class="card card-pad"><h3 style="font-size:17px;font-weight:700;margin-bottom:14px">🚫 严重不合格（T1）</h3><div class="tier-box t1" id="tier1Box"></div></div>
       <div class="card card-pad"><h3 style="font-size:17px;font-weight:700;margin-bottom:14px">⚠️ 一般不合格（T2）</h3><div class="tier-box t2" id="tier2Box"></div></div>
@@ -568,6 +609,21 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg)
         </tbody>
       </table>
     </div>
+    <!-- 快速判定流程 -->
+    <div class="card card-pad" style="margin-top:18px">
+      <h3 style="font-size:17px;font-weight:700;margin-bottom:16px">⚡ 快速判定流程</h3>
+      <div style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:14px">
+        <div style="text-align:center"><div style="width:50px;height:50px;background:#22c55e;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 6px">🎬</div><div style="font-size:13px;font-weight:600">采集完成</div></div>
+        <span style="font-size:20px;color:var(--text-muted)">➜</span>
+        <div style="text-align:center"><div style="width:50px;height:50px;background:#3b82f6;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 6px">🔍</div><div style="font-size:13px;font-weight:600">自查五原则</div></div>
+        <span style="font-size:20px;color:var(--text-muted)">➜</span>
+        <div style="text-align:center"><div style="width:50px;height:50px;background:#f59e0b;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 6px">📋</div><div style="font-size:13px;font-weight:600">对照T1/T2</div></div>
+        <span style="font-size:20px;color:var(--text-muted)">➜</span>
+        <div style="text-align:center"><div style="width:50px;height:50px;background:#22c55e;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 6px">✅</div><div style="font-size:13px;font-weight:600">合格提交</div></div>
+        <span style="font-size:20px;color:var(--text-muted)">➜</span>
+        <div style="text-align:center"><div style="width:50px;height:50px;background:#ef4444;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 6px">🔄</div><div style="font-size:13px;font-weight:600">不合格重采</div></div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -577,6 +633,7 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg)
     <div class="text-center" style="margin-bottom:24px">
       <h1 class="h-title">🔧 异常故障速查手册</h1>
       <p class="h-sub">按设备分类的故障速查指南，快速解决采集过程中的问题</p>
+      <div style="background:linear-gradient(90deg,#fef3c7,#fde68a);border:1px solid #fbbf24;border-radius:10px;padding:12px 18px;margin-top:14px;text-align:left;font-size:13px;color:#92400e;display:flex;align-items:center;gap:8px"><span style="font-size:18px">💡</span><span>遇到故障不要慌，先对照手册自查。无法解决的请立即联系对接人报备，并提供设备编号和故障截图</span></div>
     </div>
     <div class="ts-tabs" id="faultTabs">
       <button class="ts-tab at active" data-ftab="at" onclick="renderFault('at')">AT设备故障</button>
@@ -606,6 +663,9 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg)
   <p>本平台为局域网离线供应商培训平台，无需外网即可访问全部内容。</p>
   <p class="footer-sub">供应商合作培训平台 | 离线版 v1.0</p>
 </div>
+
+<!-- 返回顶部 -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <!-- 模态播放器 -->
 <div class="modal-overlay" id="taskModal">
@@ -1000,6 +1060,26 @@ function renderProject(id){
   const c=document.getElementById("projContent");
   let html="";
 
+  // 概览摘要卡
+  const projColor={at:"#2e7d32",df:"#0891b2",sw:"#059669",st:"#1b5e20"};
+  const pc=projColor[id];
+  html+='<div style="background:linear-gradient(135deg,'+pc+','+pc+'dd);border-radius:16px;padding:24px;color:#fff;margin-bottom:18px;box-shadow:0 8px 24px '+pc+'40">'+
+    '<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">'+
+      '<div style="font-size:36px">'+PROJ_META[id].icon+'</div>'+
+      '<div><div style="font-size:20px;font-weight:800">'+p.title+'</div>'+
+      '<div style="font-size:13px;opacity:.85">'+p.description+'</div></div>'+
+    '</div>'+
+    '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px">'+
+      '<div style="background:rgba(255,255,255,.15);border-radius:10px;padding:12px;text-align:center"><div style="font-size:11px;opacity:.8">有效时长</div><div style="font-size:18px;font-weight:700;margin-top:4px">'+p.validDuration+'</div></div>'+
+      '<div style="background:rgba(255,255,255,.15);border-radius:10px;padding:12px;text-align:center"><div style="font-size:11px;opacity:.8">时长单价</div><div style="font-size:18px;font-weight:700;margin-top:4px">'+p.unitPrice+'</div></div>'+
+      '<div style="background:rgba(255,255,255,.15);border-radius:10px;padding:12px;text-align:center"><div style="font-size:11px;opacity:.8">上传方式</div><div style="font-size:14px;font-weight:600;margin-top:4px">'+p.uploadMethod+'</div></div>'+
+      '<div style="background:rgba(255,255,255,.15);border-radius:10px;padding:12px;text-align:center"><div style="font-size:11px;opacity:.8">场景需求</div><div style="font-size:14px;font-weight:600;margin-top:4px">'+p.sceneRequirements+'</div></div>'+
+      '<div style="background:rgba(255,255,255,.15);border-radius:10px;padding:12px;text-align:center"><div style="font-size:11px;opacity:.8">设备来源</div><div style="font-size:14px;font-weight:600;margin-top:4px">'+(id!=="df"?"✅ 我方提供":"⚠️ 需自备")+'</div></div>'+
+      '<div style="background:linear-gradient(90deg,#fbbf24,#fde047);border-radius:10px;padding:12px;text-align:center;color:#78350f"><div style="font-size:11px;opacity:.8">结算周期</div><div style="font-size:14px;font-weight:700;margin-top:4px">'+p.settlementMethod+'</div></div>'+
+    '</div>'+
+    '<div style="margin-top:14px;font-size:12px;opacity:.85;display:flex;align-items:center;gap:6px"><span>📌</span><span>工序限制：'+p.processLimit+'</span></div>'+
+  '</div>';
+
   // 设备清单
   html+='<div class="p-section"><div class="p-sec-head">📦 全套设备清单</div><div class="p-sec-body"><ul class="eq-list">';
   p.equipment.forEach((item,i)=>{
@@ -1105,9 +1185,19 @@ function renderSOP(){
   });
   const grid=document.getElementById("sopGrid");
   document.getElementById("sopEmpty").style.display=filtered.length===0?"block":"none";
+  const catIcons={"AT设备":"🎩","iPhone设备":"📱","SW设备":"🥽","ST设备":"🎥","ST项目":"📋","通用规范":"📌","质量规范":"🎯"};
+  const catColors={"AT设备":"#2e7d32","iPhone设备":"#0891b2","SW设备":"#059669","ST设备":"#1b5e20","ST项目":"#7e22ce","通用规范":"#f57f17","质量规范":"#dc2626"};
   grid.innerHTML=filtered.map(doc=>{
-    const preview=doc.content.substring(0,100);
-    return '<div class="sop-card" onclick="openSOP(\''+doc.id+'\')"><div class="sop-card-head"><span class="sop-cat-badge">'+doc.category+'</span><span class="sop-view">查看详情 ➜</span></div><h3>'+doc.title+'</h3><p>'+preview+'...</p></div>';
+    const lines=doc.content.split("\n").filter(l=>l.trim());
+    const preview=lines.slice(0,3).join(" · ");
+    const icon=catIcons[doc.category]||"📄";
+    const color=catColors[doc.category]||"#666";
+    return '<div class="sop-card" onclick="openSOP(\''+doc.id+'\')" style="border-left:4px solid '+color+'">'+
+      '<div class="sop-card-head"><span class="sop-cat-badge" style="background:'+color+'15;color:'+color+'">'+icon+' '+doc.category+'</span><span class="sop-view">查看详情 ➜</span></div>'+
+      '<h3>'+doc.title+'</h3>'+
+      '<p style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">'+preview+'</p>'+
+      '<div style="margin-top:10px;font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:4px"><span>📄</span><span>'+lines.length+' 步操作</span></div>'+
+    '</div>';
   }).join("");
 }
 
@@ -1173,13 +1263,21 @@ function renderFault(tab){
     if(issue.needReport&&issue.reportMaterials.length>0){
       matHtml='<div class="fault-mat"><h4>报备所需材料</h4><div class="fault-mat-list">'+issue.reportMaterials.map(m=>'<span>'+m+'</span>').join("")+'</div></div>';
     }
-    return '<div class="fault-card"><div class="f-head">❌ '+issue.symptom+'</div><div class="f-body">'+
-      '<div class="fault-block"><h4>停机原因</h4><p>'+issue.cause+'</p></div>'+
-      '<div class="fault-block"><h4 class="f-sol-title">即时处理方案</h4><p>'+issue.solution+'</p></div>'+
+    const severity=issue.needReport?'<span style="background:#ef4444;color:#fff;font-size:11px;font-weight:700;padding:2px 10px;border-radius:10px;margin-left:8px">🔴 高</span>':'<span style="background:#f59e0b;color:#fff;font-size:11px;font-weight:700;padding:2px 10px;border-radius:10px;margin-left:8px">🟡 中</span>';
+    return '<div class="fault-card"><div class="f-head">'+severity+issue.title+'</div><div class="f-body">'+
+      '<div class="fault-block"><h4>❓ 故障现象</h4><p>'+issue.symptom+'</p></div>'+
+      '<div class="fault-block"><h4>🔍 可能原因</h4><p>'+issue.cause+'</p></div>'+
+      '<div class="fault-block"><h4 class="f-sol-title">✅ 即时处理方案</h4><p>'+issue.solution+'</p></div>'+
       '<div><span class="fault-tag '+(issue.needReport?'need':'no')+'">'+(issue.needReport?'⚠️ 需要报备':'✅ 无需报备')+'</span></div>'+
       matHtml+
     '</div></div>';
   }).join("");
+  // 速查表
+  const tabLabels={at:"AT设备",df:"DF手机",sw:"SW头戴",st:"ST头戴"};
+  const quickRef='<div class="card card-pad" style="margin-top:18px"><h3 style="font-size:16px;font-weight:700;margin-bottom:14px">📋 '+tabLabels[tab]+' 故障速查表</h3><div style="overflow-x:auto"><table class="grade-table"><thead><tr><th>故障</th><th>严重程度</th><th>是否需报备</th><th>处理方式</th></tr></thead><tbody>'+
+    issues.map(issue=>'<tr><td style="font-weight:600">'+issue.title+'</td><td>'+(issue.needReport?'<span style="color:#ef4444;font-weight:700">🔴 高</span>':'<span style="color:#f59e0b;font-weight:700">🟡 中</span>')+'</td><td>'+(issue.needReport?'⚠️ 需要':'✅ 不需要')+'</td><td style="font-size:12px">'+issue.solution.substring(0,30)+(issue.solution.length>30?'...':'')+'</td></tr>').join("")+
+    '</tbody></table></div></div>';
+  c.innerHTML+=quickRef;
 }
 
 // ============ 初始化 ============
@@ -1194,6 +1292,13 @@ renderFault("at");
 
 // 移动端默认隐藏菜单
 if(window.innerWidth<=768) document.getElementById("navList").classList.add("mobile-hide");
+
+// 返回顶部按钮
+window.addEventListener("scroll",function(){
+  var btn=document.getElementById("backTop");
+  if(window.scrollY>300) btn.classList.add("visible");
+  else btn.classList.remove("visible");
+});
 </script>
 </body>
 </html>
