@@ -1,14 +1,266 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>供应商培训平台 - 局域网离线版</title>
-    <script type="module" crossorigin src="/chakan/assets/index-D3Y33FbC.js"></script>
-    <link rel="stylesheet" crossorigin href="/chakan/assets/index-8sASuEhp.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>供应商培训平台 · 任务广场</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f6f8;color:#222}
+.navbar{background:linear-gradient(135deg,#2e7d32,#43a047);color:#fff;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.navbar .logo{font-size:20px;font-weight:700;display:flex;align-items:center;gap:10px}
+.navbar .logo-icon{width:32px;height:32px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.navbar .search{display:flex;align-items:center;gap:8px}
+.navbar .search input{padding:8px 16px;border:none;border-radius:20px;width:280px;font-size:14px;outline:none}
+.container{max-width:1200px;margin:0 auto;padding:32px 24px}
+.header{text-align:center;margin-bottom:32px}
+.header h1{font-size:32px;color:#1a237e;margin-bottom:8px}
+.header .subtitle{color:#666;font-size:14px}
+.stats{display:flex;justify-content:center;gap:16px;margin-bottom:24px}
+.stat-chip{background:#fff;padding:8px 20px;border-radius:20px;font-size:13px;color:#555;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+.stat-chip b{color:#2e7d32}
+.section{margin-bottom:40px}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid #e0e0e0}
+.section-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700}
+.sw .section-icon{background:#ff9800}
+.df .section-icon{background:#2196f3}
+.at .section-icon{background:#4caf50}
+.section-title{font-size:20px;font-weight:700}
+.section-desc{font-size:13px;color:#888;margin-top:2px}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.card{background:#fff;border-radius:12px;padding:18px;cursor:pointer;transition:all .25s;border:2px solid transparent;position:relative;overflow:hidden}
+.card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.sw .card:hover{border-color:#ff9800}
+.df .card:hover{border-color:#2196f3}
+.at .card:hover{border-color:#4caf50}
+.card .badge{display:inline-block;font-size:12px;padding:3px 10px;border-radius:10px;margin-bottom:8px}
+.sw .badge{background:#fff3e0;color:#e65100}
+.df .badge{background:#e3f2fd;color:#1565c0}
+.at .badge{background:#e8f5e9;color:#2e7d32}
+.card .name{font-size:16px;font-weight:600;margin-bottom:8px;line-height:1.3}
+.card .info{font-size:13px;color:#666;display:flex;align-items:center;gap:6px;margin:4px 0}
+.card .info .label{color:#999}
+.card .play-hint{margin-top:10px;font-size:13px;color:#2e7d32;font-weight:500;display:flex;align-items:center;gap:4px}
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);z-index:9999;align-items:center;justify-content:center}
+.modal-overlay.active{display:flex}
+.modal-box{background:#111;border-radius:12px;padding:20px;max-width:90vw;max-height:90vh;position:relative}
+.modal-close{position:absolute;top:-14px;right:-14px;width:36px;height:36px;border-radius:50%;background:#fff;color:#333;border:none;font-size:20px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center}
+.modal-title{color:#fff;font-size:15px;margin-bottom:10px;text-align:center;max-width:640px;word-break:break-all}
+.modal-video{max-width:640px;max-height:480px;display:block;background:#000;border-radius:6px}
+.modal-links{margin-top:12px;text-align:center}
+.modal-links a{color:#64b5f6;font-size:13px;text-decoration:none;margin:0 8px}
+.modal-links a:hover{text-decoration:underline}
+@media(max-width:768px){.card-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}.navbar{padding:12px 16px}.navbar .search input{width:180px}.modal-video{max-width:90vw;max-height:60vh}}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo"><span class="logo-icon">🎬</span> 供应商培训平台</div>
+  <div class="search">
+    <input id="searchInput" type="text" placeholder="🔍 输入场景名称搜索任务卡片...">
+  </div>
+</div>
+
+<div class="container">
+  <div class="header">
+    <h1>全部 <span id="totalCount">62</span> 个可拍任务</h1>
+    <div class="subtitle">点击任务卡片查看示例视频</div>
+  </div>
+
+  <div class="stats">
+    <span class="stat-chip">📦 食品加工 <b id="countSW">0</b> 个</span>
+    <span class="stat-chip">🛒 零售日用消费品 <b id="countDF">0</b> 个</span>
+    <span class="stat-chip">🥬 农贸生鲜处理 <b id="countAT">0</b> 个</span>
+  </div>
+
+  <!-- SW -->
+  <div class="section sw">
+    <div class="section-header">
+      <div class="section-icon">SW</div>
+      <div>
+        <div class="section-title">食品加工</div>
+        <div class="section-desc">折叠杯套、分装菌菇干、粘贴封条、封口包装，等其他任务</div>
+      </div>
+    </div>
+    <div class="card-grid" id="grid-sw"></div>
+  </div>
+
+  <!-- DF -->
+  <div class="section df">
+    <div class="section-header">
+      <div class="section-icon">DF</div>
+      <div>
+        <div class="section-title">零售日用消费品</div>
+        <div class="section-desc">过期下架、货物上架、整理货架、收银、卸货、散笔上架、套网套，等其他任务</div>
+      </div>
+    </div>
+    <div class="card-grid" id="grid-df"></div>
+  </div>
+
+  <!-- AT -->
+  <div class="section at">
+    <div class="section-header">
+      <div class="section-icon">AT</div>
+      <div>
+        <div class="section-title">农贸生鲜处理</div>
+        <div class="section-desc">蔬菜分拣、分挑选、上架、称重，等其他任务</div>
+      </div>
+    </div>
+    <div class="card-grid" id="grid-at"></div>
+  </div>
+</div>
+
+<!-- 模态播放器 -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div class="modal-title" id="modalTitle"></div>
+    <video id="modalVideo" class="modal-video" controls></video>
+    <div class="modal-links" id="modalLinks"></div>
+  </div>
+</div>
+
+<script>
+const TASKS=[
+  {category:"sw",title:"超市-过期商品下架",material:"过期商品、超市货架"},
+  {category:"sw",title:"超市-货物摆放上架",material:"商品、超市货架"},
+  {category:"sw",title:"超市-整理货架",material:"超市货架、清洁工具"},
+  {category:"sw",title:"收银",material:"收银台、商品"},
+  {category:"sw",title:"卸货",material:"货物、周转箱、托盘"},
+  {category:"sw",title:"散笔上架",material:"散笔、货架"},
+  {category:"sw",title:"套网套-水果",material:"水果、保护网套"},
+  {category:"sw",title:"分装菌菇干",material:"菌菇干、分装包装袋"},
+  {category:"sw",title:"封口包装",material:"包装袋、待封物品"},
+  {category:"sw",title:"称重菌菇干",material:"菌菇干、电子秤"},
+  {category:"sw",title:"物品称重",material:"物品、电子秤"},
+  {category:"sw",title:"纸品厂‑折叠杯套",material:"杯套片材"},
+  {category:"sw",title:"纸品厂‑纸袋穿绳",material:"纸袋、绳子"},
+  {category:"sw",title:"蔬菜分拣",material:"新鲜蔬菜、分拣框"},
+  {category:"sw",title:"蔬菜分挑选",material:"待挑选蔬菜、挑选台"},
+  {category:"sw",title:"蔬菜上架",material:"蔬菜、超市蔬菜货架"},
+  {category:"sw",title:"蔬菜称重",material:"蔬菜、电子秤"},
+  {category:"sw",title:"洗护婴身-假婴身体",material:"假婴身体、洗护用品"},
+  {category:"sw",title:"穿假婴裤子-假婴裤子",material:"假婴裤子、假婴模型"},
+  {category:"sw",title:"折出蝴蝶结-蝴蝶结礼带",material:"蝴蝶结礼带丝带"},
+  {category:"sw",title:"粘贴饰品布标-小兔帽花",material:"小兔帽花、饰品布标"},
+  {category:"sw",title:"捆绑固定耳朵-小兔帽花",material:"小兔帽花、耳朵配件"},
+  {category:"sw",title:"打胶配饰-布艺花",material:"布艺花配件、胶料"},
+  {category:"sw",title:"对讲机背夹组装",material:"对讲机、背夹配件"},
+  {category:"sw",title:"外壳组装-制冷风扇",material:"制冷风扇外壳配件"},
+  {category:"sw",title:"蒸汽小火车-马达点锡",material:"马达、点锡工具"},
+  {category:"sw",title:"折叠莲花片-莲花灯",material:"莲花灯莲花片"},
+  {category:"sw",title:"拼装莲花底座-莲花灯",material:"莲花灯底座零件"},
+  {category:"sw",title:"撑开莲花底座-莲花灯",material:"莲花灯底座"},
+  {category:"sw",title:"玩具厂-组装小乌龟",material:"小乌龟玩具配件"},
+  {category:"sw",title:"固定配装纽扣-五金扣件",material:"五金扣件纽扣"},
+  {category:"sw",title:"手工厂-卷烟纸",material:"卷烟纸原材料"},
+  {category:"sw",title:"手工坊-记针存线",material:"针线工具、记录用品"},
+  {category:"df",title:"质检花枝底垫-检测漏胶",material:"花枝底垫、检测工具"},
+  {category:"df",title:"捆扎模具-植被模型",material:"植被模型模具、捆扎工具"},
+  {category:"df",title:"品检树干-植被模型",material:"树干配件、检测工具"},
+  {category:"df",title:"上胶树干-植被模型",material:"树干配件、胶料"},
+  {category:"df",title:"拼接果实-植被模型",material:"果实配件"},
+  {category:"df",title:"组装植被-植被模型",material:"植被模型配件"},
+  {category:"df",title:"鞋厂-鞋后跟片修理毛边",material:"鞋后跟片、修毛边工具"},
+  {category:"df",title:"鞋底前脚掌刷胶",material:"鞋底、胶料"},
+  {category:"df",title:"鞋后跟去杂质-足球鞋后跟",material:"足球鞋后跟、去杂质工具"},
+  {category:"df",title:"小腿按摩器内芯组装",material:"按摩器内芯配件"},
+  {category:"df",title:"顶部外壳安装-方程式赛车",material:"方程式赛车、外壳配件"},
+  {category:"df",title:"成品组装-电脑支架",material:"电脑支架配件"},
+  {category:"df",title:"拼接底托-发卡底托",material:"发卡底托配件"},
+  {category:"df",title:"上胶底托-发卡底托",material:"发卡底托、胶料"},
+  {category:"df",title:"粘贴防滑膜-手机支架",material:"手机支架、防滑膜"},
+  {category:"df",title:"合盖电子钟",material:"电子钟配件"},
+  {category:"df",title:"套环塑料棒-塑料配件",material:"塑料棒、塑料配件"},
+  {category:"df",title:"粘贴封条",material:"封条、待封包装件"},
+  {category:"at",title:"开合挂圈--饰品龙虾扣",material:"饰品龙虾扣"},
+  {category:"at",title:"组装配件-铜牌饰品",material:"铜牌饰品配件"},
+  {category:"at",title:"组装配件-夜光十字架",material:"夜光十字架配件"},
+  {category:"at",title:"穿线手链-文玩手链",material:"手链线材、配件"},
+  {category:"at",title:"剥开耳机薄膜-耳机配件",material:"耳机配件、薄膜剥开工具"},
+  {category:"at",title:"安装弹簧环-铅酸蓄电槽",material:"铅酸蓄电槽、弹簧环"},
+  {category:"at",title:"安装负极贴片-铅酸蓄电槽",material:"铅酸蓄电槽、负极贴片"},
+  {category:"at",title:"包装成品-钱包",material:"成品钱包、包装材料"},
+  {category:"at",title:"拆除标签定孔-钱包卡片",material:"钱包卡片、标签拆除工具"},
+  {category:"at",title:"编打福袋结-小福袋香包",material:"福袋香包、绳子"},
+  {category:"at",title:"熔合福袋头与福袋结-小福袋香包",material:"福袋头、福袋结、熔合工具"}
+];
+
+// 渲染卡片
+const catMap={sw:"grid-sw",df:"grid-df",at:"grid-at"};
+const catName={sw:"SW食品加工",df:"DF零售日用",at:"AT农贸生鲜"};
+const counters={sw:0,df:0,at:0};
+
+function renderCards(filter=""){
+  const f=filter.trim().toLowerCase();
+  for(const c of ["sw","df","at"]){document.getElementById(catMap[c]).innerHTML="";counters[c]=0;}
+  let total=0;
+  TASKS.forEach((t,i)=>{
+    if(f && !t.title.toLowerCase().includes(f) && !t.material.toLowerCase().includes(f)) return;
+    counters[t.category]++;
+    total++;
+    const el=document.createElement("div");
+    el.className="card";
+    el.innerHTML=`
+      <span class="badge">可开拍</span>
+      <div class="name">${t.title}</div>
+      <div class="info"><span class="label">📦 所需物料：</span>${t.material}</div>
+      <div class="play-hint">▶ 点击查看示例视频 →</div>`;
+    el.addEventListener("click",()=>openModal(t));
+    document.getElementById(catMap[t.category]).appendChild(el);
+  });
+  document.getElementById("countSW").textContent=counters.sw;
+  document.getElementById("countDF").textContent=counters.df;
+  document.getElementById("countAT").textContent=counters.at;
+  document.getElementById("totalCount").textContent=total;
+}
+
+// 模态播放器
+const modal=document.getElementById("modal");
+const modalVideo=document.getElementById("modalVideo");
+const modalTitle=document.getElementById("modalTitle");
+const modalLinks=document.getElementById("modalLinks");
+
+function openModal(task){
+  modalTitle.textContent=task.title;
+  const srcMp4="./"+task.title+".mp4";
+  const srcMP4="./"+task.title+".MP4";
+  modalLinks.innerHTML="";
+  modal.classList.add("active");
+  modalVideo.src=srcMp4;
+  modalVideo.load();
+  const tryAlt=()=>{
+    if(modalVideo.src.endsWith(".mp4")){
+      modalVideo.src=srcMP4;
+      modalVideo.load();
+      modalVideo.play().catch(()=>{});
+    }else{
+      modalLinks.innerHTML=`<a href="${srcMp4}" target="_blank">🔗 下载视频 (.mp4)</a> <a href="${srcMP4}" target="_blank">🔗 下载视频 (.MP4)</a>`;
+    }
+  };
+  modalVideo.play().catch(()=>{tryAlt();});
+  modalVideo.onerror=tryAlt;
+}
+
+function closeModal(){
+  modal.classList.remove("active");
+  modalVideo.pause();
+  modalVideo.removeAttribute("src");
+  modalVideo.load();
+}
+
+document.getElementById("modalClose").addEventListener("click",closeModal);
+modal.addEventListener("click",e=>{if(e.target===modal)closeModal();});
+
+// ESC关闭
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&modal.classList.contains("active"))closeModal();});
+
+// 搜索
+document.getElementById("searchInput").addEventListener("input",e=>{renderCards(e.target.value);});
+
+// 初始化
+renderCards();
+</script>
+</body>
 </html>
