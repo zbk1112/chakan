@@ -143,16 +143,16 @@ export function getVideoUrl(folder: string, index: number): string {
 export const taskDetails: TaskDetailData[] = [
 
   // ========== 一、食品加工类（DF 1-4）每个任务对应自己的视频 ==========
-  { id: 1, categoryId: 'packaging', categoryName: '食品加工', categoryEmoji: '📦', name: '折叠杯套', materials: '纸品杯套原材料', steps: ['展示杯套原材料', '按标准方式折叠杯套', '展示折叠完成的杯套'], folder: 'DF', videoRange: [1, 1] },
+  { id: 1, categoryId: 'packaging', categoryName: '食品加工', categoryEmoji: '📦', name: '折叠杯套', materials: '杯套片材', steps: ['展示杯套原材料', '按标准方式折叠杯套', '展示折叠完成的杯套'], folder: 'DF', videoRange: [1, 1] },
   { id: 2, categoryId: 'packaging', categoryName: '食品加工', categoryEmoji: '📦', name: '菌菇干称重', materials: '菌菇干、电子秤', steps: ['展示待称重菌菇干', '用电子秤准确称重', '展示称重结果与记录'], folder: 'DF', videoRange: [2, 2] },
   { id: 3, categoryId: 'packaging', categoryName: '食品加工', categoryEmoji: '📦', name: '粘贴封条', materials: '封条、待封包装件', steps: ['展示待封物品', '对齐位置粘贴封条', '展示封条粘贴完成效果'], folder: 'DF', videoRange: [3, 3] },
   { id: 4, categoryId: 'packaging', categoryName: '食品加工', categoryEmoji: '📦', name: '封口包装', materials: '包装袋、待封物品', steps: ['展示待包装物品', '装入包装袋并封口', '展示封口包装成品'], folder: 'DF', videoRange: [4, 4] },
 
   // ========== 二、零售日用消费品类（DF 8-9, 14-15）==========
-  { id: 5, categoryId: 'retail', categoryName: '零售日用消费品', categoryEmoji: '🛒', name: '过期商品下架', materials: '临期商品、货架', steps: ['检查货架商品日期', '取下过期商品记录', '展示整理后的货架'], folder: 'DF', videoRange: [8, 8] },
+  { id: 5, categoryId: 'retail', categoryName: '零售日用消费品', categoryEmoji: '🛒', name: '过期商品下架', materials: '过期商品、货架', steps: ['检查货架商品日期', '取下过期商品记录', '展示整理后的货架'], folder: 'DF', videoRange: [8, 8] },
   { id: 6, categoryId: 'retail', categoryName: '零售日用消费品', categoryEmoji: '🛒', name: '货物摆放上架', materials: '商品、货架', steps: ['展示待上架货物', '整齐摆放到指定货架', '展示货架陈列效果'], folder: 'DF', videoRange: [9, 9] },
   { id: 7, categoryId: 'retail', categoryName: '零售日用消费品', categoryEmoji: '🛒', name: '超市收银', materials: '收银台、商品', steps: ['扫码识别商品', '结算打印小票', '完成收银流程'], folder: 'DF', videoRange: [14, 14] },
-  { id: 8, categoryId: 'retail', categoryName: '零售日用消费品', categoryEmoji: '🛒', name: '生活超市卸货', materials: '周转箱/货物、托盘、卸货工具', steps: ['清点到货数量与品类', '逐件卸货并分类码放整齐', '展示卸货完成的备货状态'], folder: 'DF', videoRange: [19, 19] },
+  { id: 8, categoryId: 'retail', categoryName: '零售日用消费品', categoryEmoji: '🛒', name: '生活超市卸货', materials: '货物、周转箱、托盘', steps: ['清点到货数量与品类', '逐件卸货并分类码放整齐', '展示卸货完成的备货状态'], folder: 'DF', videoRange: [19, 19] },
 
   // ========== 三、农贸生鲜处理类（DF 16-17, 21-22）==========
   { id: 9, categoryId: 'vegetables', categoryName: '农贸生鲜处理', categoryEmoji: '🥬', name: '蔬菜清理', materials: '蔬菜、清理工具', steps: ['展示待清理蔬菜', '去除黄叶/根部清理干净', '展示清理好的蔬菜'], folder: 'DF', videoRange: [16, 16] },
@@ -162,30 +162,30 @@ export const taskDetails: TaskDetailData[] = [
 
   // ========== 四、生活清洁服务类（DF 5-7, 13）每个任务对应自己的视频 ==========
   { id: 13, categoryId: 'cleaning', categoryName: '生活清洁服务', categoryEmoji: '🧹', name: '纸袋穿绳', materials: '纸袋、绳子', steps: ['展示纸袋与绳子', '绳子穿入纸袋打孔', '展示穿绳完成的纸袋'], folder: 'DF', videoRange: [5, 5] },
-  { id: 14, categoryId: 'cleaning', categoryName: '生活清洁服务', categoryEmoji: '🧹', name: '眼镜片擦拭清洁', materials: '眼镜片、清洁布/清洁液', steps: ['展示待清洁眼镜片', '用清洁布仔细擦拭镜片', '展示清洁后光亮镜片'], folder: 'DF', videoRange: [6, 6] },
+  { id: 14, categoryId: 'cleaning', categoryName: '生活清洁服务', categoryEmoji: '🧹', name: '眼镜片擦拭清洁', materials: '眼镜片、清洁布', steps: ['展示待清洁眼镜片', '用清洁布仔细擦拭镜片', '展示清洁后光亮镜片'], folder: 'DF', videoRange: [6, 6] },
   { id: 15, categoryId: 'cleaning', categoryName: '生活清洁服务', categoryEmoji: '🧹', name: '折叠毛巾', materials: '毛巾', steps: ['展示待折叠毛巾', '按标准方式折叠毛巾', '展示折叠整齐的毛巾'], folder: 'DF', videoRange: [7, 7] },
   { id: 16, categoryId: 'cleaning', categoryName: '生活清洁服务', categoryEmoji: '🧹', name: '擦拭货架', materials: '货架、抹布', steps: ['展示待清洁货架', '用抹布逐面擦拭货架', '展示清洁后的货架'], folder: 'DF', videoRange: [13, 13] },
 
   // ========== 五、服饰配件加工类（ST 1-3, 15）每个任务对应自己的视频 ==========
-  { id: 17, categoryId: 'clothing', categoryName: '服饰配件加工', categoryEmoji: '👕', name: '旋运动服纽扣', materials: '运动服、纽扣、旋扣工具', steps: ['展示运动服与纽扣', '逐一旋转拧紧纽扣', '展示所有纽扣就位状态'], folder: 'ST', videoRange: [1, 1] },
+  { id: 17, categoryId: 'clothing', categoryName: '服饰配件加工', categoryEmoji: '👕', name: '旋运动服纽扣', materials: '运动服、纽扣', steps: ['展示运动服与纽扣', '逐一旋转拧紧纽扣', '展示所有纽扣就位状态'], folder: 'ST', videoRange: [1, 1] },
   { id: 18, categoryId: 'clothing', categoryName: '服饰配件加工', categoryEmoji: '👕', name: '旋包袋纽扣', materials: '包袋、纽扣', steps: ['展示包袋与待装纽扣', '旋扣安装到位', '展示安装后效果'], folder: 'ST', videoRange: [2, 2] },
   { id: 19, categoryId: 'clothing', categoryName: '服饰配件加工', categoryEmoji: '👕', name: '箱包纽扣磨边', materials: '箱包纽扣、磨边工具', steps: ['展示待磨纽扣', '用工具磨边处理', '展示磨好的纽扣成品'], folder: 'ST', videoRange: [3, 3] },
-  { id: 20, categoryId: 'clothing', categoryName: '服饰配件加工', categoryEmoji: '👕', name: '鞋底分挑', materials: '白色鞋底、铁网格架/收纳盒', steps: ['展示待挑拣的混放鞋底', '按尺码/类型挑拣并整齐排列在网格架上', '展示挑拣完成、摆放整齐的鞋底'], folder: 'DF', videoRange: [15, 15] },
+  { id: 20, categoryId: 'clothing', categoryName: '服饰配件加工', categoryEmoji: '👕', name: '鞋底分挑', materials: '白色鞋底、铁网格架', steps: ['展示待挑拣的混放鞋底', '按尺码/类型挑拣并整齐排列在网格架上', '展示挑拣完成、摆放整齐的鞋底'], folder: 'DF', videoRange: [15, 15] },
 
   // ========== 六、精密电子组装类（ST 5, 9-10, 16）==========
-  { id: 21, categoryId: 'earphone', categoryName: '精密电子组装', categoryEmoji: '🎧', name: '有线耳机插头压制', materials: '有线耳机、插头模具', steps: ['展示线材与插头', '使用设备压制插头', '展示压制完成的插头'], folder: 'ST', videoRange: [5, 5] },
+  { id: 21, categoryId: 'earphone', categoryName: '精密电子组装', categoryEmoji: '🎧', name: '有线耳机插头压制', materials: '有线耳机、插头配件', steps: ['展示线材与插头', '使用设备压制插头', '展示压制完成的插头'], folder: 'ST', videoRange: [5, 5] },
   { id: 22, categoryId: 'earphone', categoryName: '精密电子组装', categoryEmoji: '🎧', name: '颈挂蓝牙耳机控制壳安装', materials: '颈挂蓝牙耳机、控制壳配件', steps: ['展示控制壳配件', '安装控制壳到颈挂', '展示安装完成的耳机'], folder: 'ST', videoRange: [9, 9] },
   { id: 23, categoryId: 'earphone', categoryName: '精密电子组装', categoryEmoji: '🎧', name: '耳机听筒组装', materials: '听筒壳、发声单元', steps: ['展示听筒组件', '组装听筒各部件', '展示组装完成的听筒'], folder: 'ST', videoRange: [10, 10] },
   { id: 24, categoryId: 'earphone', categoryName: '精密电子组装', categoryEmoji: '🎧', name: '汽车按摩垫振动器安装', materials: '按摩垫、振动器配件', steps: ['展示按摩垫与振动器', '安装振动器到指定位置', '展示安装完成的按摩垫'], folder: 'ST', videoRange: [16, 16] },
 
   // ========== 七、玩具模型加工类（ST 4, 6-8 + DF 18）每个任务对应自己的视频 ==========
   { id: 25, categoryId: 'toy', categoryName: '玩具模型加工', categoryEmoji: '🧸', name: '塑料玩具组装', materials: '塑料玩具配件', steps: ['展示玩具零件', '按顺序组装玩具', '展示组装完成的玩具'], folder: 'ST', videoRange: [4, 4] },
-  { id: 26, categoryId: 'toy', categoryName: '玩具模型加工', categoryEmoji: '🧸', name: '玩具模型上色', materials: '模型件、上色工具/颜料', steps: ['展示待上色模型', '仔细均匀上色', '展示上色完成的模型'], folder: 'ST', videoRange: [6, 6] },
+  { id: 26, categoryId: 'toy', categoryName: '玩具模型加工', categoryEmoji: '🧸', name: '玩具模型上色', materials: '模型件、上色颜料', steps: ['展示待上色模型', '仔细均匀上色', '展示上色完成的模型'], folder: 'ST', videoRange: [6, 6] },
   { id: 27, categoryId: 'toy', categoryName: '玩具模型加工', categoryEmoji: '🧸', name: '玩具模型加工', materials: '模型件、加工工具', steps: ['展示待加工模型', '使用工具加工处理', '展示加工完成效果'], folder: 'ST', videoRange: [7, 7] },
   { id: 28, categoryId: 'toy', categoryName: '玩具模型加工', categoryEmoji: '🧸', name: '玩具小乌龟组装', materials: '小乌龟玩具配件', steps: ['展示小乌龟零件', '组装完整小乌龟', '展示组装完成玩具'], folder: 'DF', videoRange: [18, 18] },
 
   // ========== 八、手工装饰制作类（ST 11-12, 18 + DF 23）每个任务对应自己的视频 ==========
-  { id: 29, categoryId: 'handcraft', categoryName: '手工装饰制作', categoryEmoji: '🎨', name: '蝴蝶结折叠', materials: '礼带/丝带', steps: ['展示丝带原材料', '折叠成形蝴蝶结', '展示完成的蝴蝶结'], folder: 'ST', videoRange: [11, 11] },
+  { id: 29, categoryId: 'handcraft', categoryName: '手工装饰制作', categoryEmoji: '🎨', name: '蝴蝶结折叠', materials: '丝带', steps: ['展示丝带原材料', '折叠成形蝴蝶结', '展示完成的蝴蝶结'], folder: 'ST', videoRange: [11, 11] },
   { id: 30, categoryId: 'handcraft', categoryName: '手工装饰制作', categoryEmoji: '🎨', name: '塑料安装', materials: '塑料件', steps: ['展示待装塑料件', '按结构安装塑料件', '展示安装完成件'], folder: 'ST', videoRange: [12, 12] },
   { id: 31, categoryId: 'handcraft', categoryName: '手工装饰制作', categoryEmoji: '🎨', name: '绑线内笼', materials: '内笼、绑线材料', steps: ['展示内笼与绑线', '按手工坊方式绑线', '展示绑好的内笼成品'], folder: 'DF', videoRange: [23, 23] },
   { id: 32, categoryId: 'handcraft', categoryName: '手工装饰制作', categoryEmoji: '🎨', name: '袋子粘合', materials: '袋子、粘合工具', steps: ['展示待粘合袋子', '按工艺粘合处理', '展示粘合完成袋品'], folder: 'ST', videoRange: [18, 18] },
@@ -193,7 +193,7 @@ export const taskDetails: TaskDetailData[] = [
   // ========== 九、饰品配件组装类（SW 1-2, 29, 41-42）每个任务对应自己的视频 ==========
   { id: 33, categoryId: 'jewelry', categoryName: '饰品配件组装', categoryEmoji: '💍', name: '开合挂圈', materials: '饰品龙虾扣', steps: ['展示龙虾扣饰品', '开合挂圈操作', '展示操作完成状态'], folder: 'sw', videoRange: [1, 1] },
   { id: 34, categoryId: 'jewelry', categoryName: '饰品配件组装', categoryEmoji: '💍', name: '组装钥匙扣', materials: '钥匙扣配件', steps: ['展示钥匙扣配件', '按顺序组装', '展示组装完成的钥匙扣'], folder: 'sw', videoRange: [2, 2] },
-  { id: 35, categoryId: 'jewelry', categoryName: '饰品配件组装', categoryEmoji: '💍', name: '穿线手链', materials: '文玩手链配件/线材', steps: ['展示手链线材与配件', '穿线编织手链', '展示完成的手链'], folder: 'sw', videoRange: [29, 29] },
+  { id: 35, categoryId: 'jewelry', categoryName: '饰品配件组装', categoryEmoji: '💍', name: '穿线手链', materials: '手链线材、配件', steps: ['展示手链线材与配件', '穿线编织手链', '展示完成的手链'], folder: 'sw', videoRange: [29, 29] },
   { id: 36, categoryId: 'jewelry', categoryName: '饰品配件组装', categoryEmoji: '💍', name: '蝴蝶结礼带', materials: '蝴蝶结礼带配件', steps: ['展示礼带配件', '折出+固定蝴蝶结', '展示完成的礼带'], folder: 'sw', videoRange: [41, 42] },
 
   // ========== 十、工艺品装配类（SW 13-15, 17）每个任务对应自己的视频 ==========
@@ -209,9 +209,9 @@ export const taskDetails: TaskDetailData[] = [
   { id: 44, categoryId: 'stand', categoryName: '支架配件组装', categoryEmoji: '📱', name: '对讲机背夹组装', materials: '对讲机、背夹配件', steps: ['展示对讲机与背夹', '组装背夹到位', '展示组装完成对讲机'], folder: 'sw', videoRange: [40, 40] },
 
   // ========== 十二、成品整机装配类（SW 20-22, 35-39, 47-49, 26-28）每个任务对应自己的视频 ==========
-  { id: 45, categoryId: 'assembly', categoryName: '成品整机装配', categoryEmoji: '🔧', name: '足球鞋后跟处理', materials: '足球鞋后跟、处理工具', steps: ['展示鞋后跟待处理部分', '去杂质→撕胶→贴胶', '展示处理完后跟'], folder: 'sw', videoRange: [20, 22] },
-  { id: 46, categoryId: 'assembly', categoryName: '成品整机装配', categoryEmoji: '🔧', name: '植被模型组装', materials: '植被模型配件（树干/果实）', steps: ['展示模型配件', '品检→上胶→组装', '展示组装完成的植被模型'], folder: 'sw', videoRange: [35, 39] },
-  { id: 47, categoryId: 'assembly', categoryName: '成品整机装配', categoryEmoji: '🔧', name: '钱包成品装配', materials: '钱包卡片/布料配件', steps: ['展示钱包各部件', '拆定孔→装卡片→包装', '展示成品钱包'], folder: 'sw', videoRange: [47, 49] },
+  { id: 45, categoryId: 'assembly', categoryName: '成品整机装配', categoryEmoji: '🔧', name: '足球鞋后跟处理', materials: '足球鞋后跟、胶料', steps: ['展示鞋后跟待处理部分', '去杂质→撕胶→贴胶', '展示处理完后跟'], folder: 'sw', videoRange: [20, 22] },
+  { id: 46, categoryId: 'assembly', categoryName: '成品整机装配', categoryEmoji: '🔧', name: '植被模型组装', materials: '植被模型配件（树干、果实）', steps: ['展示模型配件', '品检→上胶→组装', '展示组装完成的植被模型'], folder: 'sw', videoRange: [35, 39] },
+  { id: 47, categoryId: 'assembly', categoryName: '成品整机装配', categoryEmoji: '🔧', name: '钱包成品装配', materials: '钱包卡片、布料配件', steps: ['展示钱包各部件', '拆定孔→装卡片→包装', '展示成品钱包'], folder: 'sw', videoRange: [47, 49] },
   { id: 48, categoryId: 'assembly', categoryName: '成品整机装配', categoryEmoji: '🔧', name: '方程式赛车组装', materials: '方程式赛车配件', steps: ['展示赛车零件', '装外壳/宝箱/整车', '展示组装完成赛车'], folder: 'sw', videoRange: [26, 28] },
 ];
 
