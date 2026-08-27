@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { taskDetails } from '../data/taskVideos';
 
 interface Task {
@@ -36,10 +36,10 @@ function buildCategories(): Category[] {
   };
   const taglineMap: Record<string, string> = {
     packaging: '折叠杯套、称重包装',
-    retail: '商品上架、收银整理',
+    retail: '过期下架、上架/收银/卸货',
     vegetables: '蔬菜清理、上架称重',
     cleaning: '眼镜擦拭、毛巾折叠',
-    clothing: '服装纽扣、鞋底分拣',
+    clothing: '服装纽扣、鞋底分挑',
     earphone: '耳机组装、插头压制',
     toy: '塑料玩具、模型上色',
     handcraft: '蝴蝶结、绑线手工',

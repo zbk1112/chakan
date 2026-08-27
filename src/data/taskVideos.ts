@@ -1,4 +1,4 @@
-// 任务数据 & 视频映射（2026-08-26 根据 sp/DF、sp/ST、sp/sw 解说文档 + AT.docx + df.docx 全行业场景重新设计）
+﻿// 任务数据 & 视频映射（2026-08-26 根据 sp/DF、sp/ST、sp/sw 解说文档 + AT.docx + df.docx 全行业场景重新设计）
 
 export interface VideoInfo {
   folder: string;   // 文件夹：'DF' | 'ST' | 'SW' | '1' | '2'
@@ -35,7 +35,7 @@ const DF_TITLES: string[] = [
   '组装玩具战锤整体外壳',// 12
   '擦拭货架',           // 13
   '收银',               // 14
-  '冰柜货品整理',       // 15
+  '鞋底分挑(白色鞋底网格架)', // 15 ✓已按实际视频画面校对
   '优选购-蔬菜清理',    // 16
   '优选购-蔬菜清理',    // 17
   '玩具厂-组装小乌龟',  // 18
@@ -152,7 +152,7 @@ export const taskDetails: TaskDetailData[] = [
   { id: 5, categoryId: 'retail', categoryName: '零售日用消费品', categoryEmoji: '🛒', name: '过期商品下架', materials: '临期商品、货架', steps: ['检查货架商品日期', '取下过期商品记录', '展示整理后的货架'], folder: 'DF', videoRange: [8, 8] },
   { id: 6, categoryId: 'retail', categoryName: '零售日用消费品', categoryEmoji: '🛒', name: '货物摆放上架', materials: '商品、货架', steps: ['展示待上架货物', '整齐摆放到指定货架', '展示货架陈列效果'], folder: 'DF', videoRange: [9, 9] },
   { id: 7, categoryId: 'retail', categoryName: '零售日用消费品', categoryEmoji: '🛒', name: '超市收银', materials: '收银台、商品', steps: ['扫码识别商品', '结算打印小票', '完成收银流程'], folder: 'DF', videoRange: [14, 14] },
-  { id: 8, categoryId: 'retail', categoryName: '零售日用消费品', categoryEmoji: '🛒', name: '冰柜货品整理', materials: '冰柜、货品', steps: ['展示冰柜内货品状态', '整理分类摆放整齐', '展示整理后冰柜效果'], folder: 'DF', videoRange: [15, 15] },
+  { id: 8, categoryId: 'retail', categoryName: '零售日用消费品', categoryEmoji: '🛒', name: '生活超市卸货', materials: '周转箱/货物、托盘、卸货工具', steps: ['清点到货数量与品类', '逐件卸货并分类码放整齐', '展示卸货完成的备货状态'], folder: 'DF', videoRange: [19, 19] },
 
   // ========== 三、农贸生鲜处理类（DF 16-17, 21-22）==========
   { id: 9, categoryId: 'vegetables', categoryName: '农贸生鲜处理', categoryEmoji: '🥬', name: '蔬菜清理', materials: '蔬菜、清理工具', steps: ['展示待清理蔬菜', '去除黄叶/根部清理干净', '展示清理好的蔬菜'], folder: 'DF', videoRange: [16, 16] },
@@ -170,7 +170,7 @@ export const taskDetails: TaskDetailData[] = [
   { id: 17, categoryId: 'clothing', categoryName: '服饰配件加工', categoryEmoji: '👕', name: '旋运动服纽扣', materials: '运动服、纽扣、旋扣工具', steps: ['展示运动服与纽扣', '逐一旋转拧紧纽扣', '展示所有纽扣就位状态'], folder: 'ST', videoRange: [1, 1] },
   { id: 18, categoryId: 'clothing', categoryName: '服饰配件加工', categoryEmoji: '👕', name: '旋包袋纽扣', materials: '包袋、纽扣', steps: ['展示包袋与待装纽扣', '旋扣安装到位', '展示安装后效果'], folder: 'ST', videoRange: [2, 2] },
   { id: 19, categoryId: 'clothing', categoryName: '服饰配件加工', categoryEmoji: '👕', name: '箱包纽扣磨边', materials: '箱包纽扣、磨边工具', steps: ['展示待磨纽扣', '用工具磨边处理', '展示磨好的纽扣成品'], folder: 'ST', videoRange: [3, 3] },
-  { id: 20, categoryId: 'clothing', categoryName: '服饰配件加工', categoryEmoji: '👕', name: '鞋底分拣', materials: '多型号鞋底', steps: ['展示混放鞋底', '按类型/尺码分拣', '展示分拣结果'], folder: 'ST', videoRange: [15, 15] },
+  { id: 20, categoryId: 'clothing', categoryName: '服饰配件加工', categoryEmoji: '👕', name: '鞋底分挑', materials: '白色鞋底、铁网格架/收纳盒', steps: ['展示待挑拣的混放鞋底', '按尺码/类型挑拣并整齐排列在网格架上', '展示挑拣完成、摆放整齐的鞋底'], folder: 'DF', videoRange: [15, 15] },
 
   // ========== 六、精密电子组装类（ST 5, 9-10, 16）==========
   { id: 21, categoryId: 'earphone', categoryName: '精密电子组装', categoryEmoji: '🎧', name: '有线耳机插头压制', materials: '有线耳机、插头模具', steps: ['展示线材与插头', '使用设备压制插头', '展示压制完成的插头'], folder: 'ST', videoRange: [5, 5] },
