@@ -35,18 +35,18 @@ function buildCategories(): Category[] {
     assembly: 'from-slate-500 to-gray-600',
   };
   const taglineMap: Record<string, string> = {
-    packaging: '折叠杯套、称重包装',
-    retail: '过期下架、上架/收银/卸货',
-    vegetables: '蔬菜清理、上架称重',
-    cleaning: '眼镜擦拭、毛巾折叠',
-    clothing: '服装纽扣、鞋底分挑',
-    earphone: '耳机组装、插头压制',
-    toy: '塑料玩具、模型上色',
-    handcraft: '蝴蝶结、绑线手工',
-    jewelry: '龙虾扣、手链/礼带',
-    lotus: '莲花灯、风扇装配',
-    stand: '手机/电脑支架、对讲机',
-    assembly: '鞋跟处理、模型/赛车装配',
+    packaging: '折叠杯套、分装菌菇干、粘贴封条、封口包装',
+    retail: '过期下架、货物上架、整理货架、收银、卸货、散笔上架、套网套',
+    vegetables: '蔬菜分拣、分挑选、上架、称重',
+    cleaning: '纸袋穿绳、洗护婴身、穿假婴裤、卷烟纸、记针存线',
+    clothing: '鞋后跟修毛边、鞋底前掌刷胶、鞋后跟去杂质、五金纽扣',
+    earphone: '耳机薄膜、铅酸蓄电槽、蒸汽小火车马达点锡、合盖电子钟、按摩器内芯',
+    toy: '组装小乌龟、方程式赛车顶壳、植被模型捆扎/品检/上胶/组装/拼接',
+    handcraft: '蝴蝶结礼带、粘贴布标、捆绑耳朵、打胶布艺花、套环塑料棒',
+    jewelry: '龙虾扣、铜牌饰品、夜光十字架、穿线手链、花枝质检、福袋结、钱包包装',
+    lotus: '折叠莲花片、拼装/撑开莲花底座、制冷风扇外壳组装',
+    stand: '手机支架防滑膜、发卡底托拼接/上胶、电脑支架、对讲机、钱包拆定孔',
+    assembly: '封口包装、物品称重、收银、散笔上架、套水果网套、钱包总装收尾',
   };
   const badgeMap: Record<string, [string, string]> = {
     packaging: ['bg-amber-50', 'text-amber-600'],
@@ -112,7 +112,7 @@ export default function TaskSquare({ onNavigate }: { onNavigate: (path: string) 
   });
 
   const totalTasks = categories.reduce((sum, cat) => sum + cat.tasks.length, 0);
-  const videoCount = 90; // DF 23 + ST 16 + SW 51 ≈ 90
+  const videoCount = 62; // 2026-08-27 基于 sp 文件夹真实 62 个视频文件全部纳入覆盖
 
   return (
     <div className="bg-gray-50">
@@ -147,7 +147,7 @@ export default function TaskSquare({ onNavigate }: { onNavigate: (path: string) 
               {[
                 { emoji: '🎬', n: categories.length.toString(), unit: '类', label: '行业场景' },
                 { emoji: '📋', n: totalTasks.toString(), unit: '个', label: '可拍任务' },
-                { emoji: '🎥', n: videoCount.toString(), unit: '+', label: '示范视频' },
+                { emoji: '🎥', n: videoCount.toString(), unit: '个', label: '示范视频' },
                 { emoji: '💰', n: '审核', unit: '即赚', label: '收益透明' },
               ].map((s, i) => (
                 <div key={i} className="bg-white/15 backdrop-blur-md rounded-2xl p-4 ring-1 ring-white/20">
@@ -171,7 +171,7 @@ export default function TaskSquare({ onNavigate }: { onNavigate: (path: string) 
             {[
               { icon: '🎬', value: categories.length.toString(), unit: '类', label: '场景分类', accent: 'text-green-600' },
               { icon: '📋', value: totalTasks.toString(), unit: '个', label: '可拍任务', accent: 'text-blue-600' },
-              { icon: '🎥', value: '90', unit: '+', label: '示范视频', accent: 'text-orange-600' },
+              { icon: '🎥', value: '62', unit: '个', label: '示范视频', accent: 'text-orange-600' },
               { icon: '💰', value: '审核', unit: '即赚', label: '收益透明', accent: 'text-amber-600' },
             ].map((s, i) => (
               <div key={i} className="flex flex-col items-center text-center">
@@ -337,7 +337,7 @@ export default function TaskSquare({ onNavigate }: { onNavigate: (path: string) 
                 <h4 className="font-bold text-green-800 text-sm md:text-base">温馨提示</h4>
               </div>
               <ul className="space-y-1.5 md:space-y-2 text-green-900 text-xs md:text-sm leading-relaxed">
-                <li className="flex items-start gap-1.5 md:gap-2"><span className="text-green-500 font-bold shrink-0">•</span><span>涵盖 12 类场景，90+ 条真实示范视频</span></li>
+                <li className="flex items-start gap-1.5 md:gap-2"><span className="text-green-500 font-bold shrink-0">•</span><span>涵盖 12 类场景，62 条真实示范视频</span></li>
                 <li className="flex items-start gap-1.5 md:gap-2"><span className="text-green-500 font-bold shrink-0">•</span><span>多拍多赚，完成越多收益越高</span></li>
                 <li className="flex items-start gap-1.5 md:gap-2"><span className="text-green-500 font-bold shrink-0">•</span><span>审核通过后及时结算收益</span></li>
               </ul>
