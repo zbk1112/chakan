@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { TaskDetailData, getTaskById, getTaskVideos, getVideoUrl, getVideoTitle, taskDetails } from '../data/taskVideos';
+import { TaskDetailData, getTaskById, getTaskVideos, getVideoUrl, getVideoTitle, taskDetails, getCandidateVideoUrls } from '../data/taskVideos';
 
 interface TaskDetailProps {
   taskId: number;
@@ -60,15 +60,20 @@ export default function TaskDetail({ taskId, onNavigate }: TaskDetailProps) {
   const videoUrl = currentVideo ? getVideoUrl(currentVideo.folder, currentVideo.index) : '';
   const effectiveSrc = blobUrl || videoUrl;
 
-  // GitHub Release 返回 Content-Disposition: attachment + 无 CORS 头，导致 <video> ERR_ABORTED
-  // 方案：onerror 时走公共 CORS 代理（corsproxy.io / allorigins），代理会返回 inline + CORS
-  //        再 fetch + Blob URL 内联播放（<400MB 直接播放；>400MB 提示切局域网或新标签页打开）
-  const MAX_BLOB_BYTES = 400 * 1024 * 1024;
+  // GitHub Release 返回 attachment + 无 CORS → <video> 无法直接播放 ERR_ABORTED
+  // 优化：
+  //   1) 先尝试 Release 直链（若浏览器支持 attachment 自动解码则秒播）
+  //   2) 失败走 5 条 CORS 代理 fetch+Blob 内联
+  //   3) 所有通道失败，直接提供「新标签页打开按钮」+ 候选 URL 列表
+  const MAX_BLOB_BYTES = 600 * 1024 * 1024; // 放宽到 600MB，Release 资产最大 1.2GB 但我们映射的多为中小文件
   const CORS_PROXIES = [
-    (u: string) => `https://corsproxy.io/?${encodeURIComponent(u)}`,
-    (u: string) => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+    (u: string) => `https://corsproxy.io/?${encodeURIComponent(u)}`,          // 稳定
     (u: string) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
+    (u: string) => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+    (u: string) => `https://api.allorigins.win/raw?method=GET&url=${encodeURIComponent(u)}`,
+    (u: string) => `https://thingproxy.freeboard.io/fetch/${u}`,               // 大文件友好
   ];
+  const candidates = currentVideo ? getCandidateVideoUrls(currentVideo.folder, currentVideo.index) : [];
 
   async function handleFallbackBlob(src: string) {
     if (blobRetried || !src) return;
@@ -80,7 +85,7 @@ export default function TaskDetail({ taskId, onNavigate }: TaskDetailProps) {
       try {
         const proxyUrl = CORS_PROXIES[pi](src);
         if (pi > 0) setVideoError(`⚙️  通道 ${pi} 失败，切换备用通道 ${pi + 1}/${CORS_PROXIES.length} ...`);
-        // HEAD 检查大小 (通过代理)
+        // HEAD 检查大小
         let size = -1;
         try {
           const hr = await fetch(proxyUrl, { method: 'HEAD' });
@@ -89,35 +94,29 @@ export default function TaskDetail({ taskId, onNavigate }: TaskDetailProps) {
         } catch { /* 代理不支持 HEAD 也没关系 */ }
         if (size > MAX_BLOB_BYTES) {
           const mb = Math.round(size / 1024 / 1024);
-          setVideoError(`⚠️  该视频较大（${mb}MB），为避免浏览器内存占用过高：
-① 切换到【局域网模式】可流畅播放超大视频（首页有"start.bat"一键启动脚本）；
-② 或右键点击下方链接 → 新标签页打开，浏览器下载后直接播放；
-③ 或使用 Chrome/Safari 桌面浏览器复制链接直接打开。
-原视频链接：${src}`);
+          setVideoError(`⚠️  该视频较大（约 ${mb}MB），为避免浏览器内存占用过高：
+① 点击下方【⬇️ 新标签页打开】，浏览器下载完成后自动播放（最稳定，无需任何代理）
+② 或本地运行 start.bat 启用局域网模式（拖动进度条秒响应）`);
           setIsBlobLoading(false);
           return;
         }
-        // Fetch 完整数据 → Blob URL
         const r = await fetch(proxyUrl, { cache: 'force-cache' });
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
         const blob = await r.blob();
-        const typeFix = /video\//i.test(blob.type) ? blob.type : 'video/mp4';
-        const realBlob = /video\//i.test(blob.type) ? blob : new Blob([blob], { type: typeFix });
-        if (realBlob.size < 1024 * 50) throw new Error('代理返回空内容（大小<50KB）');
+        if (blob.size < 1024 * 50) throw new Error('代理返回内容过小，可能不是视频');
+        const realBlob = /video\//i.test(blob.type || '') ? blob : new Blob([blob], { type: 'video/mp4' });
         const objectUrl = URL.createObjectURL(realBlob);
         setBlobUrl(objectUrl);
         setVideoError('');
-        return; // 成功
+        setIsBlobLoading(false);
+        return;
       } catch (err: any) {
         lastError = (err && err.message) ? err.message : String(err);
       }
     }
     // 所有通道失败
-    setVideoError(`❌ 3 条备用通道均失败：${lastError.substring(0, 150)}
-建议：
-① 本地运行 start.bat → 用局域网地址打开视频（无任何限制，支持2GB+视频拖动进度条）；
-② 或【直接打开视频链接】用浏览器单独播放（右键复制下面链接到新标签页）：
-${src}`);
+    setVideoError(`❌ 5 条备用通道均未播放成功（${lastError.substring(0, 80)}）
+直接点击【⬇️ 新标签页打开】最稳定，浏览器会直接从 GitHub Release 下载后播放，无需任何代理。`);
     setIsBlobLoading(false);
   }
 
@@ -237,8 +236,23 @@ URL: ${videoUrl}`);
                   )}
                   {videoError && !isBlobLoading && (
                     <div className="mx-3 mt-3 mb-4 rounded-xl border border-red-200 bg-red-50 p-3 md:p-4 text-xs md:text-sm text-red-700">
-                      <div className="font-bold mb-1">⚠️ 视频播放失败</div>
-                      <div className="break-all whitespace-pre-wrap">{videoError}</div>
+                      <div className="font-bold mb-1">⚠️ 视频播放失败 / 加载较慢</div>
+                      <div className="break-all whitespace-pre-wrap mb-2">{videoError}</div>
+                      {/* 候选 URL 直接可点击 */}
+                      {candidates.length > 0 && (
+                        <div className="mb-2">
+                          <div className="text-[11px] md:text-xs font-semibold text-red-700 mb-1">📎 可用链接（点击「新标签页打开」最稳定）：</div>
+                          <div className="space-y-1">
+                            {candidates.map((c, i) => (
+                              <a key={i} href={c.url} target="_blank" rel="noreferrer"
+                                 className="flex items-center justify-between rounded-lg bg-white px-2 py-1 border border-red-200 no-underline text-red-700 hover:bg-red-100 transition">
+                                <span className="truncate text-[10px] md:text-xs mr-2">{c.label}</span>
+                                <span className="shrink-0 rounded bg-red-500 text-white px-1.5 py-0.5 text-[9px] md:text-[10px]">打开</span>
+                              </a>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                       <div className="mt-2 flex flex-wrap gap-2">
                         <button
                           onClick={() => {
@@ -260,6 +274,17 @@ URL: ${videoUrl}`);
                             ⬇️ 新标签页下载/打开
                           </a>
                         )}
+                        <a
+                          href={videoUrl}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigator.clipboard?.writeText(videoUrl);
+                          }}
+                          className="rounded-full bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 text-xs font-medium no-underline cursor-pointer"
+                          title="复制链接到剪贴板"
+                        >
+                          📋 复制链接
+                        </a>
                       </div>
                     </div>
                   )}

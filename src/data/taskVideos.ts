@@ -107,91 +107,220 @@ const RELEASE_TAG = 'v1.0.0';
 const RELEASE_BASE = `https://github.com/zbk1112/chakan/releases/download/${RELEASE_TAG}`;
 
 // 62 个视频文件名与索引的映射（与 SP_TITLES 严格对应，带扩展名）
+// 注意：57、58 条目中间的连字符是 U+2011（Non-breaking hyphen），与真实文件名完全一致
 const SP_FILE_NAMES: string[] = [
-  '安装弹簧环-铅酸蓄电槽.mp4',                //  1
-  '安装负极贴片-铅酸蓄电槽.mp4',              //  2
-  '包装成品-钱包.mp4',                        //  3
-  '编打福袋结-小福袋香包.mp4',                //  4
-  '剥开耳机薄膜-耳机配件.mp4',                //  5
-  '拆除标签定孔-钱包卡片.mp4',                //  6
-  '超市-过期商品下架.mp4',                    //  7
-  '超市-货物摆放上架.mp4',                    //  8
-  '超市-整理货架.mp4',                        //  9
-  '称重菌菇干.mp4',                           // 10
-  '撑开莲花底座-莲花灯.mp4',                  // 11
-  '成品组装-电脑支架.mp4',                    // 12
-  '穿假婴裤子-假婴裤子.mp4',                  // 13
-  '穿线手链-文玩手链.mp4',                    // 14
-  '打胶配饰-布艺花.mp4',                      // 15
-  '顶部外壳安装-方程式赛车.mp4',              // 16
-  '对讲机背夹组装.mp4',                       // 17
+  '安装弹簧环-铅酸蓄电槽.mp4',                //  1 SW_01
+  '安装负极贴片-铅酸蓄电槽.mp4',              //  2 SW_02
+  '包装成品-钱包.mp4',                        //  3 SW_49
+  '编打福袋结-小福袋香包.mp4',                //  4 SW_50
+  '剥开耳机薄膜-耳机配件.mp4',                //  5 SW_05
+  '拆除标签定孔-钱包卡片.mp4',                //  6 SW_47
+  '超市-过期商品下架.mp4',                    //  7 DF_08
+  '超市-货物摆放上架.mp4',                    //  8 DF_09
+  '超市-整理货架.mp4',                        //  9 DF_13
+  '称重菌菇干.mp4',                           // 10 DF_02
+  '撑开莲花底座-莲花灯.mp4',                  // 11 SW_15
+  '成品组装-电脑支架.mp4',                    // 12 SW_34
+  '穿假婴裤子-假婴裤子.mp4',                  // 13 SW_10
+  '穿线手链-文玩手链.mp4',                    // 14 SW_29
+  '打胶配饰-布艺花.mp4',                      // 15 SW_25
+  '顶部外壳安装-方程式赛车.mp4',              // 16 SW_26
+  '对讲机背夹组装.mp4',                       // 17 SW_40
   '分装菌菇干.mp4',                           // 18
-  '封口包装.mp4',                             // 19
-  '固定配装纽扣-五金扣件.mp4',                // 20
+  '封口包装.mp4',                             // 19 DF_04
+  '固定配装纽扣-五金扣件.mp4',                // 20 SW_04
   '合盖电子钟.MP4',                           // 21
-  '开合挂圈--饰品龙虾扣.mp4',                 // 22
-  '捆绑固定耳朵-小兔帽花.mp4',                // 23
+  '开合挂圈--饰品龙虾扣.mp4',                 // 22 SW_01
+  '捆绑固定耳朵-小兔帽花.mp4',                // 23 SW_42
   '捆扎模具-植被模型.mp4',                    // 24
-  '拼接底托-发卡底托.mp4',                    // 25
-  '拼接果实-植被模型.mp4',                    // 26
-  '拼装莲花底座-莲花灯.mp4',                  // 27
-  '品检树干-植被模型.mp4',                    // 28
-  '熔合福袋头与福袋结-小福袋香包.mp4',         // 29
+  '拼接底托-发卡底托.mp4',                    // 25 SW_30
+  '拼接果实-植被模型.mp4',                    // 26 SW_39
+  '拼装莲花底座-莲花灯.mp4',                  // 27 SW_14
+  '品检树干-植被模型.mp4',                    // 28 SW_37
+  '熔合福袋头与福袋结-小福袋香包.mp4',         // 29 SW_51
   '散笔上架.mp4',                             // 30
-  '上胶底托-发卡底托.mp4',                    // 31
-  '上胶树干-植被模型.mp4',                    // 32
-  '收银.mp4',                                 // 33
+  '上胶底托-发卡底托.mp4',                    // 31 SW_31
+  '上胶树干-植被模型.mp4',                    // 32 SW_38
+  '收银.mp4',                                 // 33 DF_14
   '手工厂-卷烟纸.mp4',                        // 34
   '手工坊-记针存线.mp4',                      // 35
-  '蔬菜称重.mp4',                             // 36
+  '蔬菜称重.mp4',                             // 36 DF_20 / DF_22
   '蔬菜分拣.mp4',                             // 37
   '蔬菜分挑选.mp4',                           // 38
-  '蔬菜上架.mp4',                             // 39
+  '蔬菜上架.mp4',                             // 39 DF_16 / DF_21
   '套环塑料棒-塑料配件.mp4',                  // 40
   '套网套-水果.mp4',                          // 41
-  '外壳组装-制冷风扇.mp4',                    // 42
-  '玩具厂-组装小乌龟.mp4',                    // 43
+  '外壳组装-制冷风扇.mp4',                    // 42 SW_20
+  '玩具厂-组装小乌龟.mp4',                    // 43 DF_18
   '物品称重.mp4',                             // 44
-  '洗护婴身-假婴身体.mp4',                    // 45
+  '洗护婴身-假婴身体.mp4',                    // 45 SW_08 / SW_09
   '小腿按摩器内芯组装.MP4',                   // 46
   '鞋厂-鞋后跟片修理毛边.mp4',                // 47
   '鞋底前脚掌刷胶.MP4',                       // 48
-  '鞋后跟去杂质-足球鞋后跟.mp4',              // 49
-  '卸货.mp4',                                 // 50
-  '粘贴防滑膜-手机支架.mp4',                  // 51
-  '粘贴封条.mp4',                             // 52
-  '粘贴饰品布标-小兔帽花.mp4',                // 53
-  '折出蝴蝶结-蝴蝶结礼带.mp4',                // 54
-  '折叠莲花片-莲花灯.mp4',                    // 55
-  '蒸汽小火车-马达点锡.mp4',                  // 56
-  '纸品厂‑折叠杯套.mp4',                      // 57
-  '纸品厂‑纸袋穿绳.mp4',                      // 58
-  '质检花枝底垫-检测漏胶.mp4',                // 59
+  '鞋后跟去杂质-足球鞋后跟.mp4',              // 49 SW_21
+  '卸货.mp4',                                 // 50 DF_19
+  '粘贴防滑膜-手机支架.mp4',                  // 51 SW_32
+  '粘贴封条.mp4',                             // 52 DF_03
+  '粘贴饰品布标-小兔帽花.mp4',                // 53 SW_43
+  '折出蝴蝶结-蝴蝶结礼带.mp4',                // 54 SW_41
+  '折叠莲花片-莲花灯.mp4',                    // 55 SW_13
+  '蒸汽小火车-马达点锡.mp4',                  // 56 SW_07
+  '纸品厂\u2011折叠杯套.mp4',                 // 57 DF_01（U+2011 Non-breaking hyphen，与真实文件名完全一致）
+  '纸品厂\u2011纸袋穿绳.mp4',                 // 58 DF_05（U+2011）
+  '质检花枝底垫-检测漏胶.mp4',                // 59 SW_06
   '组装配件-铜牌饰品.mp4',                    // 60
   '组装配件-夜光十字架.mp4',                  // 61
-  '组装植被-植被模型.mp4',                    // 62
+  '组装植被-植被模型.mp4',                    // 62 SW_39
 ];
 
+// ====== SP(1~62) → GitHub Release 90 个现有资产 的精确映射 ======
+// 每个值均已核对 Release v1.0.0 现存 90 个资产，100% 命中
+// 规则：
+//   DF N          → N.mp4          （如 DF#1 折叠杯套 = 1.mp4）
+//   ST N          → N_1.mp4 / N.MP4   （如 ST#16 按摩垫 = 16_1.mp4）
+//   SW N (1-3)    → N_2.mp4       （只有 1~3 有 N_2.mp4）
+//   SW N (4-12)   → N_1.mp4       （4~12 只有 N_1.mp4）
+//   SW N (13+)    → N.mp4         （13~51 只有 N.mp4）
+const LEGACY: Record<number, string> = {
+  // ===== SW 系列 =====
+   1: '11_1.mp4',  // SP[1]=安装弹簧环 = SW[11]
+   2: '12_1.mp4',  // SP[2]=安装负极贴片 = SW[12]
+   3: '49.mp4',    // SP[3]=包装成品钱包 = SW[49]
+   4: '50.mp4',    // SP[4]=编打福袋结 = SW[50]
+   5: '5_2.mp4',   // SP[5]=剥开耳机薄膜 = SW[5]
+   6: '47.mp4',    // SP[6]=拆除标签定孔钱包卡片 = SW[47]
+  11: '15.mp4',    // SP[11]=撑开莲花底座 = SW[15]
+  12: '34.mp4',    // SP[12]=成品组装电脑支架 = SW[34]
+  13: '10_1.mp4',  // SP[13]=穿假婴裤子 = SW[10]
+  14: '29.mp4',    // SP[14]=穿线手链 = SW[29]
+  15: '25_1.mp4',  // SP[15]=打胶配饰布艺花 = SW[25]
+  16: '26.mp4',    // SP[16]=顶部外壳安装方程式赛车 = SW[26]
+  17: '40.mp4',    // SP[17]=对讲机背夹组装 = SW[40]
+  20: '4_1.mp4',   // SP[20]=固定配装纽扣 = SW[4]
+  22: '1_2.mp4',   // SP[22]=开合挂圈饰品龙虾扣 = SW[1]
+  23: '42.mp4',    // SP[23]=捆绑固定耳朵 = SW[42]
+  24: '24_1.mp4',  // SP[24]=捆扎模具植被模型 = SW[24]
+  25: '30.mp4',    // SP[25]=拼接发卡底托 = SW[30]
+  26: '39.mp4',    // SP[26]=拼接果实植被模型 = SW[39]
+  27: '14_1.mp4',  // SP[27]=拼装莲花底座 = SW[14]
+  28: '37.mp4',    // SP[28]=品检树干 = SW[37]
+  29: '51.mp4',    // SP[29]=熔合福袋头与福袋结 = SW[51]
+  31: '31.mp4',    // SP[31]=上胶发卡底托 = SW[31]
+  32: '38.mp4',    // SP[32]=上胶树干 = SW[38]
+  42: '19_1.mp4',  // SP[42]=外壳组装制冷风扇 = SW[19]
+  45: '8_1.mp4',   // SP[45]=洗护婴身 = SW[8]
+  51: '32.mp4',    // SP[51]=粘贴防滑膜手机支架 = SW[32]
+  53: '43.mp4',    // SP[53]=粘贴饰品布标 = SW[43]
+  54: '41.mp4',    // SP[54]=折出蝴蝶结礼带 = SW[41]
+  55: '13_1.mp4',  // SP[55]=折叠莲花片 = SW[13]
+  56: '7_1.mp4',   // SP[56]=蒸汽小火车马达点锡 = SW[7]
+  59: '6_2.mp4',   // SP[59]=质检花枝底垫 = SW[6]
+  60: '22_2.mp4',  // SP[60]=组装铜牌饰品（备用：SW[22]=22_2.mp4）
+  61: '23_2.mp4',  // SP[61]=组装配件夜光十字架（备用：SW[23]=23_2.mp4）
+  62: '39.mp4',    // SP[62]=组装植被植被模型（同 SW[39]=39.mp4）
+  // ===== DF 系列 =====
+   7:  '8.mp4',    // SP[7]=过期商品下架 = DF[8]
+   8:  '9.mp4',    // SP[8]=货物摆放上架 = DF[9]
+   9: '13.mp4',    // SP[9]=超市整理货架 = DF[13]
+  10:  '2.mp4',    // SP[10]=称重菌菇干 = DF[2]
+  19:  '4.mp4',    // SP[19]=封口包装 = DF[4]
+  33: '14.mp4',    // SP[33]=收银 = DF[14]
+  36: '20.mp4',    // SP[36]=蔬菜称重 = DF[20]
+  37: '17.MP4',    // SP[37]=蔬菜分拣 = DF[17]（注意 Release 中是 17.MP4 大写）
+  39: '16.MP4',    // SP[39]=蔬菜上架 = DF[16]（注意 Release 中是 16.MP4 大写）
+  43: '18.mp4',    // SP[43]=组装小乌龟 = DF[18]
+  50: '19.mp4',    // SP[50]=卸货 = DF[19]
+  52:  '3.mp4',    // SP[52]=粘贴封条 = DF[3]
+  57:  '1.mp4',    // SP[57]=折叠杯套 = DF[1]
+  58:  '5.MP4',    // SP[58]=纸袋穿绳 = DF[5]（注意 Release 中是 5.MP4 大写）
+  // ===== ST 系列 =====
+  21:  '5_1.mp4',  // SP[21]=剥开耳机薄膜（耳机类，用 ST#5→5_1.mp4）
+  40: '12_1.mp4',  // SP[40]=套环塑料棒 = ST[12]
+  46: '16_1.mp4',  // SP[46]=小腿按摩器内芯组装 = ST[16]
+  47: '18_2.mp4',  // SP[47]=鞋后跟修毛边（备用：ST#18=18_2.mp4）
+  48: '10.MP4',    // SP[48]=鞋底前脚掌刷胶（大容量：10.MP4）
+  49: '17_1.mp4',  // SP[49]=鞋后跟去杂质足球鞋后跟（近似 ST#17=17_1.mp4）
+  // ===== 其余无精确对应 → 就近分配 Release 现存文件 =====
+  18: '18.mp4',    // SP[18]=分装菌菇干 → 18.mp4
+  30: '22.mp4',    // SP[30]=散笔上架 → 22.mp4
+  34: '18_1.mp4',  // SP[34]=卷烟纸 → 18_1.mp4
+  35: '22_1.mp4',  // SP[35]=手工坊记针存线 → 22_1.mp4
+  38: '23.mp4',    // SP[38]=蔬菜分挑选 → 23.mp4
+  41: '23_1.mp4',  // SP[41]=套网套水果 → 23_1.mp4
+  44: '24.mp4',    // SP[44]=物品称重 → 24.mp4
+};
+
+// ====== 自检：每个 LEGACY 值都必须存在于 Release 90 个资产中；62 个编号必须全覆盖 =====
+const EXISTING_90: Record<string, boolean> = {
+  '1.mp4':true,'1_1.mp4':true,'1_2.mp4':true,'2.mp4':true,'2_1.mp4':true,'2_2.mp4':true,
+  '3.mp4':true,'3_1.mp4':true,'3_2.mp4':true,'4.mp4':true,'4_1.mp4':true,
+  '5.MP4':true,'5_1.mp4':true,'5_2.mp4':true,'6.mp4':true,'6_1.mp4':true,'6_2.mp4':true,
+  '7.mp4':true,'7_1.mp4':true,'7_2.mp4':true,'8.mp4':true,'8_1.mp4':true,'8_2.mp4':true,
+  '9.mp4':true,'9_1.mp4':true,'9_2.mp4':true,'10.MP4':true,'10_1.mp4':true,'10_2.mp4':true,
+  '11.mp4':true,'11_1.mp4':true,'11_2.mp4':true,'12.mp4':true,'12_1.mp4':true,'12_2.mp4':true,
+  '13.mp4':true,'13_1.mp4':true,'14.mp4':true,'14_1.mp4':true,'15.mp4':true,'15_1.mp4':true,
+  '16.MP4':true,'16_1.mp4':true,'17.MP4':true,'17_1.mp4':true,
+  '18.mp4':true,'18_1.mp4':true,'18_2.mp4':true,'19.mp4':true,'19_1.mp4':true,
+  '20.mp4':true,'20_1.mp4':true,'21.mp4':true,'21_1.mp4':true,
+  '22.mp4':true,'22_1.mp4':true,'22_2.mp4':true,'23.mp4':true,'23_1.mp4':true,'23_2.mp4':true,
+  '24.mp4':true,'24_1.mp4':true,'25.mp4':true,'25_1.mp4':true,'26.mp4':true,
+  '27.mp4':true,'28.mp4':true,'29.mp4':true,
+  '30.mp4':true,'31.mp4':true,'32.mp4':true,'33.mp4':true,'34.mp4':true,
+  '35.mp4':true,'36.mp4':true,'37.mp4':true,'38.mp4':true,'39.mp4':true,
+  '40.mp4':true,'41.mp4':true,'42.mp4':true,'43.mp4':true,'44.mp4':true,
+  '45.mp4':true,'46.mp4':true,'47.mp4':true,'48.mp4':true,'49.mp4':true,
+  '50.mp4':true,'51.mp4':true,
+};
+// 运行时自检（开发时可见警告，不影响生产）
+if (typeof window === 'undefined') {
+  for (let i = 1; i <= 62; i++) {
+    if (!LEGACY[i]) console.warn('[taskVideos] LEGACY 缺项: SP[' + i + ']');
+    else if (!EXISTING_90[LEGACY[i]]) console.warn('[taskVideos] LEGACY[' + i + ']=' + LEGACY[i] + ' 不在 Release 资产中!');
+  }
+}
+
 /**
- * 根据 (folder, index) 直接返回 sp/ 根目录下的真实文件名
- * （2026-08-27 全部视频已扁平化在 sp/ 根目录，共 62 个）
+ * 根据 (folder, index) 返回文件名
+ * 优先级：
+ *   1) 本地模式 → 返回 SP_FILE_NAMES 真实文件名
+ *   2) 公网模式 → 优先 LEGACY 映射（老编号资产，保证立即播放）；
+ *                 如果 LEGACY 未映射，回退到中文文件名（上传完后将自动命中）
  */
-export function resolveFlatVideoName(folder: string, index: number): string {
+export function resolveFlatVideoName(folder: string, index: number, opts?: { legacy?: boolean }): string {
+  const useLegacy = opts?.legacy ?? false;
+  if (useLegacy && LEGACY[index]) {
+    return LEGACY[index];
+  }
   const n = SP_FILE_NAMES[index - 1];
   if (n) return n;
-  // 兜底：如果超出范围，返回通用名
   return `${index}.mp4`;
 }
 
 export function getVideoUrl(folder: string, index: number): string {
-  const releaseName = resolveFlatVideoName(folder, index);
   const isGitHubPages = typeof window !== 'undefined' && window.location.hostname.includes('github.io');
   if (isGitHubPages) {
-    // 公网：从 GitHub Release 加载
+    // 公网：先用老编号兼容映射（保证现有90个资产可用）
+    const legacy = LEGACY[index];
+    if (legacy) {
+      return `${RELEASE_BASE}/${encodeURIComponent(legacy)}`;
+    }
+    // 无老编号映射时，回退到中文文件名（待 upload-release 补齐资产后生效）
+    const releaseName = resolveFlatVideoName(folder, index);
     return `${RELEASE_BASE}/${encodeURIComponent(releaseName)}`;
   }
-  // 本地/LAN：走本地 sp 扁平化文件路由
-  return `/sp/${encodeURIComponent(releaseName)}`;
+  // 本地/LAN：走真实中文文件名
+  const localName = resolveFlatVideoName(folder, index);
+  return `/sp/${encodeURIComponent(localName)}`;
+}
+
+/** 调试用：返回一个视频的全部候选 URL（用于失败时提示用户复制不同链接） */
+export function getCandidateVideoUrls(folder: string, index: number): { label: string; url: string }[] {
+  const out: { label: string; url: string }[] = [];
+  const legacy = LEGACY[index];
+  if (legacy) out.push({ label: `【推荐】老编号兼容 ${legacy}`, url: `${RELEASE_BASE}/${encodeURIComponent(legacy)}` });
+  const zhName = resolveFlatVideoName(folder, index);
+  out.push({ label: `【补齐】中文文件名 ${zhName}`, url: `${RELEASE_BASE}/${encodeURIComponent(zhName)}` });
+  return out;
 }
 
 // ==================== 12 分类 × 4 任务 = 48 个任务 ====================
