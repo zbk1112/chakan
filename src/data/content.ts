@@ -56,7 +56,7 @@ export const projectContent = {
     validDuration: "20小时",
     processLimit: "场景的工序不限",
     uploadMethod: "邮寄内存卡",
-    sceneRequirements: "农业、家居、商超",
+    sceneRequirements: "农业、商超",
     unitPrice: "30rmb（腕部）",
     settlementMethod: "3周到一个月结算",
     equipment: ["充电宝2个", "摄像鸭舌帽1套", "CPU", "收纳腰包1个", "高速内存卡4张"],
