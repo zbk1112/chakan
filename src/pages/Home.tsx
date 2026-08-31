@@ -137,7 +137,7 @@ export default function Home({ onNavigate }: HomeProps) {
               const settlementMethod = '💳 3周到一个月结算';
               const icon = project.id === 'at' ? '🎩' : project.id === 'df' ? '📱' : project.id === 'sw' ? '🥽' : '🎥';
               const needsPhone = project.id === 'df';
-              const sceneTag = project.id === 'at' ? '🏷️ 农业·商超' : project.id === 'df' ? '🏷️ 居家+制造业' : project.id === 'sw' ? '🏷️ 制造业' : project.id === 'st' ? '🏷️ 真实场景·人手操作' : '';
+              const sceneTag = project.id === 'at' ? '🏷️ 农业·商超' : project.id === 'df' ? '🏷️ 居家+制造业' : project.id === 'sw' ? '🏷️ 全域制造·食品加工·仓储物流·工程维保' : project.id === 'st' ? '🏷️ 制造业：手工厂·电子厂·针织厂等流水线' : '';
               const equipmentTag = project.id === 'at' ? '✅ 我方提供全部硬件' : project.id === 'df' ? '⚠️ 需客户自备iPhone' : project.id === 'sw' ? '✅ 我方提供全部硬件' : project.id === 'st' ? '✅ 我方提供全部硬件' : '';
               const features = project.id === 'at' 
                 ? [{ icon: '🎬', text: '腕部镜头同步' }, { icon: '🔋', text: '充电宝续航' }, { icon: '📦', text: '邮寄内存卡' }] 
