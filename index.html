@@ -824,7 +824,7 @@ const PROJECTS={
   },
   st:{
     title:"ST头戴式GoPro采集",description:"使用自研头戴设备进行制造业场景第一视角数据采集",
-    validDuration:"不限制",processLimit:"录制上限较宽松",uploadMethod:"上传指定网址",sceneRequirements:"制造业",unitPrice:"20rmb",settlementMethod:"3周到一个月结算",
+    validDuration:"不限制",processLimit:"录制上限较宽松",uploadMethod:"上传指定网址",sceneRequirements:"制造业",unitPrice:"25rmb",settlementMethod:"3周到一个月结算",
     equipment:["头戴式GoPro设备","充电宝","充电器","内存卡","品牌手环"],
     preparation:["收到设备后阅读操作员执行手册了解使用流程","确认设备外观完好，电量充足","保障单设备分配10M上行带宽","准备佩戴品牌手环","熟悉指定网址上传流程"],
     steps:[{num:"1",title:"设备开机",desc:"长按开机键开启GoPro设备"},{num:"2",title:"佩戴设备",desc:"将头戴设备佩戴好，调整角度确保画面清晰"},{num:"3",title:"佩戴手环",desc:"佩戴品牌手环，确保在画面中可见"},{num:"4",title:"开始录制",desc:"确认设备正常后开始录制，展示清晰完整的手部作业动作"},{num:"5",title:"完成录制",desc:"按停止键结束录制，检查视频质量"},{num:"6",title:"数据上传",desc:"将数据上传至指定网址的指定软件"}],
@@ -929,7 +929,7 @@ function renderHomeProjects(){
     at:{icon:"🎩",name:"AT头戴采集",desc:"鸭舌帽式头戴摄像设备第一视角采集",duration:"⏱️ 20小时",limit:"工序不限",price:"💰 30rmb",scene:"🏷️ 农业·家居·商超",equip:"✅ 我方提供全部硬件",feat:[{i:"🎬",t:"腕部镜头同步"},{i:"🔋",t:"充电宝续航"},{i:"📦",t:"邮寄内存卡"}]},
     df:{icon:"📱",name:"iPhone采集",desc:"苹果手机EDL软件高清拍摄采集",duration:"⏱️ 100小时",limit:"≤15工序/场景",price:"💰 25rmb",scene:"🏷️ 居家+制造业",equip:"⚠️ 需客户自备iPhone",feat:[]},
     sw:{icon:"🥽",name:"SW头戴设备",desc:"专业头戴设备高精度采集",duration:"⏱️ 50小时",limit:"限产品款式",price:"💰 25rmb",scene:"🏷️ 制造业",equip:"✅ 我方提供全部硬件",feat:[{i:"🔆",t:"配套灯光"},{i:"💻",t:"网页配对"},{i:"📡",t:"10M上行带宽"}]},
-    st:{icon:"🎥",name:"ST头戴式GoPro",desc:"头戴式GoPro设备真实场景人手操作视频采集",duration:"⏱️ 不限制",limit:"录制上限宽松",price:"💰 20rmb",scene:"🏷️ 真实场景·人手操作",equip:"✅ 我方提供全部硬件",feat:[{i:"⌚",t:"品牌手环"},{i:"📶",t:"10M上行带宽"},{i:"✅",t:"T+1审核"}]}
+    st:{icon:"🎥",name:"ST头戴式GoPro",desc:"头戴式GoPro设备真实场景人手操作视频采集",duration:"⏱️ 不限制",limit:"录制上限宽松",price:"💰 25rmb",scene:"🏷️ 真实场景·人手操作",equip:"✅ 我方提供全部硬件",feat:[{i:"⌚",t:"品牌手环"},{i:"📶",t:"10M上行带宽"},{i:"✅",t:"T+1审核"}]}
   };
   let html="";
   projOrder.forEach(id=>{
