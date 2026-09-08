@@ -798,7 +798,7 @@ const PROJECTS={
   },
   df:{
     title:"DF",description:"使用手机端EDL录制软件，完成居家/商业场景规范化实景数据采集",
-    validDuration:"50小时",processLimit:"每个场景最多15个工序，相同场景最多2-3个",uploadMethod:"手机app端上传",sceneRequirements:"主要居家+商业场景",unitPrice:"25rmb（自柜设备）",settlementMethod:"3周到一个月结算",
+    validDuration:"100小时",processLimit:"每个场景最多15个工序，相同场景最多2-3个",uploadMethod:"手机app端上传",sceneRequirements:"主要居家+商业场景",unitPrice:"25rmb（自柜设备）",settlementMethod:"3周到一个月结算",
     equipment:["⚠️ iPhone手机（需客户自备/自租）","充电宝（建议自备）","充电器（建议自备）"],
     preparation:["收到设备后，检查外观、开机、电量、网络、摄像头是否正常","开机打开EDL采集软件，进入录制界面","参数设置：镜头选超广角、场景分类选择工厂、任务名称填写对应工序","场景描述统一填写工厂车间作业","手机调整至60-70°固定角度","工厂必须要有WiFi，设备需链接网络进行采集","提前一周确认要采集的工序产品"],
     steps:[{num:"1",title:"开机打开EDL",desc:"开机打开EDL采集软件，进入录制界面"},{num:"2",title:"设置参数",desc:"镜头选超广角、场景分类选择工厂、任务名称填写对应工序"},{num:"3",title:"调整角度",desc:"手机调整至60-70°固定角度"},{num:"4",title:"开始录制",desc:"点击启动录制，保证画面清晰，双手和操作物体尽量在画面内"},{num:"5",title:"采集执行",desc:"按SOP采集，动作自然速度正常，不要假任务水时长"},{num:"6",title:"结束上传",desc:"连接WiFi，保持手机通电不息屏，后台批量上传当日采集视频"}],
@@ -927,7 +927,7 @@ function renderHomeProjects(){
   const projOrder=["at","df","sw","st"];
   const projData={
     at:{icon:"🎩",name:"AT头戴采集",desc:"鸭舌帽式头戴摄像设备第一视角采集",duration:"⏱️ 20小时",limit:"工序不限",price:"💰 30rmb",scene:"🏷️ 农业·家居·商超",equip:"✅ 我方提供全部硬件",feat:[{i:"🎬",t:"腕部镜头同步"},{i:"🔋",t:"充电宝续航"},{i:"📦",t:"邮寄内存卡"}]},
-    df:{icon:"📱",name:"iPhone采集",desc:"苹果手机EDL软件高清拍摄采集",duration:"⏱️ 50小时",limit:"≤15工序/场景",price:"💰 25rmb",scene:"🏷️ 居家+制造业",equip:"⚠️ 需客户自备iPhone",feat:[]},
+    df:{icon:"📱",name:"iPhone采集",desc:"苹果手机EDL软件高清拍摄采集",duration:"⏱️ 100小时",limit:"≤15工序/场景",price:"💰 25rmb",scene:"🏷️ 居家+制造业",equip:"⚠️ 需客户自备iPhone",feat:[]},
     sw:{icon:"🥽",name:"SW头戴设备",desc:"专业头戴设备高精度采集",duration:"⏱️ 50小时",limit:"限产品款式",price:"💰 25rmb",scene:"🏷️ 制造业",equip:"✅ 我方提供全部硬件",feat:[{i:"🔆",t:"配套灯光"},{i:"💻",t:"网页配对"},{i:"📡",t:"10M上行带宽"}]},
     st:{icon:"🎥",name:"ST头戴式GoPro",desc:"头戴式GoPro设备真实场景人手操作视频采集",duration:"⏱️ 不限制",limit:"录制上限宽松",price:"💰 20rmb",scene:"🏷️ 真实场景·人手操作",equip:"✅ 我方提供全部硬件",feat:[{i:"⌚",t:"品牌手环"},{i:"📶",t:"10M上行带宽"},{i:"✅",t:"T+1审核"}]}
   };
