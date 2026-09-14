@@ -1049,7 +1049,10 @@ function openModal(task){
     if(attempt>=candidates.length){
       modalVideo.removeAttribute("src");
       modalVideo.load();
-      modalLinks.innerHTML='<a href="'+candidates[0]+'" target="_blank">🔗 下载 .mp4</a>';
+      const isBig=fb&&(fb==="3.mp4"||fb==="4.mp4"||fb==="10.MP4");
+      modalLinks.innerHTML=isBig
+        ? '<div style="color:#fbbf24;font-size:12px;margin-bottom:8px">该任务视频体积较大（165MB ~ 1.1GB），暂不支持网页内在线播放，请点击下方按钮下载后观看</div><a href="'+candidates[0]+'" target="_blank">🔗 下载 .mp4 视频</a>'
+        : '<a href="'+candidates[0]+'" target="_blank">🔗 下载 .mp4</a>';
       return;
     }
     const url=candidates[attempt++];
