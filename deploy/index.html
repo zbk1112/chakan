@@ -803,7 +803,7 @@ const VIDEO_FALLBACK={
 const PROJECTS={
   at:{
     title:"AT头戴鸭舌帽采集",description:"采用自研头戴摄像设备，完成第一视角作业实景数据采集",
-    validDuration:"20小时",processLimit:"场景的工序不限",uploadMethod:"邮寄内存卡",sceneRequirements:"农业、商超",unitPrice:"30rmb（腕部）",settlementMethod:"3周到一个月结算",
+    validDuration:"20小时",processLimit:"场景的工序不限",uploadMethod:"邮寄内存卡",sceneRequirements:"餐饮（面包烘焙店、蛋糕店、冰激凌店、商业厨房、披萨店）、物流（百货商店配送、节庆物流、物流/配送中心、运输、仓库）、零售（清洁用品商店、家电商店、超级市场、便利店、电子产品店、渔具店、家具店、零售花园中心、礼品店杂货店、家具装饰店、厨具店、油漆店、蔬果店、鞋店、体育用品文具店）",unitPrice:"30rmb（腕部）",settlementMethod:"3周到一个月结算",
     equipment:["充电宝2个","摄像鸭舌帽1套","CPU","收纳腰包1个","高速内存卡4张"],
     preparation:["所有采集设备提前满电，保障全天作业续航","内存卡预留充足存储空间，满足2-3天不间断录制","严格核对设备编号与对应工序，匹配无误再下发","规范佩戴摄像帽，腰包收纳至身后隐蔽位置，避免入镜","录制时按要求佩戴腕部镜头"],
     steps:[{num:"1",title:"连接设备",desc:"连接主机与充电宝，设备播报请扫描二维码后上报设备编号"},{num:"2",title:"扫码识别",desc:"领取对应二维码，置于镜头前20cm左右完成识别"},{num:"3",title:"佩戴镜头",desc:"按要求佩戴腕部镜头"},{num:"4",title:"开始采集",desc:"听到播报录制已开始即正式启动采集"},{num:"5",title:"依次部署",desc:"依次完成全部设备部署"},{num:"6",title:"结束采集",desc:"完成后停止录制，分类取出内存卡"}],
@@ -815,8 +815,8 @@ const PROJECTS={
     specialRules:["不需要上传，设备较轻","需提前确认客户开放场景","录制时按要求佩戴腕部镜头"]
   },
   df:{
-    title:"DF",description:"使用手机端EDL录制软件，完成居家/商业场景规范化实景数据采集",
-    validDuration:"100小时",processLimit:"每个场景最多15个工序，相同场景最多2-3个",uploadMethod:"手机app端上传",sceneRequirements:"主要居家+商业场景",unitPrice:"25rmb（自柜设备）",settlementMethod:"3周到一个月结算",
+    title:"DF",description:"使用手机端EDL录制软件，完成商业/服务业场景规范化实景数据采集",
+    validDuration:"100小时",processLimit:"每个场景最多15个工序，相同场景最多2-3个",uploadMethod:"手机app端上传",sceneRequirements:"生产制造与工业服务（综合维修服务、印刷与广告设计、食品加工、实验室/科研、工业制造/厂区保洁/建筑）、生活消费服务（美容个人护理、酒店餐饮服务业、体育休闲、文娱活动会展、医疗与药房、零售日用消费品）、交通出行（汽车与交通运输）、教育与照护（教育与培训、婴幼儿照护与养老看护）、公共与政务服务（行政与办公服务、公共安全与应急处置、能源与公用事业）",unitPrice:"25rmb（自柜设备）",settlementMethod:"3周到一个月结算",
     equipment:["⚠️ iPhone手机（需客户自备/自租）","充电宝（建议自备）","充电器（建议自备）"],
     preparation:["收到设备后，检查外观、开机、电量、网络、摄像头是否正常","开机打开EDL采集软件，进入录制界面","参数设置：镜头选超广角、场景分类选择工厂、任务名称填写对应工序","场景描述统一填写工厂车间作业","手机调整至60-70°固定角度","工厂必须要有WiFi，设备需链接网络进行采集","提前一周确认要采集的工序产品"],
     steps:[{num:"1",title:"开机打开EDL",desc:"开机打开EDL采集软件，进入录制界面"},{num:"2",title:"设置参数",desc:"镜头选超广角、场景分类选择工厂、任务名称填写对应工序"},{num:"3",title:"调整角度",desc:"手机调整至60-70°固定角度"},{num:"4",title:"开始录制",desc:"点击启动录制，保证画面清晰，双手和操作物体尽量在画面内"},{num:"5",title:"采集执行",desc:"按SOP采集，动作自然速度正常，不要假任务水时长"},{num:"6",title:"结束上传",desc:"连接WiFi，保持手机通电不息屏，后台批量上传当日采集视频"}],
@@ -829,7 +829,7 @@ const PROJECTS={
   },
   sw:{
     title:"SW头戴设备采集",description:"使用自研头戴设备进行高精度第一视角数据采集",
-    validDuration:"50小时",processLimit:"场景的工序不限，限制的是产品的款式，只有换了款式，才能申请新的工序",uploadMethod:"上传指定网址",sceneRequirements:"全域工业生产制造、食品工业化生产加工、仓储运输与供应链物流、工程建设与五金建材、设备检修与维保车间、整车运维与交通运输、农林种植与农牧养殖、能源供给与市政公共配套",unitPrice:"25rmb",settlementMethod:"3周到一个月结算",
+    validDuration:"50小时",processLimit:"场景的工序不限，限制的是产品的款式，只有换了款式，才能申请新的工序",uploadMethod:"上传指定网址",sceneRequirements:"一、商贸零售与生活消费（快消零售与商品经营场景、居家日常生活场景、服饰潮流与成衣行业、美妆护肤与个人护理）、二、工业生产与工程建设（全域工业生产制造、工程建设与五金建材、平面设计与印务制作）、三、物流运输与供应链（仓储运输与供应链物流、整车运维与交通运输领域）、四、创意设计与专业服务（个人工作室与实操工位、创意手作与研发工坊、企业综合行政办公）、五、住宿餐饮与照料服务（商旅食宿与线下接待服务、前台接待与专人照料服务、婴幼儿看护与养老照料）、六、医疗健康与公共安全（医疗卫生与医药零售、公共安防与突发状况应急响应）、七、市政运维与后勤保障（能源供给与市政公共配套、设备检修与维保车间、环境保洁与消杀运维）、八、农林牧渔与食品加工（农林种植与农牧养殖、食品工业化生产加工）、九、科教文体与文娱演艺（科研实验室与精密试验场景、教学授课与技能培训、体育运动与休闲文娱、文娱演艺与线下活动策划）",unitPrice:"25rmb",settlementMethod:"3周到一个月结算",
     equipment:["SW头戴设备","配套灯光","充电底座","数据传输线","配对软件"],
     preparation:["长按开机键检查电量：蓝灯20-90%，绿灯90%以上，红灯<20%","电量低于30%无法开启录制，需先充电","准备安卓手机，使用Edge浏览器","打开网址：https://vela.fozmoly.com/","保障单设备分配10M上行带宽"],
     steps:[{num:"1",title:"设备开机",desc:"长按开机键，根据指示灯确认电量状态"},{num:"2",title:"网页配对",desc:"使用安卓手机Edge浏览器打开配对网页，选择对应设备序列号"},{num:"3",title:"填写信息",desc:"工序信息填写：名字必须写真实姓名，身高需要较为准确"},{num:"4",title:"开始录制",desc:"确认软件为最新版本，正常录制状态时间跳动10秒后再操作"},{num:"5",title:"按键保存",desc:"1.8.1版本可使用设备侧面按键保存，注意只能按突起的按键"},{num:"6",title:"数据导出",desc:"设备连接USB线插上电脑，找到SXR-1文件路径复制到本地，上传至指定网站"}],
@@ -842,7 +842,7 @@ const PROJECTS={
   },
   st:{
     title:"ST头戴式GoPro采集",description:"使用自研头戴设备进行制造业场景第一视角数据采集",
-    validDuration:"不限制",processLimit:"录制上限较宽松",uploadMethod:"上传指定网址",sceneRequirements:"制造业：手工厂、电子厂、针织厂等流水线场景",unitPrice:"25rmb",settlementMethod:"3周到一个月结算",
+    validDuration:"不限制",processLimit:"录制上限较宽松",uploadMethod:"上传指定网址",sceneRequirements:"制造业工厂流水线场景：鞋厂、五金厂、玩具厂、电路板厂、电子厂、纸箱厂、雨伞厂、罐头厂、羽毛球厂等",unitPrice:"25rmb",settlementMethod:"3周到一个月结算",
     equipment:["头戴式GoPro设备","充电宝","充电器","内存卡","品牌手环"],
     preparation:["收到设备后阅读操作员执行手册了解使用流程","确认设备外观完好，电量充足","保障单设备分配10M上行带宽","准备佩戴品牌手环","熟悉指定网址上传流程"],
     steps:[{num:"1",title:"设备开机",desc:"长按开机键开启GoPro设备"},{num:"2",title:"佩戴设备",desc:"将头戴设备佩戴好，调整角度确保画面清晰"},{num:"3",title:"佩戴手环",desc:"佩戴品牌手环，确保在画面中可见"},{num:"4",title:"开始录制",desc:"确认设备正常后开始录制，展示清晰完整的手部作业动作"},{num:"5",title:"完成录制",desc:"按停止键结束录制，检查视频质量"},{num:"6",title:"数据上传",desc:"将数据上传至指定网址的指定软件"}],
@@ -944,10 +944,10 @@ function renderHomeProjects(){
   const grid=document.getElementById("homeProjects");
   const projOrder=["at","df","sw","st"];
   const projData={
-    at:{icon:"🎩",name:"AT头戴采集",desc:"鸭舌帽式头戴摄像设备第一视角采集",duration:"⏱️ 20小时",limit:"工序不限",price:"💰 30rmb",scene:"🏷️ 农业·商超",equip:"✅ 我方提供全部硬件",feat:[{i:"🎬",t:"腕部镜头同步"},{i:"🔋",t:"充电宝续航"},{i:"📦",t:"邮寄内存卡"}]},
-    df:{icon:"📱",name:"iPhone采集",desc:"苹果手机EDL软件高清拍摄采集",duration:"⏱️ 100小时",limit:"≤15工序/场景",price:"💰 25rmb",scene:"🏷️ 居家+制造业",equip:"⚠️ 需客户自备iPhone",feat:[]},
-    sw:{icon:"🥽",name:"SW头戴设备",desc:"专业头戴设备高精度采集",duration:"⏱️ 50小时",limit:"限产品款式",price:"💰 25rmb",scene:"🏷️ 全域制造·食品加工·仓储物流·工程维保",equip:"✅ 我方提供全部硬件",feat:[{i:"🔆",t:"配套灯光"},{i:"💻",t:"网页配对"},{i:"📡",t:"10M上行带宽"}]},
-    st:{icon:"🎥",name:"ST头戴式GoPro",desc:"头戴式GoPro设备真实场景人手操作视频采集",duration:"⏱️ 不限制",limit:"录制上限宽松",price:"💰 25rmb",scene:"🏷️ 制造业：手工厂·电子厂·针织厂等流水线",equip:"✅ 我方提供全部硬件",feat:[{i:"⌚",t:"品牌手环"},{i:"📶",t:"10M上行带宽"},{i:"✅",t:"T+1审核"}]}
+    at:{icon:"🎩",name:"AT头戴采集",desc:"鸭舌帽式头戴摄像设备第一视角采集",duration:"⏱️ 20小时",limit:"工序不限",price:"💰 30rmb",scene:"🏷️ 餐饮·物流·零售（25类场景）",equip:"✅ 我方提供全部硬件",feat:[{i:"🎬",t:"腕部镜头同步"},{i:"🔋",t:"充电宝续航"},{i:"📦",t:"邮寄内存卡"}]},
+    df:{icon:"📱",name:"iPhone采集",desc:"苹果手机EDL软件高清拍摄采集",duration:"⏱️ 100小时",limit:"≤15工序/场景",price:"💰 25rmb",scene:"🏷️ 生产制造·生活消费·交通出行·教育照护·公共政务",equip:"⚠️ 需客户自备iPhone",feat:[]},
+    sw:{icon:"🥽",name:"SW头戴设备",desc:"专业头戴设备高精度采集",duration:"⏱️ 50小时",limit:"限产品款式",price:"💰 25rmb",scene:"🏷️ 商贸零售·工业制造·物流供应链·创意设计·医疗健康等九大场景",equip:"✅ 我方提供全部硬件",feat:[{i:"🔆",t:"配套灯光"},{i:"💻",t:"网页配对"},{i:"📡",t:"10M上行带宽"}]},
+    st:{icon:"🎥",name:"ST头戴式GoPro",desc:"头戴式GoPro设备真实场景人手操作视频采集",duration:"⏱️ 不限制",limit:"录制上限宽松",price:"💰 25rmb",scene:"🏷️ 鞋厂·五金厂·玩具厂·电路板厂·电子厂等九类工厂",equip:"✅ 我方提供全部硬件",feat:[{i:"⌚",t:"品牌手环"},{i:"📶",t:"10M上行带宽"},{i:"✅",t:"T+1审核"}]}
   };
   let html="";
   projOrder.forEach(id=>{
