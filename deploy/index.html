@@ -781,6 +781,24 @@ const TASKS=[
   {cat:"battery",title:"安装负极贴片-铅酸蓄电槽",material:"铅酸蓄电槽、负极贴片"}
 ];
 
+// ============ 数据：视频兜底源（GitHub Release） ============
+// 本地 deploy 目录未提供视频的任务，自动回退到 GitHub Release 资产（经公共反代剥离 attachment 头以支持网页内播放）
+const RELEASE_BASE="https://github.com/zbk1112/chakan/releases/download/v1.0.0";
+const RELEASE_PROXIES=[
+  (u)=>"https://gh-proxy.com/"+u,
+  (u)=>"https://ghproxy.net/"+u,
+  (u)=>"https://github.moeyy.xyz/"+u,
+  (u)=>"https://corsproxy.io/?url="+encodeURIComponent(u)
+];
+const VIDEO_FALLBACK={
+  "称重菌菇干":"2.mp4",
+  "封口包装":"4.mp4",
+  "粘贴封条":"3.mp4",
+  "鞋底前脚掌刷胶":"10.MP4",
+  "小腿按摩器内芯组装":"16_1.mp4",
+  "合盖电子钟":"5_1.mp4"
+};
+
 // ============ 数据：项目内容 ============
 const PROJECTS={
   at:{
@@ -798,7 +816,7 @@ const PROJECTS={
   },
   df:{
     title:"DF",description:"使用手机端EDL录制软件，完成居家/商业场景规范化实景数据采集",
-    validDuration:"50小时",processLimit:"每个场景最多15个工序，相同场景最多2-3个",uploadMethod:"手机app端上传",sceneRequirements:"主要居家+商业场景",unitPrice:"25rmb（自柜设备）",settlementMethod:"3周到一个月结算",
+    validDuration:"100小时",processLimit:"每个场景最多15个工序，相同场景最多2-3个",uploadMethod:"手机app端上传",sceneRequirements:"主要居家+商业场景",unitPrice:"25rmb（自柜设备）",settlementMethod:"3周到一个月结算",
     equipment:["⚠️ iPhone手机（需客户自备/自租）","充电宝（建议自备）","充电器（建议自备）"],
     preparation:["收到设备后，检查外观、开机、电量、网络、摄像头是否正常","开机打开EDL采集软件，进入录制界面","参数设置：镜头选超广角、场景分类选择工厂、任务名称填写对应工序","场景描述统一填写工厂车间作业","手机调整至60-70°固定角度","工厂必须要有WiFi，设备需链接网络进行采集","提前一周确认要采集的工序产品"],
     steps:[{num:"1",title:"开机打开EDL",desc:"开机打开EDL采集软件，进入录制界面"},{num:"2",title:"设置参数",desc:"镜头选超广角、场景分类选择工厂、任务名称填写对应工序"},{num:"3",title:"调整角度",desc:"手机调整至60-70°固定角度"},{num:"4",title:"开始录制",desc:"点击启动录制，保证画面清晰，双手和操作物体尽量在画面内"},{num:"5",title:"采集执行",desc:"按SOP采集，动作自然速度正常，不要假任务水时长"},{num:"6",title:"结束上传",desc:"连接WiFi，保持手机通电不息屏，后台批量上传当日采集视频"}],
@@ -824,7 +842,7 @@ const PROJECTS={
   },
   st:{
     title:"ST头戴式GoPro采集",description:"使用自研头戴设备进行制造业场景第一视角数据采集",
-    validDuration:"不限制",processLimit:"录制上限较宽松",uploadMethod:"上传指定网址",sceneRequirements:"制造业：手工厂、电子厂、针织厂等流水线场景",unitPrice:"20rmb",settlementMethod:"3周到一个月结算",
+    validDuration:"不限制",processLimit:"录制上限较宽松",uploadMethod:"上传指定网址",sceneRequirements:"制造业：手工厂、电子厂、针织厂等流水线场景",unitPrice:"25rmb",settlementMethod:"3周到一个月结算",
     equipment:["头戴式GoPro设备","充电宝","充电器","内存卡","品牌手环"],
     preparation:["收到设备后阅读操作员执行手册了解使用流程","确认设备外观完好，电量充足","保障单设备分配10M上行带宽","准备佩戴品牌手环","熟悉指定网址上传流程"],
     steps:[{num:"1",title:"设备开机",desc:"长按开机键开启GoPro设备"},{num:"2",title:"佩戴设备",desc:"将头戴设备佩戴好，调整角度确保画面清晰"},{num:"3",title:"佩戴手环",desc:"佩戴品牌手环，确保在画面中可见"},{num:"4",title:"开始录制",desc:"确认设备正常后开始录制，展示清晰完整的手部作业动作"},{num:"5",title:"完成录制",desc:"按停止键结束录制，检查视频质量"},{num:"6",title:"数据上传",desc:"将数据上传至指定网址的指定软件"}],
@@ -927,9 +945,9 @@ function renderHomeProjects(){
   const projOrder=["at","df","sw","st"];
   const projData={
     at:{icon:"🎩",name:"AT头戴采集",desc:"鸭舌帽式头戴摄像设备第一视角采集",duration:"⏱️ 20小时",limit:"工序不限",price:"💰 30rmb",scene:"🏷️ 农业·商超",equip:"✅ 我方提供全部硬件",feat:[{i:"🎬",t:"腕部镜头同步"},{i:"🔋",t:"充电宝续航"},{i:"📦",t:"邮寄内存卡"}]},
-    df:{icon:"📱",name:"iPhone采集",desc:"苹果手机EDL软件高清拍摄采集",duration:"⏱️ 50小时",limit:"≤15工序/场景",price:"💰 25rmb",scene:"🏷️ 居家+制造业",equip:"⚠️ 需客户自备iPhone",feat:[]},
+    df:{icon:"📱",name:"iPhone采集",desc:"苹果手机EDL软件高清拍摄采集",duration:"⏱️ 100小时",limit:"≤15工序/场景",price:"💰 25rmb",scene:"🏷️ 居家+制造业",equip:"⚠️ 需客户自备iPhone",feat:[]},
     sw:{icon:"🥽",name:"SW头戴设备",desc:"专业头戴设备高精度采集",duration:"⏱️ 50小时",limit:"限产品款式",price:"💰 25rmb",scene:"🏷️ 全域制造·食品加工·仓储物流·工程维保",equip:"✅ 我方提供全部硬件",feat:[{i:"🔆",t:"配套灯光"},{i:"💻",t:"网页配对"},{i:"📡",t:"10M上行带宽"}]},
-    st:{icon:"🎥",name:"ST头戴式GoPro",desc:"头戴式GoPro设备真实场景人手操作视频采集",duration:"⏱️ 不限制",limit:"录制上限宽松",price:"💰 20rmb",scene:"🏷️ 制造业：手工厂·电子厂·针织厂等流水线",equip:"✅ 我方提供全部硬件",feat:[{i:"⌚",t:"品牌手环"},{i:"📶",t:"10M上行带宽"},{i:"✅",t:"T+1审核"}]}
+    st:{icon:"🎥",name:"ST头戴式GoPro",desc:"头戴式GoPro设备真实场景人手操作视频采集",duration:"⏱️ 不限制",limit:"录制上限宽松",price:"💰 25rmb",scene:"🏷️ 制造业：手工厂·电子厂·针织厂等流水线",equip:"✅ 我方提供全部硬件",feat:[{i:"⌚",t:"品牌手环"},{i:"📶",t:"10M上行带宽"},{i:"✅",t:"T+1审核"}]}
   };
   let html="";
   projOrder.forEach(id=>{
@@ -1016,23 +1034,32 @@ const modalLinks=document.getElementById("modalLinks");
 
 function openModal(task){
   modalTitle.textContent=task.title;
-  const srcMp4="./"+task.title+".mp4";
-  const srcMP4="./"+task.title+".MP4";
   modalLinks.innerHTML="";
   taskModal.classList.add("active");
-  modalVideo.src=srcMp4;
-  modalVideo.load();
-  const tryAlt=()=>{
-    if(modalVideo.src.endsWith(".mp4")){
-      modalVideo.src=srcMP4;
+  // 候选视频源：本地同名 mp4 → 本地同名 MP4 → Release 反代代理 → Release 直链
+  const candidates=["./"+task.title+".mp4","./"+task.title+".MP4"];
+  const fb=VIDEO_FALLBACK[task.title];
+  if(fb){
+    const asset=RELEASE_BASE+"/"+encodeURIComponent(fb);
+    RELEASE_PROXIES.forEach(p=>candidates.push(p(asset)));
+    candidates.push(asset);
+  }
+  let attempt=0;
+  const tryNext=()=>{
+    if(attempt>=candidates.length){
+      modalVideo.removeAttribute("src");
       modalVideo.load();
-      modalVideo.play().catch(()=>{});
-    }else{
-      modalLinks.innerHTML='<a href="'+srcMp4+'" target="_blank">🔗 下载 .mp4</a><a href="'+srcMP4+'" target="_blank">🔗 下载 .MP4</a>';
+      modalLinks.innerHTML='<a href="'+candidates[0]+'" target="_blank">🔗 下载 .mp4</a>';
+      return;
     }
+    const url=candidates[attempt++];
+    modalVideo.onerror=()=>{tryNext();};
+    modalVideo.oncanplay=()=>{modalVideo.onerror=null;};
+    modalVideo.src=url;
+    modalVideo.load();
+    modalVideo.play().catch(()=>{tryNext();});
   };
-  modalVideo.play().catch(()=>{tryAlt();});
-  modalVideo.onerror=tryAlt;
+  tryNext();
 }
 
 function closeModal(){
