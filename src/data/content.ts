@@ -196,7 +196,7 @@ export const projectContent = {
     validDuration: "不限制",
     processLimit: "录制上限较宽松",
     uploadMethod: "上传指定网址",
-    sceneRequirements: "制造业工厂流水线场景：鞋厂、五金厂、玩具厂、电路板厂、电子厂、纸箱厂、雨伞厂、罐头厂、羽毛球厂等",
+    sceneRequirements: "除工厂流水线场景外，其余场景均可录制，具体可录制范围需结合视频内容判定",
     unitPrice: "25rmb",
     settlementMethod: "3周到一个月结算",
     equipment: ["头戴式GoPro设备", "充电宝", "充电器", "内存卡", "品牌手环"],
