@@ -1,5 +1,5 @@
-import { useState, useMemo, useEffect } from 'react';
-import { TaskDetailData, getTaskById, getTaskVideos, getVideoUrl, getVideoTitle, taskDetails, getCandidateVideoUrls } from '../data/taskVideos';
+import { useState, useMemo, useEffect, useRef } from 'react';
+import { TaskDetailData, getTaskById, getTaskVideos, getVideoUrl, getVideoTitle, taskDetails, getCandidateVideoUrls, getVideoUrlCandidates } from '../data/taskVideos';
 
 interface TaskDetailProps {
   taskId: number;
@@ -14,11 +14,22 @@ export default function TaskDetail({ taskId, onNavigate }: TaskDetailProps) {
   const [blobUrl, setBlobUrl] = useState<string>('');
   const [isBlobLoading, setIsBlobLoading] = useState(false);
   const [blobRetried, setBlobRetried] = useState(false);
+  // 多候选 URL 自动切换：公网模式下保存所有反代+直链候选，onError 时切下一个
+  const [candidateIdx, setCandidateIdx] = useState(0);
+  const candidateTriedRef = useRef<Set<string>>(new Set());
 
   const videos = useMemo(() => {
     if (!task) return [];
     return getTaskVideos(task);
   }, [task]);
+
+  // 当前视频的全部候选 URL（公网：反代+直链 / 本地：单条直链）
+  const urlCandidates = useMemo(() => {
+    if (!task) return [];
+    const v = videos[currentVideoIndex];
+    if (!v) return [];
+    return getVideoUrlCandidates(v.folder, v.index);
+  }, [task, videos, currentVideoIndex]);
 
   // 切换任务时重置
   useEffect(() => {
@@ -28,15 +39,19 @@ export default function TaskDetail({ taskId, onNavigate }: TaskDetailProps) {
     if (blobUrl) { URL.revokeObjectURL(blobUrl); setBlobUrl(''); }
     setBlobRetried(false);
     setIsBlobLoading(false);
+    setCandidateIdx(0);
+    candidateTriedRef.current = new Set();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskId]);
 
-  // 切换当前视频时回收旧 blob
+  // 切换当前视频时回收旧 blob + 重置候选索引
   useEffect(() => {
     if (blobUrl) { URL.revokeObjectURL(blobUrl); setBlobUrl(''); }
     setBlobRetried(false);
     setIsBlobLoading(false);
     setVideoError('');
+    setCandidateIdx(0);
+    candidateTriedRef.current = new Set();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentVideoIndex]);
 
@@ -57,14 +72,20 @@ export default function TaskDetail({ taskId, onNavigate }: TaskDetailProps) {
   }
 
   const currentVideo = videos[currentVideoIndex];
-  const videoUrl = currentVideo ? getVideoUrl(currentVideo.folder, currentVideo.index) : '';
-  const effectiveSrc = blobUrl || videoUrl;
+  // 公网模式下 urlCandidates 包含反代+直链；本地模式只 1 条直链
+  // 当前使用的 URL：blob 内联优先 → 当前候选 URL
+  const fallbackDirectUrl = currentVideo ? getVideoUrl(currentVideo.folder, currentVideo.index) : '';
+  const candidateUrl = urlCandidates[candidateIdx] || fallbackDirectUrl;
+  const effectiveSrc = blobUrl || candidateUrl;
+  // 错误提示和"新标签页打开"按钮使用 Release 直链（候选数组最后一条）
+  // 浏览器原生处理 attachment 头 → 触发下载，用户下载完成后本地播放最稳定
+  const videoUrl = urlCandidates.length > 0 ? urlCandidates[urlCandidates.length - 1] : fallbackDirectUrl;
 
-  // GitHub Release 返回 attachment + 无 CORS → <video> 无法直接播放 ERR_ABORTED
-  // 优化：
-  //   1) 先尝试 Release 直链（若浏览器支持 attachment 自动解码则秒播）
-  //   2) 失败走 5 条 CORS 代理 fetch+Blob 内联
-  //   3) 所有通道失败，直接提供「新标签页打开按钮」+ 候选 URL 列表
+  // 公网视频播放优化（2026-09-14）：
+  //   1) 先用 gh-proxy 类反代（剥离 attachment 头 + 加 CORS，<video> 可直接播放）
+  //   2) 反代失败 → 自动切换下一个反代镜像（多镜像自动换源）
+  //   3) 所有反代失败 → 切到 Release 直链，触发 onError 后走 fetch+blob 内联
+  //   4) 所有通道失败 → 提供「新标签页打开」按钮（浏览器直接下载后播放，最稳定）
   const MAX_BLOB_BYTES = 600 * 1024 * 1024; // 放宽到 600MB，Release 资产最大 1.2GB 但我们映射的多为中小文件
   const CORS_PROXIES = [
     (u: string) => `https://corsproxy.io/?${encodeURIComponent(u)}`,          // 稳定
@@ -188,7 +209,7 @@ export default function TaskDetail({ taskId, onNavigate }: TaskDetailProps) {
               {currentVideo ? (
                 <>
                   <video
-                    key={effectiveSrc + String(currentVideoIndex)}
+                    key={effectiveSrc + String(currentVideoIndex) + String(candidateIdx)}
                     controls
                     controlsList="nodownload"
                     autoPlay
@@ -203,7 +224,17 @@ export default function TaskDetail({ taskId, onNavigate }: TaskDetailProps) {
                     onError={(e) => {
                       const target = e.currentTarget;
                       const code = target?.error?.code;
-                      // 公网 CDN (attachment 或 CORS) 出错 → fallback 到 fetch+blob 内联模式
+                      // 标记当前候选已失败
+                      candidateTriedRef.current.add(candidateUrl);
+                      // 还有未尝试的候选 → 自动切换到下一个反代/直链
+                      const nextIdx = urlCandidates.findIndex((u, i) => i > candidateIdx && !candidateTriedRef.current.has(u));
+                      if (nextIdx !== -1) {
+                        const total = urlCandidates.length;
+                        setVideoError(`⚙️  当前镜像加载失败，自动切换到备用镜像 ${nextIdx + 1}/${total} ...`);
+                        setCandidateIdx(nextIdx);
+                        return;
+                      }
+                      // 所有候选都失败 → 触发 fetch+blob 内联模式
                       if (!blobRetried) {
                         handleFallbackBlob(videoUrl);
                         return;
@@ -221,7 +252,8 @@ export default function TaskDetail({ taskId, onNavigate }: TaskDetailProps) {
                       setVideoError(`${msg}（错误码 ${code || '未知'}）
 URL: ${videoUrl}`);
                     }}
-                    onLoadStart={() => { if (!blobRetried) setVideoError(''); }}
+                    onLoadStart={() => { if (!blobRetried && !videoError.startsWith('⚙️')) setVideoError(''); }}
+                    onPlaying={() => { if (videoError) setVideoError(''); }}
                   >
                     <source src={effectiveSrc} type="video/mp4" />
                     您的浏览器不支持视频播放。请尝试：① 用 Chrome / Safari / Edge 现代浏览器 ② 不要使用 IE 或老旧微信 WebView
@@ -485,18 +517,19 @@ URL: ${videoUrl}`);
 // 分类颜色映射
 function getCategoryGradient(categoryId: string): string {
   const map: Record<string, string> = {
-    packaging: 'from-amber-500 to-orange-500',
     retail: 'from-blue-500 to-indigo-500',
-    vegetables: 'from-green-500 to-emerald-500',
-    cleaning: 'from-cyan-500 to-teal-500',
-    clothing: 'from-pink-500 to-rose-500',
-    earphone: 'from-sky-500 to-blue-500',
-    toy: 'from-yellow-500 to-amber-500',
-    handcraft: 'from-fuchsia-500 to-pink-500',
+    fresh: 'from-green-500 to-emerald-500',
+    packaging: 'from-amber-500 to-orange-500',
+    papergoods: 'from-yellow-500 to-amber-500',
+    shoes: 'from-orange-500 to-red-500',
+    model: 'from-lime-500 to-green-600',
     jewelry: 'from-rose-500 to-pink-500',
-    lotus: 'from-purple-500 to-fuchsia-500',
-    stand: 'from-indigo-500 to-violet-500',
-    assembly: 'from-slate-500 to-gray-600',
+    handcraft: 'from-fuchsia-500 to-pink-500',
+    electronics: 'from-sky-500 to-blue-500',
+    toys: 'from-yellow-500 to-amber-500',
+    lighting: 'from-amber-400 to-yellow-500',
+    hardware: 'from-slate-500 to-gray-600',
+    battery: 'from-emerald-500 to-teal-600',
   };
   return map[categoryId] || 'from-green-500 to-emerald-500';
 }

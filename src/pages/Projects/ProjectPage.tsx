@@ -157,12 +157,12 @@ export default function ProjectPage({ initialProject }: ProjectPageProps) {
                   </div>
                 </div>
               </div>
-              <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded p-2 md:p-3 border border-orange-200">
-                <div className="flex items-center gap-1.5 md:gap-2">
-                  <span className="text-base md:text-xl">🎯</span>
-                  <div className="min-w-0">
-                    <p className="text-[9px] md:text-xs text-gray-500">场景需求</p>
-                    <p className="text-[11px] md:text-sm font-medium text-gray-700 truncate">
+              <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded p-2 md:p-3 border border-orange-200 md:col-span-2">
+                <div className="flex items-start gap-1.5 md:gap-2">
+                  <span className="text-base md:text-xl shrink-0 mt-0.5">🎯</span>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[9px] md:text-xs text-gray-500 mb-0.5">场景需求</p>
+                    <p className="text-[11px] md:text-sm font-medium text-gray-700 leading-relaxed break-all">
                       {currentProject.sceneRequirements}
                     </p>
                   </div>

@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { taskDetails } from '../data/taskVideos';
 
 interface Task {
@@ -21,56 +21,59 @@ interface Category {
 // 从 taskVideos 任务详情中抽取 Category + Task
 function buildCategories(): Category[] {
   const gradientMap: Record<string, string> = {
-    packaging: 'from-amber-500 to-orange-500',
     retail: 'from-blue-500 to-indigo-500',
-    vegetables: 'from-green-500 to-emerald-500',
-    cleaning: 'from-cyan-500 to-teal-500',
-    clothing: 'from-pink-500 to-rose-500',
-    earphone: 'from-sky-500 to-blue-500',
-    toy: 'from-yellow-500 to-amber-500',
-    handcraft: 'from-fuchsia-500 to-pink-500',
+    fresh: 'from-green-500 to-emerald-500',
+    packaging: 'from-amber-500 to-orange-500',
+    papergoods: 'from-yellow-500 to-amber-500',
+    shoes: 'from-orange-500 to-red-500',
+    model: 'from-lime-500 to-green-600',
     jewelry: 'from-rose-500 to-pink-500',
-    lotus: 'from-purple-500 to-fuchsia-500',
-    stand: 'from-indigo-500 to-violet-500',
-    assembly: 'from-slate-500 to-gray-600',
+    handcraft: 'from-fuchsia-500 to-pink-500',
+    electronics: 'from-sky-500 to-blue-500',
+    toys: 'from-yellow-500 to-amber-500',
+    lighting: 'from-amber-400 to-yellow-500',
+    hardware: 'from-slate-500 to-gray-600',
+    battery: 'from-emerald-500 to-teal-600',
   };
   const taglineMap: Record<string, string> = {
-    packaging: '折叠杯套、分装菌菇干、粘贴封条、封口包装',
-    retail: '过期下架、货物上架、整理货架、收银、卸货、散笔上架、套网套',
-    vegetables: '蔬菜分拣、分挑选、上架、称重',
-    cleaning: '纸袋穿绳、洗护婴身、穿假婴裤、卷烟纸、记针存线',
-    clothing: '鞋后跟修毛边、鞋底前掌刷胶、鞋后跟去杂质、五金纽扣',
-    earphone: '耳机薄膜、铅酸蓄电槽、蒸汽小火车马达点锡、合盖电子钟、按摩器内芯',
-    toy: '组装小乌龟、方程式赛车顶壳、植被模型捆扎/品检/上胶/组装/拼接',
-    handcraft: '蝴蝶结礼带、粘贴布标、捆绑耳朵、打胶布艺花、套环塑料棒',
-    jewelry: '龙虾扣、铜牌饰品、夜光十字架、穿线手链、花枝质检、福袋结、钱包包装',
-    lotus: '折叠莲花片、拼装/撑开莲花底座、制冷风扇外壳组装',
-    stand: '手机支架防滑膜、发卡底托拼接/上胶、电脑支架、对讲机、钱包拆定孔',
-    assembly: '封口包装、物品称重、收银、散笔上架、套水果网套、钱包总装收尾',
+    retail: '超市-过期商品下架、超市-货物摆放上架、超市-整理货架、散笔上架、收银、套网套-水果、卸货',
+    fresh: '称重菌菇干、分装菌菇干、蔬菜称重、蔬菜分拣、蔬菜分挑选、蔬菜上架',
+    packaging: '包装成品-钱包、封口包装、物品称重、粘贴封条',
+    papergoods: '手工厂-卷烟纸、纸品厂-折叠杯套、纸品厂-纸袋穿绳',
+    shoes: '鞋厂-鞋后跟片修理毛边、鞋底前脚掌刷胶、鞋后跟去杂质-足球鞋后跟',
+    model: '捆扎模具-植被模型、拼接果实-植被模型、品检树干-植被模型、上胶树干-植被模型、组装植被-植被模型',
+    jewelry: '穿线手链-文玩手链、开合挂圈-饰品龙虾扣、拼接底托-发卡底托、上胶底托-发卡底托、质检花枝底垫、组装配件-铜牌饰品、组装配件-夜光十字架',
+    handcraft: '编打福袋结、穿假婴裤子、打胶配饰-布艺花、捆绑固定耳朵、熔合福袋头、手工坊-记针存线、洗护婴身、粘贴饰品布标、折出蝴蝶结',
+    electronics: '剥开耳机薄膜、合盖电子钟、外壳组装-制冷风扇、小腿按摩器内芯组装、蒸汽小火车-马达点锡',
+    toys: '顶部外壳安装-方程式赛车、玩具厂-组装小乌龟',
+    lighting: '撑开莲花底座-莲花灯、拼装莲花底座-莲花灯、折叠莲花片-莲花灯',
+    hardware: '套环塑料棒、拆除标签定孔、成品组装-电脑支架、对讲机背夹组装、固定配装纽扣、粘贴防滑膜-手机支架',
+    battery: '安装弹簧环-铅酸蓄电槽、安装负极贴片-铅酸蓄电槽',
   };
   const badgeMap: Record<string, [string, string]> = {
-    packaging: ['bg-amber-50', 'text-amber-600'],
     retail: ['bg-blue-50', 'text-blue-600'],
-    vegetables: ['bg-green-50', 'text-green-600'],
-    cleaning: ['bg-cyan-50', 'text-cyan-600'],
-    clothing: ['bg-pink-50', 'text-pink-600'],
-    earphone: ['bg-sky-50', 'text-sky-600'],
-    toy: ['bg-yellow-50', 'text-yellow-700'],
-    handcraft: ['bg-fuchsia-50', 'text-fuchsia-600'],
+    fresh: ['bg-green-50', 'text-green-600'],
+    packaging: ['bg-amber-50', 'text-amber-600'],
+    papergoods: ['bg-yellow-50', 'text-yellow-700'],
+    shoes: ['bg-orange-50', 'text-orange-600'],
+    model: ['bg-lime-50', 'text-lime-700'],
     jewelry: ['bg-rose-50', 'text-rose-600'],
-    lotus: ['bg-purple-50', 'text-purple-600'],
-    stand: ['bg-indigo-50', 'text-indigo-600'],
-    assembly: ['bg-slate-50', 'text-slate-600'],
+    handcraft: ['bg-fuchsia-50', 'text-fuchsia-600'],
+    electronics: ['bg-sky-50', 'text-sky-600'],
+    toys: ['bg-amber-50', 'text-amber-700'],
+    lighting: ['bg-yellow-50', 'text-yellow-600'],
+    hardware: ['bg-slate-50', 'text-slate-600'],
+    battery: ['bg-emerald-50', 'text-emerald-600'],
   };
   const order = [
-    'packaging', 'retail', 'vegetables', 'cleaning',
-    'clothing', 'earphone', 'toy', 'handcraft',
-    'jewelry', 'lotus', 'stand', 'assembly',
+    'retail', 'fresh', 'packaging', 'papergoods',
+    'shoes', 'model', 'jewelry', 'handcraft',
+    'electronics', 'toys', 'lighting', 'hardware', 'battery',
   ];
   const emojiMap: Record<string, string> = {
-    packaging: '📦', retail: '🛒', vegetables: '🥬', cleaning: '🧹',
-    clothing: '👕', earphone: '🎧', toy: '🧸', handcraft: '🎨',
-    jewelry: '💍', lotus: '🪷', stand: '📱', assembly: '🔧',
+    retail: '🛒', fresh: '🥬', packaging: '📦', papergoods: '📄',
+    shoes: '👞', model: '🌿', jewelry: '💍', handcraft: '🎨',
+    electronics: '🔌', toys: '🧸', lighting: '💡', hardware: '⚙️', battery: '🔋',
   };
   const byCat = new Map<string, Task[]>();
   taskDetails.forEach((t) => {
@@ -139,7 +142,7 @@ export default function TaskSquare({ onNavigate }: { onNavigate: (path: string) 
                   <p className="text-sm md:text-base font-semibold">真实场景视频 · 看完即可开拍</p>
                 </div>
                 <p className="pl-6 md:pl-7 text-xs md:text-base text-white/90 leading-relaxed">
-                  从食品加工、零售日用消费品、农贸生鲜处理、生活清洁服务、服饰配件加工、精密电子组装、玩具模型加工、手工装饰制作、饰品/工艺品/支架/成品整机装配共 12 大类 48 个任务，全部提供示范视频。复制任务名后立即开始，完成并通过审核后，按平台规则获得相应收益。
+                  涵盖商超零售、生鲜处理、包装作业、紙品加工、鞋业加工、模型加工、饰品加工、手工布艺、电子组装、玩具组装、灯饰加工、五金塑胶、电池组装共 13 大行业分类，每个任务均提供真实示范视频。复制任务名后立即开始，完成并通过审核后，按平台规则获得相应收益。
                 </p>
               </div>
             </div>
@@ -224,8 +227,8 @@ export default function TaskSquare({ onNavigate }: { onNavigate: (path: string) 
               >← 全部分类</button>
             )}
           </div>
-          {/* 12 分类：手机端 4 列，桌面端 12 列 */}
-          <div className="grid grid-cols-4 gap-1.5 md:grid-cols-6 lg:grid-cols-12 md:gap-3">
+          {/* 13 分类：手机端 4 列，桌面端 13 列 */}
+          <div className="grid grid-cols-4 gap-1.5 md:grid-cols-7 lg:grid-cols-13 md:gap-3">
             {categories.map((cat) => {
               const isActive = activeCategory === cat.id;
               return (
@@ -337,7 +340,7 @@ export default function TaskSquare({ onNavigate }: { onNavigate: (path: string) 
                 <h4 className="font-bold text-green-800 text-sm md:text-base">温馨提示</h4>
               </div>
               <ul className="space-y-1.5 md:space-y-2 text-green-900 text-xs md:text-sm leading-relaxed">
-                <li className="flex items-start gap-1.5 md:gap-2"><span className="text-green-500 font-bold shrink-0">•</span><span>涵盖 12 类场景，62 条真实示范视频</span></li>
+                <li className="flex items-start gap-1.5 md:gap-2"><span className="text-green-500 font-bold shrink-0">•</span><span>涵盖 13 类行业场景，62 条真实示范视频</span></li>
                 <li className="flex items-start gap-1.5 md:gap-2"><span className="text-green-500 font-bold shrink-0">•</span><span>多拍多赚，完成越多收益越高</span></li>
                 <li className="flex items-start gap-1.5 md:gap-2"><span className="text-green-500 font-bold shrink-0">•</span><span>审核通过后及时结算收益</span></li>
               </ul>

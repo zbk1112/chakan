@@ -131,13 +131,13 @@ export default function Home({ onNavigate }: HomeProps) {
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
             {projects.map(project => {
               const isDfProject = project.id === 'df';
-              const durationInfo = project.id === 'at' ? '⏱️ 20小时' : project.id === 'df' ? '⏱️ 50小时' : project.id === 'sw' ? '⏱️ 50小时' : '⏱️ 不限制';
-              const unitPrice = project.id === 'at' ? '💰 30rmb' : project.id === 'df' ? '💰 25rmb' : project.id === 'sw' ? '💰 25rmb' : '💰 20rmb';
+              const durationInfo = project.id === 'at' ? '⏱️ 20小时' : project.id === 'df' ? '⏱️ 100小时' : project.id === 'sw' ? '⏱️ 50小时' : '⏱️ 不限制';
+              const unitPrice = project.id === 'at' ? '💰 30rmb' : project.id === 'df' ? '💰 25rmb' : project.id === 'sw' ? '💰 25rmb' : '💰 25rmb';
               const limitInfo = project.id === 'at' ? '工序不限' : project.id === 'df' ? '≤15工序/场景' : project.id === 'sw' ? '限产品款式' : '录制上限宽松';
               const settlementMethod = '💳 3周到一个月结算';
               const icon = project.id === 'at' ? '🎩' : project.id === 'df' ? '📱' : project.id === 'sw' ? '🥽' : '🎥';
               const needsPhone = project.id === 'df';
-              const sceneTag = project.id === 'at' ? '🏷️ 农业·商超' : project.id === 'df' ? '🏷️ 居家+制造业' : project.id === 'sw' ? '🏷️ 全域制造·食品加工·仓储物流·工程维保' : project.id === 'st' ? '🏷️ 制造业：手工厂·电子厂·针织厂等流水线' : '';
+              const sceneTag = project.id === 'at' ? '🏷️ 农业·商超' : project.id === 'df' ? '🏷️ 商业·服务业·制造业' : project.id === 'sw' ? '🏷️ 全域制造·食品加工·仓储物流·工程维保' : project.id === 'st' ? '🏷️ 制造业：手工厂·电子厂·针织厂等流水线' : '';
               const equipmentTag = project.id === 'at' ? '✅ 我方提供全部硬件' : project.id === 'df' ? '⚠️ 需客户自备iPhone' : project.id === 'sw' ? '✅ 我方提供全部硬件' : project.id === 'st' ? '✅ 我方提供全部硬件' : '';
               const features = project.id === 'at' 
                 ? [{ icon: '🎬', text: '腕部镜头同步' }, { icon: '🔋', text: '充电宝续航' }, { icon: '📦', text: '邮寄内存卡' }] 
@@ -179,11 +179,11 @@ export default function Home({ onNavigate }: HomeProps) {
                              style={{ background: 'linear-gradient(135deg, rgba(16,185,129,0.35) 0%, rgba(5,150,105,0.25) 100%)' }}>
                           <div className="flex items-center gap-1.5 mb-1.5">
                             <span className="text-sm">📱</span>
-                            <span className="text-xs font-bold text-white tracking-wide">DF 居家</span>
+                            <span className="text-xs font-bold text-white tracking-wide">DF iPhone</span>
                           </div>
                           <div className="flex items-center gap-1 mb-0.5">
                             <span className="text-sm">⏱️</span>
-                            <span className="text-sm font-extrabold text-white">50h</span>
+                            <span className="text-sm font-extrabold text-white">100h</span>
                           </div>
                           <div className="text-[9px] text-green-50 mb-1 leading-tight">≤15工序/场景</div>
                           <div className="flex items-center gap-1">
@@ -342,7 +342,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white text-xl mr-4">🏭</div>
                 <div>
                   <h4 className="font-bold text-gray-800">XX电子厂</h4>
-                  <p className="text-sm text-gray-500">制造业 | DF项目</p>
+                  <p className="text-sm text-gray-500">制造业 | ST项目</p>
                 </div>
               </div>
               <p className="text-gray-700 mb-4">平台操作简单，培训内容详细，工人上手快。结算透明，每月准时到账，非常满意！</p>
@@ -358,7 +358,7 @@ export default function Home({ onNavigate }: HomeProps) {
                   <p className="text-sm text-gray-500">服务业 | DF项目</p>
                 </div>
               </div>
-              <p className="text-gray-700 mb-4">DF项目非常适合我们，居家场景采集方便，不需要额外设备投入，收益稳定。</p>
+              <p className="text-gray-700 mb-4">DF项目非常适合我们，商业场景采集方便，不需要额外设备投入，收益稳定。</p>
               <div className="flex text-yellow-400">
                 <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
               </div>
