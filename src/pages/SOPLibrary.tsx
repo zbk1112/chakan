@@ -8,7 +8,7 @@ export default function SOPLibrary() {
   const [selectedCategory, setSelectedCategory] = useState('全部');
   const [selectedDoc, setSelectedDoc] = useState<typeof sopLibrary[0] | null>(null);
 
-  const categories = ['全部', 'AT设备', 'DF设备', 'SW设备', 'ST设备', 'ST项目', '通用'];
+  const categories = ['全部', 'AT设备', 'DF设备', 'SW设备', '通用'];
 
   const filteredDocs = sopLibrary.filter(doc => {
     const matchesSearch = doc.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -30,7 +30,7 @@ export default function SOPLibrary() {
             SOP资料库
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">SOP运维资料库</h1>
-          <p className="text-gray-600 text-lg">整合4份文档全部操作规范，可搜索、分页查看，支持本地打印导出</p>
+          <p className="text-gray-600 text-lg">整合6份文档全部操作规范，可搜索、分页查看，支持本地打印导出</p>
         </div>
 
         <Card className="mb-8">

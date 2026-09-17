@@ -9,7 +9,7 @@ import Troubleshooting from './pages/Troubleshooting';
 import TaskSquare from './pages/TaskSquare';
 import TaskDetail from './pages/TaskDetail';
 
-type Page = 'home' | 'at' | 'df' | 'sw' | 'st' | 'sop' | 'quality' | 'troubleshooting' | 'tasksquare' | 'taskdetail';
+type Page = 'home' | 'at' | 'df' | 'sw' | 'sop' | 'quality' | 'troubleshooting' | 'tasksquare' | 'taskdetail';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
@@ -42,9 +42,6 @@ export default function App() {
       case '/projects/sw':
         setCurrentPage('sw');
         break;
-      case '/projects/st':
-        setCurrentPage('st');
-        break;
       case '/sop':
         setCurrentPage('sop');
         break;
@@ -71,7 +68,6 @@ export default function App() {
       case 'at':
       case 'df':
       case 'sw':
-      case 'st':
         return <ProjectPage initialProject={currentPage} />;
       case 'sop':
         return <SOPLibrary />;

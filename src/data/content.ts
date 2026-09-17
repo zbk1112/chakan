@@ -7,7 +7,7 @@ export const homeContent = {
   advantages: [
     {
       title: "全套设备免费提供",
-      description: "AT头戴摄像、SW头戴设备、ST头戴式GoPro全套配齐，含充电宝、内存卡、充电器，DF需客户自租iPhone",
+      description: "AT头戴摄像、SW头戴设备全套配齐，含充电宝、内存卡、充电器，DF需客户自租iPhone",
       icon: "🎥"
     },
     {
@@ -30,11 +30,10 @@ export const homeContent = {
     { id: "at", name: "AT头戴采集", description: "鸭舌帽式头戴摄像设备第一视角采集", color: "bg-gradient-to-br from-green-600 via-emerald-600 to-green-500" },
     { id: "df", name: "iPhone采集", description: "苹果手机EDL软件高清拍摄采集", color: "bg-gradient-to-br from-teal-600 via-cyan-600 to-teal-500" },
     { id: "sw", name: "SW头戴设备", description: "专业头戴设备高精度采集", color: "bg-gradient-to-br from-emerald-600 via-green-500 to-teal-500" },
-    { id: "st", name: "ST头戴式GoPro", description: "头戴式GoPro设备真实场景人手操作视频采集", color: "bg-gradient-to-br from-green-700 via-teal-600 to-emerald-500" }
   ],
   process: [
     { step: "1", title: "对接洽谈", desc: "联系负责人了解合作详情" },
-    { step: "2", title: "设备准备", desc: "AT/SW/ST设备我方提供，DF需客户自租iPhone" },
+    { step: "2", title: "设备准备", desc: "AT/SW设备我方提供，DF需客户自租iPhone" },
     { step: "3", title: "培训采集", desc: "学习SOP规范开始采集" },
     { step: "4", title: "数据上传", desc: "按流程导出上传数据" },
     { step: "5", title: "对账结算", desc: "透明结算获取收益" }
@@ -190,64 +189,6 @@ export const projectContent = {
       "场景审核通过率高"
     ]
   },
-  st: {
-    title: "ST头戴式GoPro采集",
-    description: "使用自研头戴设备进行制造业场景第一视角数据采集",
-    validDuration: "不限制",
-    processLimit: "录制上限较宽松",
-    uploadMethod: "上传指定网址",
-    sceneRequirements: "除工厂流水线场景外，其余场景均可录制，具体可录制范围需结合视频内容判定",
-    unitPrice: "25rmb",
-    settlementMethod: "3周到一个月结算",
-    equipment: ["头戴式GoPro设备", "充电宝", "充电器", "内存卡", "品牌手环"],
-    preparation: [
-      "收到设备后阅读操作员执行手册了解使用流程",
-      "确认设备外观完好，电量充足",
-      "保障单设备分配10M上行带宽",
-      "准备佩戴品牌手环",
-      "熟悉指定网址上传流程"
-    ],
-    steps: [
-      { num: "1", title: "设备开机", desc: "长按开机键开启GoPro设备" },
-      { num: "2", title: "佩戴设备", desc: "将头戴设备佩戴好，调整角度确保画面清晰" },
-      { num: "3", title: "佩戴手环", desc: "佩戴品牌手环，确保在画面中可见" },
-      { num: "4", title: "开始录制", desc: "确认设备正常后开始录制，展示清晰完整的手部作业动作" },
-      { num: "5", title: "完成录制", desc: "按停止键结束录制，检查视频质量" },
-      { num: "6", title: "数据上传", desc: "将数据上传至指定网址的指定软件" }
-    ],
-    patrol: ["定时检查设备电量和录制状态", "确保手部动作完整清晰入镜", "注意环境光线充足", "确保网络带宽稳定"],
-    lunchBreak: [
-      "暂停录制保存进度",
-      "设备充电确保续航",
-      "休息结束后检查设备状态",
-      "重新开始采集"
-    ],
-    finish: ["停止采集，保存所有视频", "检查视频质量，确保清晰完整", "按要求上传至指定网址的指定软件", "填写任务清单，规范分类标签"],
-    prohibitions: ["禁止拍摄到人脸画面", "禁止视频模糊不清", "禁止手部动作不完整", "禁止未经审核擅自采集"],
-    selfCheck: [
-      "设备自检：外观、开机、电量是否正常",
-      "采集前检查：设备佩戴正确，画面清晰",
-      "采集执行：手部动作完整清晰，操作物体可见",
-      "视频审核：按质量标准自查",
-      "表格记录：填写任务清单，规范分类标签",
-      "网络检查：确保单设备分配10M上行带宽"
-    ],
-    specialRules: [
-      "录制工序时长不限",
-      "需保障单设备分配10M上行带宽",
-      "需上传数据到指定网址的指定软件",
-      "试采阶段用于验证场景和人员组织能力",
-      "样片需上传至多维表格等待T+1审核",
-      "审核通过后开始批量试采集",
-      "正式批量采集需签署商务合同",
-      "按周/双周更新任务清单",
-      "最终有效交付量以审核通过的数据为准"
-    ],
-    qualityLevels: {
-      tier1: ["手部频繁离开画面超过30秒", "50%以上时间动作过快", "超过1分钟无意义动作", "镜头有脏东西、水渍或被遮挡", "未佩戴品牌手环"],
-      tier2: ["连续重复同一动作超过1分钟", "视频模糊不清", "镜头大幅晃动", "他人或本人面部清晰入镜", "环境过暗"]
-    }
-  }
 };
 
 export const sopLibrary = [
@@ -268,18 +209,6 @@ export const sopLibrary = [
     title: "SW头戴设备网页配对流程",
     category: "SW设备",
     content: "1. 准备安卓手机，使用Edge浏览器\n2. 打开网址：https://vela.fozmoly.com/\n3. 选择对应设备序列号\n4. 填写工序信息：名字必须写真实姓名\n5. 确认软件为最新版本\n6. 正常录制状态时间跳动10秒后再操作"
-  },
-  {
-    id: "sop-009",
-    title: "ST头戴式GoPro操作指南",
-    category: "ST设备",
-    content: "1. 长按开机键开启GoPro设备\n2. 将头戴设备佩戴好，调整角度确保画面清晰\n3. 佩戴品牌手环，确保在画面中可见\n4. 确认设备正常后开始录制\n5. 展示清晰完整的手部作业动作\n6. 按停止键结束录制，检查视频质量\n7. 将视频上传至公司专有平台"
-  },
-  {
-    id: "sop-010",
-    title: "ST样片审核流程",
-    category: "ST项目",
-    content: "1. 完成单台设备采样录制\n2. 将样片上传至多维表格\n3. 规范分类标签\n4. 等待工程师T+1审核\n5. 审核通过后开始批量试采集\n6. 签署正式商务合同后进行批量采集"
   },
   {
     id: "sop-005",
@@ -391,7 +320,6 @@ export const settlementCenter = {
     { title: "AT设备结算", desc: "按设备数量和采集时长结算" },
     { title: "DF结算", desc: "按采集时长和质量评分结算" },
     { title: "SW设备结算", desc: "按设备数量和采集时长结算" },
-    { title: "ST设备结算", desc: "按审核通过的数据量结算" }
   ],
   contact: {
     name: "",
@@ -420,12 +348,6 @@ export const faultCenter = {
       title: "电量不足",
       type: "sw",
       solutions: ["停止录制充电", "电量低于30%无法开启录制", "更换满电设备"]
-    },
-    {
-      id: "f7",
-      title: "平台上传异常",
-      type: "st",
-      solutions: ["检查网络连接", "确认账户权限", "联系平台管理员", "重新上传"]
     },
     {
       id: "f5",
@@ -493,7 +415,6 @@ export const logisticsContent = {
       "AT设备按设备数量和采集时长结算",
       "DF按采集时长和质量评分结算",
       "SW设备按设备数量和采集时长结算",
-      "ST设备按审核通过的数据量结算"
     ],
     paymentCycle: "月结，每月15日结算上月款项",
     paymentMethod: "银行转账"
@@ -567,26 +488,4 @@ export const troubleshooting = {
       reportMaterials: []
     }
   ],
-  st: [
-    {
-      id: "st-1",
-      title: "平台上传异常",
-      symptom: "无法登录上传平台或上传失败",
-      cause: "网络问题或账户权限不足",
-      solution: "检查网络连接，确认账户权限，联系平台管理员",
-      solutions: ["检查网络连接", "确认账户权限", "联系平台管理员", "重新上传"],
-      needReport: true,
-      reportMaterials: ["账户名", "错误截图", "网络状态"]
-    },
-    {
-      id: "st-2",
-      title: "手环未佩戴",
-      symptom: "样片审核未通过，提示未佩戴手环",
-      cause: "录制时忘记佩戴品牌手环",
-      solution: "佩戴品牌手环重新录制，确保手环在画面中可见",
-      solutions: ["佩戴品牌手环", "重新录制", "确保手环入镜"],
-      needReport: false,
-      reportMaterials: []
-    }
-  ]
 };

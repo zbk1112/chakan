@@ -3,12 +3,11 @@ import { troubleshooting } from '../data/content';
 import Card from '../components/Card';
 
 export default function Troubleshooting() {
-  const [activeTab, setActiveTab] = useState<'at' | 'df' | 'sw' | 'st'>('at');
+  const [activeTab, setActiveTab] = useState<'at' | 'df' | 'sw'>('at');
   const tabs = [
     { id: 'at' as const, label: 'AT设备故障', color: 'bg-green-500' },
     { id: 'df' as const, label: 'DF手机故障', color: 'bg-blue-500' },
     { id: 'sw' as const, label: 'SW头戴故障', color: 'bg-orange-500' },
-    { id: 'st' as const, label: 'ST头戴故障', color: 'bg-red-500' }
   ];
 
   const currentIssues = troubleshooting[activeTab];

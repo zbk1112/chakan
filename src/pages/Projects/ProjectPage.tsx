@@ -10,7 +10,7 @@ import swImage6 from '../../assets/images/sw_image_6.png';
 const swImages = [swImage1, swImage2, swImage3, swImage4, swImage5, swImage6];
 
 interface ProjectPageProps {
-  initialProject: 'at' | 'df' | 'sw' | 'st';
+  initialProject: 'at' | 'df' | 'sw';
 }
 
 /* 紧凑卡片：手机端极简、桌面端保留完整样式 */
@@ -39,14 +39,13 @@ export default function ProjectPage({ initialProject }: ProjectPageProps) {
   const [activeTab, setActiveTab] =
     useState<typeof initialProject>(initialProject);
 
-  const projects = ['at', 'df', 'sw', 'st'] as const;
+  const projects = ['at', 'df', 'sw'] as const;
   const projectLabels = {
     at: 'AT头戴采集',
     df: 'iPhone采集',
     sw: 'SW头戴设备',
-    st: 'ST头戴式GoPro',
   };
-  const projectIcons = { at: '🎩', df: '📱', sw: '🥽', st: '🎥' };
+  const projectIcons = { at: '🎩', df: '📱', sw: '🥽' };
 
   const currentProject = projectContent[activeTab];
 

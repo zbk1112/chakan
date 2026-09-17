@@ -125,7 +125,7 @@ export default function Home({ onNavigate }: HomeProps) {
             <span className="inline-block bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-sm font-medium mb-4">
               项目专区
             </span>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-800">🚀 四大可接单项目</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-800">🚀 三大可接单项目</h2>
             <p className="text-gray-500 mt-2">灵活选择，多场景接单</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
@@ -137,14 +137,12 @@ export default function Home({ onNavigate }: HomeProps) {
               const settlementMethod = '💳 3周到一个月结算';
               const icon = project.id === 'at' ? '🎩' : project.id === 'df' ? '📱' : project.id === 'sw' ? '🥽' : '🎥';
               const needsPhone = project.id === 'df';
-              const sceneTag = project.id === 'at' ? '🏷️ 农业·商超' : project.id === 'df' ? '🏷️ 商业·服务业·制造业' : project.id === 'sw' ? '🏷️ 全域制造·食品加工·仓储物流·工程维保' : project.id === 'st' ? '🏷️ 制造业：手工厂·电子厂·针织厂等流水线' : '';
-              const equipmentTag = project.id === 'at' ? '✅ 我方提供全部硬件' : project.id === 'df' ? '⚠️ 需客户自备iPhone' : project.id === 'sw' ? '✅ 我方提供全部硬件' : project.id === 'st' ? '✅ 我方提供全部硬件' : '';
+              const sceneTag = project.id === 'at' ? '🏷️ 农业·商超' : project.id === 'df' ? '🏷️ 商业·服务业·制造业' : project.id === 'sw' ? '🏷️ 全域制造·食品加工·仓储物流·工程维保' : '';
+              const equipmentTag = project.id === 'at' ? '✅ 我方提供全部硬件' : project.id === 'df' ? '⚠️ 需客户自备iPhone' : project.id === 'sw' ? '✅ 我方提供全部硬件' : '';
               const features = project.id === 'at' 
                 ? [{ icon: '🎬', text: '腕部镜头同步' }, { icon: '🔋', text: '充电宝续航' }, { icon: '📦', text: '邮寄内存卡' }] 
                 : project.id === 'sw' 
                 ? [{ icon: '🔆', text: '配套灯光' }, { icon: '💻', text: '网页配对' }, { icon: '📡', text: '10M上行带宽' }] 
-                : project.id === 'st' 
-                ? [{ icon: '⌚', text: '品牌手环' }, { icon: '📶', text: '10M上行带宽' }, { icon: '✅', text: 'T+1审核' }] 
                 : [];
               const gradientClass = project.id === 'at' 
                 ? 'bg-gradient-to-br from-green-600 via-emerald-600 to-green-500' 
@@ -250,7 +248,7 @@ export default function Home({ onNavigate }: HomeProps) {
             <div className="flex items-start gap-3">
               <span className="text-2xl shrink-0">💰</span>
               <div>
-                <h4 className="font-bold text-amber-800 text-base mb-1">设备押金说明（AT / SW / ST）</h4>
+                <h4 className="font-bold text-amber-800 text-base mb-1">设备押金说明（AT / SW）</h4>
                 <p className="text-amber-900 text-sm leading-relaxed">
                   初次跨省合作，由于自研设备较贵，可先投放 <span className="font-bold">2-5 台</span> 设备试运行，收取押金。试运行通过后，追加设备<span className="font-bold">免押金</span>，前期押金于首次结算<span className="font-bold">全额退还</span>。
                 </p>
@@ -342,7 +340,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white text-xl mr-4">🏭</div>
                 <div>
                   <h4 className="font-bold text-gray-800">XX电子厂</h4>
-                  <p className="text-sm text-gray-500">制造业 | ST项目</p>
+                  <p className="text-sm text-gray-500">制造业 \| SW项目</p>
                 </div>
               </div>
               <p className="text-gray-700 mb-4">平台操作简单，培训内容详细，工人上手快。结算透明，每月准时到账，非常满意！</p>
